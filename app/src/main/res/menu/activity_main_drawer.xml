@@ -16,5 +16,14 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_slideshow" />
+        <item
+            android:id="@+id/action_profile"
+            android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/action_edit_profile"
+            android:title="@string/menu_edit_profile" />
+        <item
+            android:id="@+id/action_search_profile"
+            android:title="@string/menu_search_profile" />
     </group>
 </menu>
