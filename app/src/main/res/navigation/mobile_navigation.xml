@@ -7,43 +7,37 @@
 
     <fragment
         android:id="@+id/nav_home"
+        android:label=""
         android:name="com.example.androidapp.ui.home.HomeFragment"
-        android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_locations"
         android:name="com.example.androidapp.ui.locations.LocationsFragment"
-        android:label="@string/menu_locations"
         tools:layout="@layout/fragment_locations" />
 
     <fragment
         android:id="@+id/nav_add_locations"
         android:name="com.example.androidapp.ui.addLocations.AddLocationsFragment"
-        android:label="@string/menu_add_locations"
         tools:layout="@layout/fragment_add_locations" />
 
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.androidapp.ui.profile.ProfileFragment"
-        android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_edit_profile"
         android:name="com.example.androidapp.ui.editProfile.EditProfileFragment"
-        android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
 
     <fragment
         android:id="@+id/nav_search_profile"
         android:name="com.example.androidapp.ui.searchProfile.SearchProfileFragment"
-        android:label="Search Profile"
         tools:layout="@layout/fragment_search_profile" />
 
     <fragment
         android:id="@+id/nav_search_location"
         android:name="com.example.androidapp.ui.searchLocation.SearchLocationFragment"
-        android:label="Search Location"
         tools:layout="@layout/fragment_search_location" />
 </navigation>
