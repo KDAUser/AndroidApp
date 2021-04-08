@@ -5,16 +5,13 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_menu">Account options</string>
-    <string name="action_profile">Profil</string>
-    <string name="action_edit_profile">Edytuj profil</string>
-    <string name="action_search_user">Szukaj użytkownika</string>
-    <string name="action_logout">Wyloguj się</string>
+    <string name="action_menu">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_locations">Locations</string>
+    <string name="menu_add_locations">Add Locations</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_search_profile">Search Profile</string>
+    <string name="menu_logout_profile">Logout</string>
 </resources>

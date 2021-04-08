@@ -10,24 +10,9 @@
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/action_profile"
+                android:id="@+id/action_settings"
                 android:orderInCategory="100"
-                android:title="@string/action_profile"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/action_edit_profile"
-                android:orderInCategory="100"
-                android:title="@string/action_edit_profile"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/action_search_user"
-                android:orderInCategory="100"
-                android:title="@string/action_search_user"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/action_logout"
-                android:orderInCategory="100"
-                android:title="@string/action_logout"
+                android:title="@string/action_menu"
                 app:showAsAction="never" />
         </menu>
     </item>

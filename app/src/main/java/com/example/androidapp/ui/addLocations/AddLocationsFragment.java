@@ -1,4 +1,4 @@
-package com.example.androidapp.ui.slideshow;
+package com.example.androidapp.ui.addLocations;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,18 +13,20 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.androidapp.R;
+import com.example.androidapp.ui.editProfile.EditProfileViewModel;
+import com.example.androidapp.ui.locations.LocationsViewModel;
 
-public class SlideshowFragment extends Fragment {
+public class AddLocationsFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private AddLocationsViewModel addLocationsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        addLocationsViewModel =
+                new ViewModelProvider(this).get(AddLocationsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_add_locations, container, false);
+        final TextView textView = root.findViewById(R.id.text_add_locations);
+        addLocationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
