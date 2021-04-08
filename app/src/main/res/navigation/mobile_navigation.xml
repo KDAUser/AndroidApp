@@ -40,4 +40,10 @@
         android:name="com.example.androidapp.ui.searchProfile.SearchProfileFragment"
         android:label="Search Profile"
         tools:layout="@layout/fragment_search_profile" />
+
+    <fragment
+        android:id="@+id/nav_search_location"
+        android:name="com.example.androidapp.ui.searchLocation.SearchLocationFragment"
+        android:label="Search Location"
+        tools:layout="@layout/fragment_search_location" />
 </navigation>

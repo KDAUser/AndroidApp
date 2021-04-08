@@ -17,4 +17,5 @@
     <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_search_profile">Search Profile</string>
     <string name="menu_logout_profile">Logout</string>
+    <string name="menu_search_location">Search Location</string>
 </resources>
