@@ -13,10 +13,23 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.androidapp.R;
+import com.example.androidapp.ui.profile.ProfileViewModel;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
+    private ProfileViewModel profileViewModel;
+
+    private boolean isUser(){
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        return profileViewModel.isUser();
+    }
+
+    private void goToLoginFragment(){
+        if (!isUser()){
+
+        }
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
