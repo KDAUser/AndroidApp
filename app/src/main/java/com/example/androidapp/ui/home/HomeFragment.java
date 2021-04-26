@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment {
 
     private void goToLoginFragment(){
         if (!isUser()){
-
+            //tu przejscie do fragmentu login
         }
     }
 
