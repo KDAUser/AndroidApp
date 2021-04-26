@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.androidapp.R;
 import com.example.androidapp.ui.profile.ProfileViewModel;
@@ -19,6 +21,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private ProfileViewModel profileViewModel;
+    private NavController navController;
 
     private boolean isUser(){
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
@@ -28,6 +31,7 @@ public class HomeFragment extends Fragment {
     private void goToLoginFragment(){
         if (!isUser()){
             //tu przejscie do fragmentu login
+            navController.navigate(R.id.nav_login);
         }
     }
 
@@ -36,6 +40,7 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         final TextView textView = root.findViewById(R.id.text_home);
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -43,6 +48,7 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        goToLoginFragment();
         return root;
     }
 }
