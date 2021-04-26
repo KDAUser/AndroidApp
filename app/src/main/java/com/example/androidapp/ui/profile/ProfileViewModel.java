@@ -8,7 +8,6 @@ public class ProfileViewModel extends ViewModel {
 
     private boolean isUser;
     private MutableLiveData<String> mText;
-    //private MutableLiveData<String> isUser;
 
     public Boolean isUser() {
         return isUser;

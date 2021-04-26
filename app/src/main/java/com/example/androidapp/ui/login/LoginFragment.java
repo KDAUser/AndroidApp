@@ -37,6 +37,8 @@ public class LoginFragment extends Fragment {
                 navController.navigate(R.id.nav_home);
             }
         });
+        if(profileViewModel.isUser())
+            navController.navigate(R.id.nav_home);
         return root;
     }
 
