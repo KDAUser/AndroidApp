@@ -8,8 +8,9 @@ public class ProfileViewModel extends ViewModel {
 
     private boolean isUser;
     private MutableLiveData<String> mText;
+    //private MutableLiveData<String> isUser;
 
-    public boolean isUser() {
+    public Boolean isUser() {
         return isUser;
     }
 
@@ -18,6 +19,10 @@ public class ProfileViewModel extends ViewModel {
 
         mText = new MutableLiveData<>();
         mText.setValue("This is profile fragment");
+    }
+
+    public void setUser() {
+        isUser = true;
     }
 
     public LiveData<String> getText() {

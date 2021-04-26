@@ -22,14 +22,12 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private ProfileViewModel profileViewModel;
     private NavController navController;
+    private Boolean isUser = false;
 
-    private boolean isUser(){
-        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        return profileViewModel.isUser();
-    }
 
-    private void goToLoginFragment(){
-        if (!isUser()){
+    public void checkUser() {
+        profileViewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
+        if (!profileViewModel.isUser()) {
             //tu przejscie do fragmentu login
             navController.navigate(R.id.nav_login);
         }
@@ -48,7 +46,7 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        goToLoginFragment();
+        checkUser();
         return root;
     }
 }
