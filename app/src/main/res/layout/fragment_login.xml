@@ -13,6 +13,7 @@
         android:background="@color/bgColor"
         android:focusableInTouchMode="true"
         android:scrollbars="vertical"
+        android:onClick="hideKeyboard"
         tools:context=".ui.login.LoginFragment">
 
         <Button
