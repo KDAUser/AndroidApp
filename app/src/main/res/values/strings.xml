@@ -21,4 +21,7 @@
     <string name="menu_search_location">Search Location</string>
     <string name="login_page_title">Start from logging into your account.</string>
     <string name="loginPage_login">Login</string>
+    <string name="loginPage_password">Password</string>
+    <string name="loginPage_registerNote">You dont have an account?</string>
+    <string name="loginPage_register">Register</string>
 </resources>

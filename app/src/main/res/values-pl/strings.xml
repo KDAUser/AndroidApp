@@ -20,4 +20,7 @@
     <string name="menu_search_profile">Search User</string>
     <string name="menu_logout_profile">Logout</string>
     <string name="menu_search_location">Search Location</string>
+    <string name="loginPage_password">Password</string>
+    <string name="loginPage_registerNote">You dont have an account?</string>
+    <string name="loginPage_register">Register</string>
 </resources>
