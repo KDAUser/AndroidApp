@@ -6,19 +6,15 @@ import androidx.lifecycle.ViewModel;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<Boolean> mBool;
+    private MutableLiveData<String> mText;
 
     public LoginViewModel() {
-        mBool = new MutableLiveData<>();
-        changeLoginCondition();
+        mText = new MutableLiveData<>();
+        mText.setValue("This is login fragment");
     }
 
-    private void changeLoginCondition(){
-        mBool.setValue(true);
-    }
-
-    public LiveData<Boolean> getLoginCondition(){
-        return mBool;
+    public LiveData<String> getText() {
+        return mText;
     }
 
 }
