@@ -25,4 +25,5 @@
     <string name="loginPage_password">Password</string>
     <string name="loginPage_registerNote">You dont have an account?</string>
     <string name="loginPage_register">Register</string>
+    <string name="searchLocation_hint">Location Name</string>
 </resources>

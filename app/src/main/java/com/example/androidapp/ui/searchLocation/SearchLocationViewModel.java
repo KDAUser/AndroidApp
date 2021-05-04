@@ -1,19 +1,53 @@
 package com.example.androidapp.ui.searchLocation;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import android.app.Activity;
+
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class SearchLocationViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private ArrayList<LocationItem> mLocationsList;
 
-    public SearchLocationViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is search location fragment");
+    private RecyclerView mLocationsView;
+    private SearchLocationAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    public void filter(String text) {
+        ArrayList<LocationItem> filteredList = new ArrayList<>();
+
+        for (LocationItem item : mLocationsList) {
+            if (item.getSearchItemLocationName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        mAdapter.filterList(filteredList);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public void createExampleLocationsList() {
+        mLocationsList = new ArrayList<>();
+        mLocationsList.add(new LocationItem("Białystok"));
+        mLocationsList.add(new LocationItem("Bydgoszcz"));
+        mLocationsList.add(new LocationItem("Gdańsk"));
+        mLocationsList.add(new LocationItem("Gorzów Wielkopolski"));
+        mLocationsList.add(new LocationItem("Katowice"));
+        mLocationsList.add(new LocationItem("Kielce"));
+        mLocationsList.add(new LocationItem("Kraków"));
+        mLocationsList.add(new LocationItem("Lublin"));
+        mLocationsList.add(new LocationItem("Łódź"));
+    }
+
+    public void buildRecyclerView(RecyclerView mLocationsView, Activity activityClass) {
+        mLocationsView = mLocationsView;
+        mLocationsView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(activityClass);
+        mAdapter = new SearchLocationAdapter(mLocationsList);
+
+        mLocationsView.setLayoutManager(mLayoutManager);
+        mLocationsView.setAdapter(mAdapter);
     }
 }
