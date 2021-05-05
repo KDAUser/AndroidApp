@@ -1,33 +1,25 @@
 package com.example.androidapp.ui.registration;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.androidapp.R;
-import com.example.androidapp.ui.home.HomeViewModel;
 import com.example.androidapp.ui.profile.ProfileViewModel;
+
+import java.util.Objects;
 
 public class RegistrationFragment extends Fragment {
 
@@ -48,19 +40,16 @@ public class RegistrationFragment extends Fragment {
                 new ViewModelProvider(this).get(RegistrationViewModel.class);
         View root = inflater.inflate(R.layout.fragment_registration, container, false);
 
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         profileViewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
 
         EditText login = (EditText) root.findViewById(R.id.registrationPage_login);
         EditText password = (EditText) root.findViewById(R.id.registrationPage_password);
         EditText confPassword = (EditText) root.findViewById(R.id.registrationPage_confPassword);
         EditText email = (EditText) root.findViewById(R.id.registrationPage_email);
-        View.OnFocusChangeListener hideSoftKeyboard = new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v);
-                }
+        View.OnFocusChangeListener hideSoftKeyboard = (v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
             }
         };
         login.setOnFocusChangeListener(hideSoftKeyboard);
@@ -69,25 +58,19 @@ public class RegistrationFragment extends Fragment {
         email.setOnFocusChangeListener(hideSoftKeyboard);
 
         Button avatarButton = (Button) root.findViewById(R.id.registrationPage_avatarButton);
-        avatarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
+        avatarButton.setOnClickListener(arg0 -> {
 //                Intent i = new Intent(
 //                        Intent.ACTION_PICK,
 //                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //
 //                startActivityForResult(i, RESULT_LOAD_IMAGE);
-            }
         });
 
         Button registerButton = (Button) root.findViewById(R.id.registrationPage_registerButton);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                profileViewModel.setUser();
-                navController.navigate(R.id.nav_home);
-                ((AppCompatActivity)getActivity()).getSupportActionBar().show(); //show toolbar
-            }
+        registerButton.setOnClickListener(view -> {
+            profileViewModel.setUser();
+            navController.navigate(R.id.nav_home);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().show(); //show toolbar
         });
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide(); //hide toolbar
