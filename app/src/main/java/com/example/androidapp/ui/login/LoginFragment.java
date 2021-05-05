@@ -60,21 +60,25 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 profileViewModel.setUser();
                 navController.navigate(R.id.nav_home);
+                ((AppCompatActivity)getActivity()).getSupportActionBar().show(); //show toolbar
             }
         });
-        if(profileViewModel.isUser())
-            navController.navigate(R.id.nav_home);
-        return root;
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        Button registrationButton = (Button) root.findViewById(R.id.registrationButton);
+        registrationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.nav_registration);
+            }
+        });
+
+        if(profileViewModel.isUser()) {
+            navController.navigate(R.id.nav_home);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().show(); //show toolbar
+        }
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide(); //hide toolbar
+
+        return root;
     }
 }

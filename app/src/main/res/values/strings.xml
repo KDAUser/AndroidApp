@@ -25,5 +25,11 @@
     <string name="loginPage_registerNote">You dont have an account?</string>
     <string name="loginPage_register">Register</string>
     <string name="searchLocation_hint">Location Name</string>
+    <string name="registrationPage_title">Create new aacount</string>
+    <string name="registrationPage_confPass">Confirm password</string>
+    <string name="registrationPage_email">Email</string>
+    <string name="registrationPage_avatar">Choose your avatar</string>
+    <string name="registrationPage_browse">Browse</string>
+    <string name="registrationPage_register">Register</string>
     <string name="searchProfile_hint">Profile Name</string>
 </resources>
