@@ -13,30 +13,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgColor"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:context=".ui.registration.RegistrationFragment">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/registrationPage_avatarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/registrationPage_browse"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_avatarTitle" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/registrationPage_registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/registrationPage_register"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+            app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_avatarImage" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/registrationPage_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -44,54 +47,55 @@
             android:focusable="true"
             android:hint="@string/loginPage_login"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4" />
+            app:layout_constraintBottom_toTopOf="@+id/registrationPage_passwordTitle"
+            app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName4"
+            android:id="@+id/registrationPage_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:focusable="true"
             android:hint="@string/loginPage_password"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/textView6"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName5"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName5" />
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toTopOf="@+id/registrationPage_confPasswordTitle"
+            app:layout_constraintEnd_toEndOf="@+id/registrationPage_confPassword"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_confPassword" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName5"
+            android:id="@+id/registrationPage_confPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:focusable="true"
             android:hint="@string/registrationPage_confPass"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName6"
+            android:id="@+id/registrationPage_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:focusable="true"
             android:hint="@string/registrationPage_email"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_emailTitle" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/registrationPage_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            android:contentDescription="@string/logo"
+            app:layout_constraintBottom_toTopOf="@+id/registrationPage_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,73 +103,75 @@
             app:srcCompat="@mipmap/ic_logo_foreground" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/registrationPage_avatarImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="8dp"
+            android:contentDescription="@string/registrationPage_avatar"
             android:src="@drawable/ic_no_avatar"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_avatarButton" />
 
         <TextView
-            android:id="@+id/login_page_login2"
+            android:id="@+id/registrationPage_loginTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/loginPage_login"
             android:textColor="@color/textColor"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName3"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3" />
+            app:layout_constraintBottom_toTopOf="@+id/registrationPage_login"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_login" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/registrationPage_passwordTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/loginPage_password"
             android:textColor="@color/textColor"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName4"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4" />
+            app:layout_constraintBottom_toTopOf="@+id/registrationPage_password"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/registrationPage_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/registrationPage_title"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/login_page_login2"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4" />
+            app:layout_constraintBottom_toTopOf="@+id/registrationPage_loginTitle"
+            app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/registrationPage_confPasswordTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/registrationPage_confPass"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName5"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName5" />
+            app:layout_constraintBottom_toTopOf="@+id/registrationPage_confPassword"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_confPassword" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/registrationPage_emailTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/registrationPage_email"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName6"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_email"
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_confPassword" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/registrationPage_avatarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/registrationPage_avatar"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6" />
+            app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_email" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -12,45 +12,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bgColor"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:scrollbars="vertical"
-        android:onClick="hideKeyboard"
         tools:context=".ui.login.LoginFragment">
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/loginPage_loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/loginPage_login"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+            app:layout_constraintEnd_toEndOf="@+id/loginPage_password"
+            app:layout_constraintStart_toStartOf="@+id/loginPage_password"
+            app:layout_constraintTop_toBottomOf="@+id/loginPage_password" />
 
         <Button
-            android:id="@+id/registrationButton"
+            android:id="@+id/loginPage_registrationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/loginPage_register"
-            app:layout_constraintEnd_toEndOf="@+id/textView3"
-            app:layout_constraintStart_toStartOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintEnd_toEndOf="@+id/loginPage_noAccountNote"
+            app:layout_constraintStart_toStartOf="@+id/loginPage_noAccountNote"
+            app:layout_constraintTop_toBottomOf="@+id/loginPage_noAccountNote" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/loginPage_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:focusable="true"
             android:hint="@string/loginPage_password"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/loginPage_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -58,61 +60,62 @@
             android:focusable="true"
             android:hint="@string/loginPage_login"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
-            app:layout_constraintStart_toStartOf="@+id/textView" />
+            app:layout_constraintBottom_toTopOf="@+id/loginPage_passwordTitle"
+            app:layout_constraintStart_toStartOf="@+id/loginPage_passwordTitle" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/loginPage_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/logo"
             android:src="@mipmap/ic_logo_foreground"
-            app:layout_constraintBottom_toTopOf="@+id/login_page_title"
+            app:layout_constraintBottom_toTopOf="@+id/loginPage_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/loginPage_passwordTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/loginPage_password"
             android:textColor="@color/textColor"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2" />
+            app:layout_constraintBottom_toTopOf="@+id/loginPage_password"
+            app:layout_constraintStart_toStartOf="@+id/loginPage_password" />
 
         <TextView
-            android:id="@+id/login_page_title"
+            android:id="@+id/loginPage_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/login_page_title"
             android:textColor="@color/textColor"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/login_page_login"
-            app:layout_constraintEnd_toEndOf="@+id/loginButton"
+            app:layout_constraintBottom_toTopOf="@+id/loginPage_loginTitle"
+            app:layout_constraintEnd_toEndOf="@+id/loginPage_loginButton"
             app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="@+id/loginButton" />
+            app:layout_constraintStart_toStartOf="@+id/loginPage_loginButton" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/loginPage_noAccountNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/loginPage_registerNote"
-            app:layout_constraintEnd_toEndOf="@+id/loginButton"
-            app:layout_constraintStart_toStartOf="@+id/loginButton"
-            app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+            app:layout_constraintEnd_toEndOf="@+id/loginPage_loginButton"
+            app:layout_constraintStart_toStartOf="@+id/loginPage_loginButton"
+            app:layout_constraintTop_toBottomOf="@+id/loginPage_loginButton" />
 
         <TextView
-            android:id="@+id/login_page_login"
+            android:id="@+id/loginPage_loginTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/loginPage_login"
             android:textColor="@color/textColor"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName" />
+            app:layout_constraintBottom_toTopOf="@+id/loginPage_login"
+            app:layout_constraintStart_toStartOf="@+id/loginPage_login" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

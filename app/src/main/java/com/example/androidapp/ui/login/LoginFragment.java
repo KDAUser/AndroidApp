@@ -19,8 +19,6 @@ import androidx.navigation.Navigation;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.profile.ProfileViewModel;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 public class LoginFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
@@ -41,8 +39,8 @@ public class LoginFragment extends Fragment {
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         profileViewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
 
-        EditText edittext = (EditText) root.findViewById(R.id.editTextTextPersonName);
-        EditText edittext2 = (EditText) root.findViewById(R.id.editTextTextPersonName2);
+        EditText edittext = (EditText) root.findViewById(R.id.loginPage_login);
+        EditText edittext2 = (EditText) root.findViewById(R.id.loginPage_password);
         View.OnFocusChangeListener hideSoftKeyboard = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -54,7 +52,7 @@ public class LoginFragment extends Fragment {
         edittext.setOnFocusChangeListener(hideSoftKeyboard);
         edittext2.setOnFocusChangeListener(hideSoftKeyboard);
 
-        Button loginButton = (Button) root.findViewById(R.id.loginButton);
+        Button loginButton = (Button) root.findViewById(R.id.loginPage_loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +62,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        Button registrationButton = (Button) root.findViewById(R.id.registrationButton);
+        Button registrationButton = (Button) root.findViewById(R.id.loginPage_registrationButton);
         registrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

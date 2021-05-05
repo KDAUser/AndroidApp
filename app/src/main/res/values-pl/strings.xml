@@ -24,7 +24,7 @@
     <string name="loginPage_login">Login</string>
     <string name="loginPage_password">Password</string>
     <string name="loginPage_registerNote">You dont have an account?</string>
-    <string name="loginPage_register">Register</string>
+    <string name="loginPage_register">Registration</string>
     <string name="searchLocation_hint">Location Name</string>
     <string name="registrationPage_title">Create new aacount</string>
     <string name="registrationPage_confPass">Confirm password</string>
