@@ -1,15 +1,15 @@
 package com.example.androidapp.ui.searchProfile;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.androidapp.R;
@@ -21,15 +21,30 @@ public class SearchProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         searchProfileViewModel =
-                new ViewModelProvider(this).get(SearchProfileViewModel.class);
+                new ViewModelProvider(requireActivity()).get(SearchProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_search_profile, container, false);
-        final TextView textView = root.findViewById(R.id.text_search_profile);
-        searchProfileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+
+        searchProfileViewModel.createExampleProfilesList();
+        searchProfileViewModel.buildRecyclerView(root.findViewById(R.id.profilesView), root.getContext());
+
+        EditText editText = root.findViewById(R.id.searchProfileField);
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchProfileViewModel.filter(s.toString());
             }
         });
+
         return root;
     }
 }
