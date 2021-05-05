@@ -72,8 +72,6 @@ public class RegistrationFragment extends Fragment {
         avatarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-
-                hideKeyboard(root);
 //                Intent i = new Intent(
 //                        Intent.ACTION_PICK,
 //                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -91,6 +89,8 @@ public class RegistrationFragment extends Fragment {
                 ((AppCompatActivity)getActivity()).getSupportActionBar().show(); //show toolbar
             }
         });
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide(); //hide toolbar
 
         return root;
     }

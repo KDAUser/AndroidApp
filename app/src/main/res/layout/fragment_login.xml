@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/bgColor"
         android:clickable="true"
         android:focusable="true"
@@ -49,7 +49,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:autofillHints="password" />
 
         <EditText
             android:id="@+id/loginPage_login"
@@ -61,7 +62,8 @@
             android:hint="@string/loginPage_login"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/loginPage_passwordTitle"
-            app:layout_constraintStart_toStartOf="@+id/loginPage_passwordTitle" />
+            app:layout_constraintStart_toStartOf="@+id/loginPage_passwordTitle"
+            android:autofillHints="nickname name" />
 
         <ImageView
             android:id="@+id/loginPage_logo"

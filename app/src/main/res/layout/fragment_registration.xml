@@ -9,9 +9,8 @@
     android:focusableInTouchMode="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/bgColor"
         android:clickable="true"
         android:focusable="true"
@@ -49,7 +48,8 @@
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/registrationPage_passwordTitle"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
-            app:layout_constraintStart_toStartOf="@+id/registrationPage_password" />
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
+            android:autofillHints="nickname name" />
 
         <EditText
             android:id="@+id/registrationPage_password"
@@ -62,7 +62,8 @@
             android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/registrationPage_confPasswordTitle"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_confPassword"
-            app:layout_constraintStart_toStartOf="@+id/registrationPage_confPassword" />
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_confPassword"
+            android:autofillHints="password" />
 
         <EditText
             android:id="@+id/registrationPage_confPassword"
@@ -75,7 +76,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:autofillHints="password" />
 
         <EditText
             android:id="@+id/registrationPage_email"
@@ -88,7 +90,8 @@
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
             app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
-            app:layout_constraintTop_toBottomOf="@+id/registrationPage_emailTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_emailTitle"
+            android:autofillHints="email" />
 
         <ImageView
             android:id="@+id/registrationPage_logo"
