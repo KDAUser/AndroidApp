@@ -1,6 +1,6 @@
 package com.example.androidapp.ui.searchLocation;
 
-import android.app.Activity;
+import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,10 +41,10 @@ public class SearchLocationViewModel extends ViewModel {
         mLocationsList.add(new LocationItem("Łódź"));
     }
 
-    public void buildRecyclerView(RecyclerView mLocationsView, Activity activityClass) {
+    public void buildRecyclerView(RecyclerView mLocationsView, Context context) {
         mLocationsView = mLocationsView;
         mLocationsView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(activityClass);
+        mLayoutManager = new LinearLayoutManager(context);
         mAdapter = new SearchLocationAdapter(mLocationsList);
 
         mLocationsView.setLayoutManager(mLayoutManager);
