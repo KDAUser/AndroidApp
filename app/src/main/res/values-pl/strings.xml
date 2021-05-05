@@ -33,4 +33,5 @@
     <string name="registrationPage_browse">Browse</string>
     <string name="registrationPage_register">Register</string>
     <string name="searchProfile_hint">Profile Name</string>
+    <string name="addTip">Add next tip</string>
 </resources>
