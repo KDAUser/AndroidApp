@@ -2,9 +2,10 @@ package com.example.androidapp.ui.registration;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import androidx.navigation.Navigation;
 
 import com.example.androidapp.R;
 import com.example.androidapp.ui.profile.ProfileViewModel;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -31,7 +33,6 @@ public class RegistrationFragment extends Fragment {
     private ProfileViewModel profileViewModel;
     private NavController navController;
 
-    private static final int PICK_IMAGE = 100;
     private ImageView avatarImage;
     private Uri imageUri;
 
@@ -40,9 +41,13 @@ public class RegistrationFragment extends Fragment {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
+    private void startCropImageActivity() {
+        CropImage.activity()
+                .setActivityTitle(getString(R.string.registrationPage_editAvatar))
+                .setCropMenuCropButtonTitle(getString(R.string.registrationPage_cropAvatar))
+                .setAspectRatio(1, 1)
+                .setMinCropResultSize(200,200)
+                .start(getContext(),this);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -72,11 +77,12 @@ public class RegistrationFragment extends Fragment {
         email.setOnFocusChangeListener(hideSoftKeyboard);
 
         avatarImage = (ImageView) root.findViewById(R.id.registrationPage_avatarImage);
+        avatarImage.setVisibility(View.GONE);
         Button avatarButton = (Button) root.findViewById(R.id.registrationPage_avatarButton);
         avatarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+                startCropImageActivity();
             }
         });
 
@@ -98,9 +104,19 @@ public class RegistrationFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            imageUri = data.getData();
-            avatarImage.setImageURI(imageUri);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                imageUri = result.getUri();
+
+                Bitmap in= BitmapFactory.decodeFile(imageUri.getEncodedPath());
+                Bitmap out = Bitmap.createScaledBitmap(in, 200, 200, false);
+                avatarImage.setImageBitmap(out);
+                avatarImage.setVisibility(View.VISIBLE);
+                //Toast.makeText(getActivity(), imageUri.toString(), Toast.LENGTH_SHORT).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
         }
     }
 }
