@@ -35,4 +35,6 @@
     <string name="registrationPage_register">Register</string>
     <string name="searchProfile_hint">Profile Name</string>
     <string name="addTip">Add next tip</string>
+    <string name="comments">Comments</string>
+    <string name="checkPosition">Check Position</string>
 </resources>
