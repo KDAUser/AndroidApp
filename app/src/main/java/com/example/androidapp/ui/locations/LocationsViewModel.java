@@ -100,26 +100,24 @@ public class LocationsViewModel extends ViewModel {
     }
 
     public void addTip(){
-        ArrayList<TipItem> updateList = new ArrayList<>();
-        int i = 4;
         if(stars>1) {
             stars--;
             updateStars(stars);
-            updateList.add(firstTip);
-            for (TipItem item : mTipsList) {
-                if (!areStarsOn[i]) {
-                    updateList.add(item);
-                }
-                i--;
-            }
-            mAdapter.filterList(updateList);
+            updateTipList();
         }
     }
 
-    public void firstTip(){
-        ArrayList<TipItem> firstList = new ArrayList<>();
-        firstList.add(firstTip);
-        mAdapter.filterList(firstList);
+    public void updateTipList(){
+        ArrayList<TipItem> updateList = new ArrayList<>();
+        int i = 4;
+        updateList.add(firstTip);
+        for (TipItem item : mTipsList) {
+            if (!areStarsOn[i]) {
+                updateList.add(item);
+            }
+            i--;
+        }
+        mAdapter.filterList(updateList);
     }
 
     public Boolean[] getAreStarsOn() {

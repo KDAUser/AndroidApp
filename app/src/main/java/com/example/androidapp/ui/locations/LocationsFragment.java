@@ -69,8 +69,9 @@ public class LocationsFragment extends Fragment {
                 locationsViewModel.setStars(locationsViewModel.getAreStarsOn(), starsOn, starsOff);
             }
         });
-        locationsViewModel.firstTip();
+        locationsViewModel.updateTipList();
         locationsViewModel.setStars(locationsViewModel.getAreStarsOn(), starsOn, starsOff);
         return root;
     }
+
 }
