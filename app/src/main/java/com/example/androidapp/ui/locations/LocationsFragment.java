@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.androidapp.R;
 
@@ -20,8 +22,7 @@ public class LocationsFragment extends Fragment {
     private LocationsViewModel locationsViewModel;
     private String[] starsOn = new String[] {"firstStarOn", "secondStarOn", "thirdStarOn", "fourthStarOn", "fifthStarOn"};
     private String[] starsOff = new String[] {"firstStarOff", "secondStarOff", "thirdStarOff", "fourthStarOff", "fifthStarOff"};
-
-
+    private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class LocationsFragment extends Fragment {
         Button commentsButton = (Button) root.findViewById(R.id.commentsButton);
         Button addTipButton = (Button) root.findViewById(R.id.addTipButton);
         Button checkPositionButton = (Button) root.findViewById(R.id.checkPositionButton);
+
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         ArrayList<ImageView> starsOn;
         starsOn = new ArrayList<>();
@@ -69,6 +72,14 @@ public class LocationsFragment extends Fragment {
                 locationsViewModel.setStars(locationsViewModel.getAreStarsOn(), starsOn, starsOff);
             }
         });
+
+        commentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.nav_comments);
+            }
+        });
+
         locationsViewModel.updateTipList();
         locationsViewModel.setStars(locationsViewModel.getAreStarsOn(), starsOn, starsOff);
         return root;
