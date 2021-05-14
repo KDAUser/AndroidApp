@@ -39,4 +39,5 @@
     <string name="comments">Comments</string>
     <string name="checkPosition">Check Position</string>
     <string name="addComment">Dodaj komentarz</string>
+    <string name="acceptComment">Publish</string>
 </resources>

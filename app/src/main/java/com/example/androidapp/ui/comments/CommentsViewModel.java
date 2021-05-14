@@ -15,6 +15,7 @@ public class CommentsViewModel extends ViewModel {
     private RecyclerView mCommentsView;
     private CommentAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Boolean wasExampleListCreated = false;
 
     public void showComments() {
         ArrayList<CommentItem> commentsList = new ArrayList<>();
@@ -25,10 +26,17 @@ public class CommentsViewModel extends ViewModel {
     }
 
     public void createExampleCommentsList() {
-        mCommentsList = new ArrayList<>();
-        mCommentsList.add(new CommentItem("Jake","Nice location", Calendar.getInstance().getTime().toString()));
-        mCommentsList.add(new CommentItem("Linda","I like this location", Calendar.getInstance().getTime().toString()));
-        mCommentsList.add(new CommentItem("Conor","Man, this location is pretty scary", Calendar.getInstance().getTime().toString()));
+        if(!wasExampleListCreated) {
+            mCommentsList = new ArrayList<>();
+            mCommentsList.add(new CommentItem("Jake", "Nice location", Calendar.getInstance().getTime().toString()));
+            mCommentsList.add(new CommentItem("Linda", "I like this location", Calendar.getInstance().getTime().toString()));
+            mCommentsList.add(new CommentItem("Conor", "Man, this location is pretty scary", Calendar.getInstance().getTime().toString()));
+            wasExampleListCreated = true;
+        }
+    }
+
+    public void addComment(CommentItem newItem){
+        mCommentsList.add(newItem);
     }
 
     public void buildRecyclerView(RecyclerView mCommentsView, Context context) {
