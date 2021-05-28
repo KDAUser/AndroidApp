@@ -39,4 +39,5 @@
     <string name="checkPosition">Check Position</string>
     <string name="addComment">Add comment</string>
     <string name="acceptComment">Publish</string>
+    <string name="trophies">Trophies</string>
 </resources>

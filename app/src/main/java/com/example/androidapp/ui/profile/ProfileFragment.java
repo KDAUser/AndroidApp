@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,13 +24,18 @@ public class ProfileFragment extends Fragment {
         profileViewModel =
                 new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView textView = root.findViewById(R.id.text_profile);
+        final TextView description = root.findViewById(R.id.profilePage_description);
+        final ImageView profileImage = root.findViewById(R.id.profilePage_image);
         profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+                description.setText(s);
             }
         });
+        profileImage.setImageResource(R.drawable.ic_launcher_foreground);
+        profileViewModel.createExampleItemList();
+        profileViewModel.buildRecyclerView(root.findViewById(R.id.trophiesView),root.getContext());
+        profileViewModel.updateTrophiesList();
         return root;
     }
 }
