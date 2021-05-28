@@ -24,6 +24,10 @@ public class ProfileViewModel extends ViewModel {
         isUser = true;
     }
 
+    public void logout() {
+        isUser = false;
+    }
+
     public LiveData<String> getText() {
         return mText;
     }

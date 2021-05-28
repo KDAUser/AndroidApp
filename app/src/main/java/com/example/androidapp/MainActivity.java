@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.androidapp.ui.profile.ProfileViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private static final String TAG = "MainActivity";
+    private ProfileViewModel profileViewModel;
 
     public void setupNavigationMenu(){
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -40,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_search_profile,
                 R.id.nav_search_location,
                 R.id.nav_login,
-                R.id.nav_registration)
+                R.id.nav_registration,
+                R.id.nav_logout_profile)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -62,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
         setupNavigationMenu();
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES);
 

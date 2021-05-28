@@ -58,4 +58,10 @@
         android:label=""
         android:name="com.example.androidapp.ui.comments.CommentsFragment"
         tools:layout="@layout/fragment_location_comments" />
+
+    <fragment
+        android:id="@+id/nav_logout_profile"
+        android:label=""
+        android:name="com.example.androidapp.ui.logout.LogoutFragment"
+        tools:layout="@layout/fragment_logout" />
 </navigation>
