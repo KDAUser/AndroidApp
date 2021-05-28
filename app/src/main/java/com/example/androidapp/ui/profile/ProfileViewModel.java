@@ -33,6 +33,9 @@ public class ProfileViewModel extends ViewModel {
     public void setUser() {
         isUser = true;
     }
+    public void clearUser() {
+        isUser = false;
+    }
 
     public void logout() {
         isUser = false;
