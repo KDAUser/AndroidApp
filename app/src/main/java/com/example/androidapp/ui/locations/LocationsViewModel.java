@@ -1,6 +1,9 @@
 package com.example.androidapp.ui.locations;
 
+import android.app.Application;
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -122,5 +125,11 @@ public class LocationsViewModel extends ViewModel {
 
     public Boolean[] getAreStarsOn() {
         return areStarsOn;
+    }
+
+    public String getCurrentLocation(Location location){
+        String longitude = "Longitude: " + location.getLongitude();
+        String latitude = "Latitude: " + location.getLatitude();
+        return longitude + ", " + latitude;
     }
 }
