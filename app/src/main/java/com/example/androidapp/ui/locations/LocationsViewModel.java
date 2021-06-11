@@ -21,6 +21,9 @@ public class LocationsViewModel extends ViewModel {
     private RecyclerView mTipsView;
     private RecyclerView.LayoutManager mLayoutManager;
     private LocationTipsAdapter mAdapter;
+    private int mLastLocationId;
+    private JFILocation mLocation;
+
     private int stars = 5;
 
     public void setStars (Boolean[] starStatus, ArrayList<ImageView> starsON, ArrayList<ImageView> starsOFF) {
@@ -105,6 +108,7 @@ public class LocationsViewModel extends ViewModel {
     public void addTip(){
         if(stars>1) {
             stars--;
+            mLocation.setNumberOfStars(stars);
             updateStars(stars);
             updateTipList();
         }
@@ -120,6 +124,7 @@ public class LocationsViewModel extends ViewModel {
             }
             i--;
         }
+        mLocation.setLocationTips(updateList);
         mAdapter.filterList(updateList);
     }
 
@@ -131,5 +136,24 @@ public class LocationsViewModel extends ViewModel {
         String longitude = "Longitude: " + location.getLongitude();
         String latitude = "Latitude: " + location.getLatitude();
         return longitude + ", " + latitude;
+    }
+
+    public void setmLastLocationId(int mLastLocationId) {
+        this.mLastLocationId = mLastLocationId;
+    }
+
+    public int getmLastLocationId() {
+        return mLastLocationId;
+    }
+
+    public JFILocation getmLocation() {
+        return mLocation;
+    }
+
+    public void setmLocation() {
+        createExampleItemList();
+        JFILocation jfiLocation = new JFILocation(1, false, "Example location", 5, mTipsList);
+        updateStars(jfiLocation.getNumberOfStars());
+        this.mLocation = jfiLocation;
     }
 }

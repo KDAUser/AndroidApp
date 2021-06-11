@@ -15,12 +15,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.androidapp.R;
+import com.example.androidapp.ui.locations.LocationsViewModel;
 import com.example.androidapp.ui.profile.ProfileViewModel;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private ProfileViewModel profileViewModel;
+    private LocationsViewModel locationsViewModel;
     private NavController navController;
     private Boolean isUser = false;
 
@@ -30,6 +32,13 @@ public class HomeFragment extends Fragment {
         if (!profileViewModel.isUser()) {
             //tu przejscie do fragmentu login
             navController.navigate(R.id.nav_login);
+        }
+    }
+
+    public void checkLastLocation() {
+        locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
+        if (locationsViewModel.getmLastLocationId()!=0) {
+            navController.navigate(R.id.nav_locations);
         }
     }
 
@@ -47,6 +56,7 @@ public class HomeFragment extends Fragment {
             }
         });
         checkUser();
+
         return root;
     }
 }

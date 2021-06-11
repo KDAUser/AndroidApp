@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,11 +33,7 @@ public class LocationsFragment extends Fragment {
     private NavController navController;
     private LocationManager locationManager;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        locationsViewModel =
-                new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_locations, container, false);
+    private void prepareLocationView(View root, JFILocation location) {
         ImageView firstStarOn = (ImageView) root.findViewById(R.id.firstStarOn);
         ImageView secondStarOn = (ImageView) root.findViewById(R.id.secondStarOn);
         ImageView thirdStarOn = (ImageView) root.findViewById(R.id.thirdStarOn);
@@ -51,6 +48,9 @@ public class LocationsFragment extends Fragment {
         Button commentsButton = (Button) root.findViewById(R.id.commentsButton);
         Button addTipButton = (Button) root.findViewById(R.id.addTipButton);
         Button checkPositionButton = (Button) root.findViewById(R.id.checkPositionButton);
+
+        TextView locationName = (TextView) root.findViewById(R.id.locationName);
+        locationName.setText(location.getLocationName());
 
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         locationManager = (LocationManager) root.getContext().getSystemService(Context.LOCATION_SERVICE);
@@ -71,7 +71,6 @@ public class LocationsFragment extends Fragment {
         starsOff.add(fourthStarOff);
         starsOff.add(fifthStarOff);
 
-        locationsViewModel.createExampleItemList();
         locationsViewModel.buildRecyclerView(root.findViewById(R.id.tipsView), root.getContext());
 
         addTipButton.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +107,16 @@ public class LocationsFragment extends Fragment {
 
         locationsViewModel.updateTipList();
         locationsViewModel.setStars(locationsViewModel.getAreStarsOn(), starsOn, starsOff);
-        return root;
     }
 
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        locationsViewModel =
+                new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_locations, container, false);
+        locationsViewModel.setmLocation();
+        JFILocation jfiLocation = locationsViewModel.getmLocation();
+        prepareLocationView(root, jfiLocation);
+        return root;
+    }
 }
