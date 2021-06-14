@@ -27,36 +27,25 @@ public class HomeFragment extends Fragment {
     private Boolean isUser = false;
 
 
-    public void checkUser() {
+    public void navigateFromHome() {
         profileViewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
+        locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
         if (!profileViewModel.isUser()) {
             //tu przejscie do fragmentu login
             navController.navigate(R.id.nav_login);
-        }
-    }
-
-    public void checkLastLocation() {
-        locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
-        if (locationsViewModel.getmLastLocationId()!=0) {
+        } else if (locationsViewModel.getmLastLocationId()!=0) {
             navController.navigate(R.id.nav_locations);
+        } else {
+            navController.navigate(R.id.nav_search_location);
         }
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        checkUser();
-
+        navigateFromHome();
         return root;
     }
 }

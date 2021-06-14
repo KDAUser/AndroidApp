@@ -22,16 +22,9 @@ public class AddLocationsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        addLocationsViewModel =
-                new ViewModelProvider(this).get(AddLocationsViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_add_locations, container, false);
-        final TextView textView = root.findViewById(R.id.text_add_locations);
-        addLocationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 }

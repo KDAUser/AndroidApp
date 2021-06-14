@@ -16,15 +16,12 @@ import java.util.ArrayList;
 public class LocationsViewModel extends ViewModel {
 
     private Boolean[] areStarsOn = new Boolean[] {true, true, true, true, true};
-    private ArrayList<TipItem> mTipsList;
     private TipItem firstTip = new TipItem("Tip 1", "Go straight", null);
     private RecyclerView mTipsView;
     private RecyclerView.LayoutManager mLayoutManager;
     private LocationTipsAdapter mAdapter;
     private int mLastLocationId;
-    private JFILocation mLocation;
-
-    private int stars = 5;
+    private JFILocation mLocation = new JFILocation(1, false, "Example location", 5, null);
 
     public void setStars (Boolean[] starStatus, ArrayList<ImageView> starsON, ArrayList<ImageView> starsOFF) {
         int i = 0;
@@ -49,18 +46,19 @@ public class LocationsViewModel extends ViewModel {
     }
 
     public void createExampleItemList(){
-        mTipsList = new ArrayList<>();
-        mTipsList.add(new TipItem("Tip 2", "Turn left", null));
-        mTipsList.add(new TipItem("Tip 3", "Turn right", null));
-        mTipsList.add(new TipItem("Tip 4", "Turn back", null));
-        mTipsList.add(new TipItem("Tip 5", "Look around", null));
+        ArrayList<TipItem> tipsList = new ArrayList<>();
+        tipsList.add(new TipItem("Tip 2", "Turn left", null));
+        tipsList.add(new TipItem("Tip 3", "Turn right", null));
+        tipsList.add(new TipItem("Tip 4", "Turn back", null));
+        tipsList.add(new TipItem("Tip 5", "Look around", null));
+        mLocation.setLocationTips(tipsList);
     }
 
     public void buildRecyclerView(RecyclerView mTipsView, Context context) {
         mTipsView = mTipsView;
         mTipsView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
-        mAdapter = new LocationTipsAdapter(mTipsList);
+        mAdapter = new LocationTipsAdapter(mLocation.getLocationTips());
         mTipsView.setLayoutManager(mLayoutManager);
         mTipsView.setAdapter(mAdapter);
     }
@@ -106,10 +104,9 @@ public class LocationsViewModel extends ViewModel {
     }
 
     public void addTip(){
-        if(stars>1) {
-            stars--;
-            mLocation.setNumberOfStars(stars);
-            updateStars(stars);
+        if(mLocation.getNumberOfStars()>1) {
+            mLocation.setNumberOfStars(mLocation.getNumberOfStars()-1);
+            updateStars(mLocation.getNumberOfStars());
             updateTipList();
         }
     }
@@ -118,13 +115,12 @@ public class LocationsViewModel extends ViewModel {
         ArrayList<TipItem> updateList = new ArrayList<>();
         int i = 4;
         updateList.add(firstTip);
-        for (TipItem item : mTipsList) {
+        for (TipItem item : mLocation.getLocationTips()) {
             if (!areStarsOn[i]) {
                 updateList.add(item);
             }
             i--;
         }
-        mLocation.setLocationTips(updateList);
         mAdapter.filterList(updateList);
     }
 
@@ -150,10 +146,11 @@ public class LocationsViewModel extends ViewModel {
         return mLocation;
     }
 
-    public void setmLocation() {
-        createExampleItemList();
-        JFILocation jfiLocation = new JFILocation(1, false, "Example location", 5, mTipsList);
-        updateStars(jfiLocation.getNumberOfStars());
-        this.mLocation = jfiLocation;
+    public void getLocationFromDB(){
+
+    }
+
+    public void sendLocationToDB(){
+
     }
 }

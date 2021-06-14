@@ -114,7 +114,7 @@ public class LocationsFragment extends Fragment {
         locationsViewModel =
                 new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_locations, container, false);
-        locationsViewModel.setmLocation();
+        locationsViewModel.createExampleItemList();
         JFILocation jfiLocation = locationsViewModel.getmLocation();
         prepareLocationView(root, jfiLocation);
         return root;

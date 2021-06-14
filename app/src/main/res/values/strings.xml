@@ -40,4 +40,16 @@
     <string name="addComment">Add comment</string>
     <string name="acceptComment">Publish</string>
     <string name="trophies">Trophies</string>
+    <string name="change_avatar">Change your avatar</string>
+    <string name="save_profile_description">Save profile description</string>
+    <string name="save_new_password">Save new password</string>
+    <string name="location_name">Location Name</string>
+    <string name="first_tip">First Tip</string>
+    <string name="second_tip">Second Tip</string>
+    <string name="third_tip">Third Tip</string>
+    <string name="fourth_tip">Fourth Tip</string>
+    <string name="fifth_tip">Fifth Tip</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="save_location">Save location</string>
 </resources>
