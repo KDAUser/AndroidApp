@@ -8,6 +8,8 @@ public class JFILocation {
     private String locationName;
     private int numberOfStars;
     private ArrayList<TipItem> locationTips;
+    private double longitude;
+    private double latitude;
 
     public JFILocation(int locationId, boolean isSolved, String locationName, int numberOfStars, ArrayList<TipItem> locationTips) {
         this.locationId = locationId;
@@ -15,6 +17,8 @@ public class JFILocation {
         this.locationName = locationName;
         this.numberOfStars = numberOfStars;
         this.locationTips = locationTips;
+        this.longitude = 0.0;
+        this.latitude = 0.0;
     }
 
     public String getLocationName() {
@@ -55,5 +59,21 @@ public class JFILocation {
 
     public void setLocationId(int locationId) {
         this.locationId = locationId;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }

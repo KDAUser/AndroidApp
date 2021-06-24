@@ -13,6 +13,15 @@
         android:layout_height="match_parent"
         tools:context=".ui.addLocations.AddLocationsFragment">
 
+        <TextView
+            android:id="@+id/addLocationPage_locationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/location_name"
+            app:layout_constraintStart_toStartOf="@+id/addLocationName"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/addLocationName"
             android:layout_width="wrap_content"
@@ -26,112 +35,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addLocationPage_locationName" />
 
-        <EditText
-            android:id="@+id/firstTipText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:focusable="true"
-            android:hint="@string/location_name"
-            android:inputType="textLongMessage"
-            app:layout_constraintEnd_toStartOf="@+id/button"
-            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
-            app:layout_constraintTop_toBottomOf="@+id/textFirstTip" />
-
-        <EditText
-            android:id="@+id/secondTipText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:focusable="true"
-            android:hint="@string/location_name"
-            android:inputType="textLongMessage"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
-            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
-            app:layout_constraintTop_toBottomOf="@+id/textSecondTip" />
-
-        <EditText
-            android:id="@+id/thirdTipText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:focusable="true"
-            android:hint="@string/location_name"
-            android:inputType="textLongMessage"
-            app:layout_constraintEnd_toStartOf="@+id/button4"
-            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
-            app:layout_constraintTop_toBottomOf="@+id/textThirdTip" />
-
-        <TextView
-            android:id="@+id/textFifthTip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/fifth_tip"
-            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
-            app:layout_constraintTop_toBottomOf="@+id/fourthTipText" />
-
-        <EditText
-            android:id="@+id/fifthTipText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:focusable="true"
-            android:hint="@string/location_name"
-            android:inputType="textLongMessage"
-            app:layout_constraintEnd_toStartOf="@+id/button6"
-            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
-            app:layout_constraintTop_toBottomOf="@+id/textFifthTip" />
-
-        <TextView
-            android:id="@+id/textThirdTip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/third_tip"
-            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
-            app:layout_constraintTop_toBottomOf="@+id/secondTipText" />
-
-        <TextView
-            android:id="@+id/textFourthTip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/fourth_tip"
-            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
-            app:layout_constraintTop_toBottomOf="@+id/thirdTipText" />
-
-        <EditText
-            android:id="@+id/fourthTipText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:focusable="true"
-            android:hint="@string/location_name"
-            android:inputType="textLongMessage"
-            app:layout_constraintEnd_toStartOf="@+id/button5"
-            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
-            app:layout_constraintTop_toBottomOf="@+id/textFourthTip" />
-
-        <TextView
-            android:id="@+id/addLocationPage_locationName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/location_name"
-            app:layout_constraintStart_toStartOf="@+id/addLocationName"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/textFirstTip"
             android:layout_width="wrap_content"
@@ -142,6 +45,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addLocationName" />
 
+        <EditText
+            android:id="@+id/firstTipText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/tip_text"
+            android:inputType="textLongMessage"
+            app:layout_constraintEnd_toStartOf="@+id/firstTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
+            app:layout_constraintTop_toBottomOf="@+id/textFirstTip" />
+
         <TextView
             android:id="@+id/textSecondTip"
             android:layout_width="wrap_content"
@@ -149,66 +66,105 @@
             android:layout_marginTop="8dp"
             android:text="@string/second_tip"
             app:layout_constraintStart_toStartOf="@+id/textFirstTip"
-            app:layout_constraintTop_toBottomOf="@+id/firstTipText" />
+            app:layout_constraintTop_toBottomOf="@+id/firstTipImage" />
 
-        <Button
-            android:id="@+id/button"
+        <EditText
+            android:id="@+id/secondTipText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/tip_text"
+            android:inputType="textLongMessage"
+            app:layout_constraintEnd_toStartOf="@+id/secondTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
+            app:layout_constraintTop_toBottomOf="@+id/textSecondTip" />
+
+        <TextView
+            android:id="@+id/textThirdTip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/registrationPage_browse"
-            app:layout_constraintBaseline_toBaselineOf="@+id/firstTipText"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginTop="8dp"
+            android:text="@string/third_tip"
+            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
+            app:layout_constraintTop_toBottomOf="@+id/secondTipImage" />
 
-        <Button
-            android:id="@+id/button3"
+        <EditText
+            android:id="@+id/thirdTipText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/tip_text"
+            android:inputType="textLongMessage"
+            app:layout_constraintEnd_toStartOf="@+id/thirdTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
+            app:layout_constraintTop_toBottomOf="@+id/textThirdTip" />
+
+        <TextView
+            android:id="@+id/textFourthTip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/registrationPage_browse"
-            app:layout_constraintBaseline_toBaselineOf="@+id/secondTipText"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginTop="8dp"
+            android:text="@string/fourth_tip"
+            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
+            app:layout_constraintTop_toBottomOf="@+id/thirdTipImage" />
 
-        <Button
-            android:id="@+id/button4"
+        <EditText
+            android:id="@+id/fourthTipText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/tip_text"
+            android:inputType="textLongMessage"
+            app:layout_constraintEnd_toStartOf="@+id/fourthTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
+            app:layout_constraintTop_toBottomOf="@+id/textFourthTip" />
+
+        <TextView
+            android:id="@+id/textFifthTip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/registrationPage_browse"
-            app:layout_constraintBaseline_toBaselineOf="@+id/thirdTipText"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginTop="8dp"
+            android:text="@string/fifth_tip"
+            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
+            app:layout_constraintTop_toBottomOf="@+id/fourthTipImage" />
 
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/fifthTipText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/registrationPage_browse"
-            app:layout_constraintBaseline_toBaselineOf="@+id/fourthTipText"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/registrationPage_browse"
-            app:layout_constraintBaseline_toBaselineOf="@+id/fifthTipText"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/tip_text"
+            android:inputType="textLongMessage"
+            app:layout_constraintEnd_toStartOf="@+id/fifthTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/textFirstTip"
+            app:layout_constraintTop_toBottomOf="@+id/textFifthTip" />
 
         <EditText
             android:id="@+id/editTextLongitude"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="@string/longitude"
-            android:inputType="number|numberDecimal"
+            android:inputType="numberDecimal"
+            android:digits="0123456789."
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fifthTipText" />
+            app:layout_constraintTop_toBottomOf="@+id/fifthTipImage" />
 
         <EditText
             android:id="@+id/editTextLatitude"
@@ -218,18 +174,57 @@
             android:layout_marginEnd="16dp"
             android:ems="10"
             android:hint="@string/latitude"
-            android:inputType="number|numberDecimal"
+            android:inputType="numberDecimal"
+            android:digits="0123456789."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toTopOf="@+id/editTextLongitude" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
+        <Button
+            android:id="@+id/firstTipBrowseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            android:layout_marginEnd="16dp"
+            android:text="@string/registrationPage_browse"
+            app:layout_constraintBaseline_toBaselineOf="@+id/firstTipText"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/secondTipBrowseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/registrationPage_browse"
+            app:layout_constraintBaseline_toBaselineOf="@+id/secondTipText"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/thirdTipBrowseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/registrationPage_browse"
+            app:layout_constraintBaseline_toBaselineOf="@+id/thirdTipText"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/fourthTipBrowseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/registrationPage_browse"
+            app:layout_constraintBaseline_toBaselineOf="@+id/fourthTipText"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/fifthTipBrowseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/registrationPage_browse"
+            app:layout_constraintBaseline_toBaselineOf="@+id/fifthTipText"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/saveWrittenValuesButton"
@@ -243,7 +238,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextLongitude" />
 
         <Button
-            android:id="@+id/saveActualValues"
+            android:id="@+id/saveActualValuesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -261,6 +256,63 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/saveWrittenValuesButton" />
+
+        <ImageView
+            android:id="@+id/firstTipImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/firstTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/firstTipText"
+            app:layout_constraintTop_toBottomOf="@+id/firstTipText"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/secondTipImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/firstTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/firstTipText"
+            app:layout_constraintTop_toBottomOf="@+id/secondTipText"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/thirdTipImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/firstTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/firstTipText"
+            app:layout_constraintTop_toBottomOf="@+id/thirdTipText"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/fourthTipImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/firstTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/firstTipText"
+            app:layout_constraintTop_toBottomOf="@+id/fourthTipText"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/fifthTipImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/firstTipBrowseButton"
+            app:layout_constraintStart_toStartOf="@+id/firstTipText"
+            app:layout_constraintTop_toBottomOf="@+id/fifthTipText"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
