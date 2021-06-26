@@ -53,4 +53,14 @@
     <string name="latitude">Latitude</string>
     <string name="save_location">Save location</string>
     <string name="tip_text">Tip Text</string>
+    <string name="registerError_loginLength">Username must have from 3 to 20 characters.</string>
+    <string name="registerError_loginSyntax">Use only letters and numbers.</string>
+    <string name="registerError_loginOccupied">User with that name already exists.</string>
+    <string name="registerError_passwordLength">Password must have from 8 to 30 characters.</string>
+    <string name="registerError_passwordsNotMatch">Passwords are not the same.</string>
+    <string name="registerError_emailSyntax">Put correct e-mail.</string>
+    <string name="registerError_emailOccupied">Account with that email already exists.</string>
+    <string name="registerError_imageNotLoad">Error druing uploading profile image.</string>
+    <string name="loginError_noCredential">Login or/and password not given.</string>
+    <string name="loginError_wrongCredential">Login or/and password not match.</string>
 </resources>

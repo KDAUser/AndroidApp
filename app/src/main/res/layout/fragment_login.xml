@@ -26,7 +26,7 @@
             android:text="@string/loginPage_login"
             app:layout_constraintEnd_toEndOf="@+id/loginPage_password"
             app:layout_constraintStart_toStartOf="@+id/loginPage_password"
-            app:layout_constraintTop_toBottomOf="@+id/loginPage_password" />
+            app:layout_constraintTop_toBottomOf="@+id/loginError_wrongCredential" />
 
         <Button
             android:id="@+id/loginPage_registrationButton"
@@ -118,6 +118,30 @@
             android:textColor="@color/textColor"
             app:layout_constraintBottom_toTopOf="@+id/loginPage_login"
             app:layout_constraintStart_toStartOf="@+id/loginPage_login" />
+
+        <TextView
+            android:id="@+id/loginError_noCredential"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/loginError_noCredential"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/loginPage_password"
+            app:layout_constraintStart_toStartOf="@+id/loginPage_password"
+            app:layout_constraintTop_toBottomOf="@+id/loginPage_password" />
+
+        <TextView
+            android:id="@+id/loginError_wrongCredential"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/loginError_wrongCredential"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/loginPage_password"
+            app:layout_constraintStart_toStartOf="@+id/loginPage_password"
+            app:layout_constraintTop_toBottomOf="@+id/loginError_noCredential" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

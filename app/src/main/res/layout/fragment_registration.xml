@@ -35,40 +35,41 @@
             android:text="@string/registrationPage_register"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
             app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
-            app:layout_constraintTop_toBottomOf="@+id/registrationPage_avatarImage" />
+            app:layout_constraintTop_toBottomOf="@+id/registerError_imageNotLoad" />
 
         <EditText
             android:id="@+id/registrationPage_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:autofillHints="nickname name"
             android:ems="10"
             android:focusable="true"
             android:hint="@string/loginPage_login"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/registrationPage_passwordTitle"
+            app:layout_constraintBottom_toTopOf="@+id/registerError_loginLength"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
-            app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
-            android:autofillHints="nickname name" />
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password" />
 
         <EditText
             android:id="@+id/registrationPage_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:autofillHints="password"
             android:ems="10"
             android:focusable="true"
             android:hint="@string/loginPage_password"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/registrationPage_confPasswordTitle"
+            app:layout_constraintBottom_toTopOf="@+id/registerError_passwordLength"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_confPassword"
-            app:layout_constraintStart_toStartOf="@+id/registrationPage_confPassword"
-            android:autofillHints="password" />
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_confPassword" />
 
         <EditText
             android:id="@+id/registrationPage_confPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autofillHints="password"
             android:ems="10"
             android:focusable="true"
             android:hint="@string/registrationPage_confPass"
@@ -76,22 +77,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:autofillHints="password" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/registrationPage_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:autofillHints="email"
             android:ems="10"
             android:focusable="true"
             android:hint="@string/registrationPage_email"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
             app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
-            app:layout_constraintTop_toBottomOf="@+id/registrationPage_emailTitle"
-            android:autofillHints="email" />
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_emailTitle" />
 
         <ImageView
             android:id="@+id/registrationPage_logo"
@@ -143,6 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/registrationPage_title"
+            android:textColor="@color/textColor"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/registrationPage_loginTitle"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
@@ -154,6 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/registrationPage_confPass"
+            android:textColor="@color/textColor"
             app:layout_constraintBottom_toTopOf="@+id/registrationPage_confPassword"
             app:layout_constraintStart_toStartOf="@+id/registrationPage_confPassword" />
 
@@ -163,8 +165,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/registrationPage_email"
+            android:textColor="@color/textColor"
             app:layout_constraintStart_toStartOf="@+id/registrationPage_email"
-            app:layout_constraintTop_toBottomOf="@+id/registrationPage_confPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/registerError_passwordsNotMatch" />
 
         <TextView
             android:id="@+id/registrationPage_avatarTitle"
@@ -172,9 +175,100 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/registrationPage_avatar"
+            android:textColor="@color/textColor"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
+            app:layout_constraintHorizontal_bias="0.415"
             app:layout_constraintStart_toStartOf="@+id/registrationPage_password"
+            app:layout_constraintTop_toBottomOf="@+id/registerError_emailOccupied" />
+
+        <TextView
+            android:id="@+id/registerError_loginLength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/registerError_loginLength"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/registerError_loginSyntax"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_login" />
+
+        <TextView
+            android:id="@+id/registerError_loginSyntax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/registerError_loginSyntax"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/registerError_loginOccupied"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_login" />
+
+        <TextView
+            android:id="@+id/registerError_loginOccupied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/registerError_loginOccupied"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/registrationPage_passwordTitle"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_login" />
+
+        <TextView
+            android:id="@+id/registerError_passwordLength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/registerError_passwordLength"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/registrationPage_confPasswordTitle"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_password" />
+
+        <TextView
+            android:id="@+id/registerError_passwordsNotMatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_passwordsNotMatch"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_confPassword"
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_confPassword" />
+
+        <TextView
+            android:id="@+id/registerError_emailSyntax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_emailSyntax"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_email"
             app:layout_constraintTop_toBottomOf="@+id/registrationPage_email" />
+
+        <TextView
+            android:id="@+id/registerError_emailOccupied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_emailOccupied"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_email"
+            app:layout_constraintTop_toBottomOf="@+id/registerError_emailSyntax" />
+
+        <TextView
+            android:id="@+id/registerError_imageNotLoad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_imageNotLoad"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/registrationPage_avatarImage"
+            app:layout_constraintStart_toStartOf="@+id/registrationPage_avatarImage"
+            app:layout_constraintTop_toBottomOf="@+id/registrationPage_avatarImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

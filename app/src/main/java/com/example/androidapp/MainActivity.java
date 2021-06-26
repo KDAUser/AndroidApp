@@ -1,6 +1,7 @@
 package com.example.androidapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -72,6 +73,18 @@ public class MainActivity extends AppCompatActivity {
         });
         setupNavigationMenu();
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES);
+
+        // Storing data into SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("JustFindIt", MODE_PRIVATE);
+        // Creating an Editor object to edit(write to the file)
+        //SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        // Storing the key and its value as the data fetched from edittext
+        //myEdit.putString("name", name.getText().toString());
+        //myEdit.putInt("age", Integer.parseInt(age.getText().toString()));
+        // Once the changes have been made,
+        // we need to commit to apply those changes made,
+        // otherwise, it will throw an error
+        //myEdit.commit();
 
         Log.d(TAG, "onCreate: out");
     }
