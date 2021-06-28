@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ProfileViewModel extends ViewModel {
 
-    private boolean isUser;
+//    private boolean isUser;
     private String profileDescription;
     private ImageView Avatar;
     private ArrayList<TrophyItem> mTrophiesList;
@@ -22,20 +22,20 @@ public class ProfileViewModel extends ViewModel {
     private ProfileTrophiesAdapter mAdapter;
     private int userId;
 
-    public Boolean isUser() {
-        return isUser;
-    }
-
-    public ProfileViewModel() {
-        isUser = false;
-    }
-
-    public void setUser() {
-        isUser = true;
-    }
-    public void logout() {
-        isUser = false;
-    }
+//    public Boolean isUser() {
+//        return isUser;
+//    }
+//
+//    public ProfileViewModel() {
+//        isUser = false;
+//    }
+//
+//    public void setUser() {
+//        isUser = true;
+//    }
+//    public void logout() {
+//        isUser = false;
+//    }
 
     public ImageView getAvatar() {
         return Avatar;

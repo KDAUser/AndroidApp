@@ -63,4 +63,6 @@
     <string name="registerError_imageNotLoad">Error druing uploading profile image.</string>
     <string name="loginError_noCredential">Login or/and password not given.</string>
     <string name="loginError_wrongCredential">Login or/and password not match.</string>
+    <string name="navHeader_noUser_login">User name</string>
+    <string name="navHeader_noUser_email">email</string>
 </resources>
