@@ -122,7 +122,7 @@ public class RegistrationFragment extends Fragment {
                 class ConnectMySQL extends AsyncTask<String, Void, String> {
                     ProgressDialog pDialog;
                     List<NameValuePair> params;
-                    String link = "http://192.168.0.3/TM/register.php";
+                    String link = "http://185.237.157.193/TM/register.php";
                     JSONParser jsonParser;
                     JSONObject feedback;
 

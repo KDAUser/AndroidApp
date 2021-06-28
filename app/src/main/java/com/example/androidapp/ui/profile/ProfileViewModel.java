@@ -1,6 +1,7 @@
 package com.example.androidapp.ui.profile;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,11 +14,13 @@ import java.util.ArrayList;
 public class ProfileViewModel extends ViewModel {
 
     private boolean isUser;
-    private MutableLiveData<String> mText;
+    private String profileDescription;
+    private ImageView Avatar;
     private ArrayList<TrophyItem> mTrophiesList;
     private RecyclerView mTrophiesView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ProfileTrophiesAdapter mAdapter;
+    private int userId;
 
     public Boolean isUser() {
         return isUser;
@@ -25,32 +28,46 @@ public class ProfileViewModel extends ViewModel {
 
     public ProfileViewModel() {
         isUser = false;
-
-        mText = new MutableLiveData<>();
-        mText.setValue("Here is the profile description");
     }
 
     public void setUser() {
         isUser = true;
     }
-    public void clearUser() {
-        isUser = false;
-    }
-
     public void logout() {
         isUser = false;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public ImageView getAvatar() {
+        return Avatar;
     }
 
-    public void createExampleItemList(){
+    private void setProfileDescription() {
+        //TODO: pobranie opisu użytkownika po userId
+        profileDescription = "Here is the profile description";
+    }
+
+    private void setAvatar() {
+        //TODO: pobranie zdjęcia awataru dla danego userId
+        Avatar = null;
+    }
+
+    private void setmTrophiesList() {
+        //TODO: pobranie nazw rozwiązanych lokalizacji i ich ilości gwiazdek dla danego userId
         mTrophiesList = new ArrayList<>();
         mTrophiesList.add(new TrophyItem("First location", 4));
         mTrophiesList.add(new TrophyItem("Second location", 2));
         mTrophiesList.add(new TrophyItem("Third location", 3));
         mTrophiesList.add(new TrophyItem("Fourth location", 5));
+    }
+
+    public String getProfileDescription() {
+        return profileDescription;
+    }
+
+    public void setView() {
+        setmTrophiesList();
+        setProfileDescription();
+        setAvatar();
     }
 
     public void buildRecyclerView(RecyclerView mTrophiesView, Context context) {

@@ -101,7 +101,7 @@ public class LocationsFragment extends Fragment {
                     // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
-                Toast.makeText(root.getContext(), locationsViewModel.getCurrentLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(root.getContext(), locationsViewModel.checkLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -117,6 +117,7 @@ public class LocationsFragment extends Fragment {
         locationsViewModel.createExampleItemList();
         JFILocation jfiLocation = locationsViewModel.getmLocation();
         prepareLocationView(root, jfiLocation);
+        locationsViewModel.getLocationCoordinates();
         return root;
     }
 }

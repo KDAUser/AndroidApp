@@ -23,6 +23,11 @@ public class LocationsViewModel extends ViewModel {
     private int mLastLocationId;
     private JFILocation mLocation = new JFILocation(1, false, "Example location", 5, null);
 
+    public void getLocationCoordinates() {
+        mLocation.setLatitude(52.2318);
+        mLocation.setLongitude(21.0060);
+    }
+
     public void setStars (Boolean[] starStatus, ArrayList<ImageView> starsON, ArrayList<ImageView> starsOFF) {
         int i = 0;
 
@@ -128,10 +133,12 @@ public class LocationsViewModel extends ViewModel {
         return areStarsOn;
     }
 
-    public String getCurrentLocation(Location location){
-        String longitude = "Longitude: " + location.getLongitude();
-        String latitude = "Latitude: " + location.getLatitude();
-        return longitude + ", " + latitude;
+    public String checkLocation(Location location){
+        double distance = Math.sqrt(Math.pow(mLocation.getLatitude()-location.getLatitude(),2)+Math.pow(mLocation.getLongitude()-location.getLongitude(),2))*111.139;
+        if(distance<10) {
+            return "Nice man! "+distance;
+        }
+        return "Too bad! "+distance;
     }
 
     public void setmLastLocationId(int mLastLocationId) {

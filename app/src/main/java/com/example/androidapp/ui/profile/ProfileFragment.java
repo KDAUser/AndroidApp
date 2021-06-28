@@ -24,18 +24,14 @@ public class ProfileFragment extends Fragment {
         profileViewModel =
                 new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView description = root.findViewById(R.id.profilePage_description);
-        final ImageView profileImage = root.findViewById(R.id.profilePage_image);
-        profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                description.setText(s);
-            }
-        });
-        profileImage.setImageResource(R.drawable.ic_launcher_foreground);
-        profileViewModel.createExampleItemList();
+        TextView description = (TextView) root.findViewById(R.id.profilePage_description);
+        ImageView profileImage = (ImageView) root.findViewById(R.id.profilePage_image);
+
+        profileViewModel.setView();
         profileViewModel.buildRecyclerView(root.findViewById(R.id.trophiesView),root.getContext());
         profileViewModel.updateTrophiesList();
+        description.setText(profileViewModel.getProfileDescription());
+        profileImage.setImageResource(R.drawable.ic_launcher_foreground); //TODO: zastąpienie pobraniem avatara z ProfileViewModel
         return root;
     }
 }

@@ -18,11 +18,7 @@ public class CommentsViewModel extends ViewModel {
     private Boolean wasExampleListCreated = false;
 
     public void showComments() {
-        ArrayList<CommentItem> commentsList = new ArrayList<>();
-        for (CommentItem item : mCommentsList) {
-            commentsList.add(item);
-        }
-        mAdapter.filterList(commentsList);
+        mAdapter.filterList(mCommentsList);
     }
 
     public void createExampleCommentsList() {
