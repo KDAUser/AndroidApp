@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -60,6 +61,9 @@ public class LoginFragment extends Fragment {
 
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         profileViewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
+
+        DrawerLayout drawer = ((AppCompatActivity)getActivity()).findViewById(R.id.drawer_layout);
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         TextView error_noCredential = root.findViewById(R.id.loginError_noCredential);
         TextView error_wrongCredential = root.findViewById(R.id.loginError_wrongCredential);
@@ -130,7 +134,10 @@ public class LoginFragment extends Fragment {
                                     updateNavigationHeader();
                                 }
 
+                                NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+                                navigationView.setCheckedItem(R.id.nav_home);
                                 navController.navigate(R.id.nav_home);
+                                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                                 ((AppCompatActivity)getActivity()).getSupportActionBar().show(); //show toolbar
                                 Toast.makeText(getContext(), "Successful login", Toast.LENGTH_SHORT).show();
                             }

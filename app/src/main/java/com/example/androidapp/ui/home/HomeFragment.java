@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment {
     private NavController navController;
 
     public void navigateFromHome() {
+        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
         SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         if(sp.getString("login", "") == ""){
@@ -39,8 +40,10 @@ public class HomeFragment extends Fragment {
         }
         else if (locationsViewModel.getmLastLocationId()!=0) {
             navController.navigate(R.id.nav_locations);
+            navigationView.setCheckedItem(R.id.nav_locations);
         } else {
             navController.navigate(R.id.nav_search_location);
+            navigationView.setCheckedItem(R.id.nav_search_location);
         }
     }
 
