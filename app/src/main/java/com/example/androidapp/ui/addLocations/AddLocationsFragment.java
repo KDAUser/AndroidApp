@@ -2,10 +2,15 @@ package com.example.androidapp.ui.addLocations;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +26,21 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.locations.LocationsViewModel;
 import com.example.androidapp.ui.locations.TipItem;
+import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AddLocationsFragment extends Fragment {
 
     private AddLocationsViewModel addLocationsViewModel;
     private LocationManager locationManager;
+    private Uri[] imageUri = new Uri[5];
+    private Boolean[] imageSet = {false, false, false, false, false};
+    private ImageView[] tipImage= new ImageView[5];
+    private int imageIndex = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,13 +67,15 @@ public class AddLocationsFragment extends Fragment {
         Button saveActualValuesButton = (Button) root.findViewById(R.id.saveActualValuesButton);
         Button saveLocationButton = (Button) root.findViewById(R.id.saveLocationButton);
 
-        ImageView firstTipImage = (ImageView) root.findViewById(R.id.firstTipImage);
-        ImageView secondTipImage = (ImageView) root.findViewById(R.id.secondTipImage);
-        ImageView thirdTipImage = (ImageView) root.findViewById(R.id.thirdTipImage);
-        ImageView fourthTipImage = (ImageView) root.findViewById(R.id.fourthTipImage);
-        ImageView fifthTipImage = (ImageView) root.findViewById(R.id.fifthTipImage);
+        tipImage[0] = (ImageView) root.findViewById(R.id.firstTipImage);
+        tipImage[1] = (ImageView) root.findViewById(R.id.secondTipImage);
+        tipImage[2] = (ImageView) root.findViewById(R.id.thirdTipImage);
+        tipImage[3] = (ImageView) root.findViewById(R.id.fourthTipImage);
+        tipImage[4] = (ImageView) root.findViewById(R.id.fifthTipImage);
 
         locationManager = (LocationManager) root.getContext().getSystemService(Context.LOCATION_SERVICE);
+
+        setTipImageButtons(firstTipBrowseButton, secondTipBrowseButton, thirdTipBrowseButton, fourthTipBrowseButton, fifthTipBrowseButton);
 
         saveWrittenValuesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,15 +114,96 @@ public class AddLocationsFragment extends Fragment {
                 currentTipTextArray.add(thirdTipText.getText().toString());
                 currentTipTextArray.add(fourthTipText.getText().toString());
                 currentTipTextArray.add(fifthTipText.getText().toString());
-                currentTipImageArray.add(firstTipImage);
-                currentTipImageArray.add(secondTipImage);
-                currentTipImageArray.add(thirdTipImage);
-                currentTipImageArray.add(fourthTipImage);
-                currentTipImageArray.add(fifthTipImage);
+                currentTipImageArray.add(tipImage[0]);
+                currentTipImageArray.add(tipImage[1]);
+                currentTipImageArray.add(tipImage[2]);
+                currentTipImageArray.add(tipImage[3]);
+                currentTipImageArray.add(tipImage[4]);
                 addLocationsViewModel.saveLocation(addLocationName.getText().toString(), currentTipTextArray, currentTipImageArray);
             }
         });
 
         return root;
+    }
+
+    public void setTipImageButtons(Button button1, Button button2, Button button3, Button button4, Button button5) {
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageIndex = 0;
+                startCropImageActivity();
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageIndex = 1;
+                startCropImageActivity();
+            }
+        });
+
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageIndex = 2;
+                startCropImageActivity();
+            }
+        });
+
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageIndex = 3;
+                startCropImageActivity();
+            }
+        });
+
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageIndex = 4;
+                startCropImageActivity();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                imageUri[imageIndex] = result.getUri();
+
+                try
+                {
+                    // Resize chosen image
+                    Bitmap bitmap = BitmapFactory.decodeFile(imageUri[imageIndex].getEncodedPath());
+                    // Write resized image
+                    FileOutputStream f_out = new FileOutputStream(imageUri[imageIndex].getEncodedPath());
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, f_out);
+                    // Update view
+                    imageSet[imageIndex] = true;
+                    tipImage[imageIndex].setImageBitmap(bitmap);
+                    tipImage[imageIndex].setVisibility(View.VISIBLE);
+                    //Toast.makeText(getActivity(), imageUri.toString(), Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e)
+                {
+                    Log.e("Tip " + (imageIndex+1) + " image", e.getMessage(), e);
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
+    }
+
+    private void startCropImageActivity() {
+        CropImage.activity()
+                .setActivityTitle(getString(R.string.registrationPage_editAvatar))
+                .setCropMenuCropButtonTitle(getString(R.string.registrationPage_cropAvatar))
+                .setMinCropResultSize(200, 200)
+                .start(getContext(), this);
     }
 }
