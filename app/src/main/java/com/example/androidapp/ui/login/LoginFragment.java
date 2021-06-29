@@ -52,27 +52,6 @@ public class LoginFragment extends Fragment {
     private ProfileViewModel profileViewModel;
     private NavController navController;
 
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    private void updateNavigationHeader(){
-        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-        View hView = navigationView.getHeaderView(0);
-        ImageView profile_image = (ImageView) hView.findViewById(R.id.profile_image);
-        TextView profile_login = (TextView) hView.findViewById(R.id.profile_login);
-        TextView profile_email = (TextView) hView.findViewById(R.id.profile_email);
-
-        SharedPreferences sp = getActivity().getSharedPreferences("JustFindIt", Context.MODE_PRIVATE);
-        profile_login.setText(sp.getString("login", ""));
-        profile_email.setText(sp.getString("email", ""));
-        String avatar_path = sp.getString("avatar", "");
-        if(avatar_path != "") {
-            profile_image.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
-        }
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         loginViewModel =
@@ -106,7 +85,7 @@ public class LoginFragment extends Fragment {
                 class ConnectMySQL extends AsyncTask<String, Void, String> {
                     ProgressDialog pDialog;
                     List<NameValuePair> params;
-                    String link = "http://192.168.0.3/TM/login.php";
+                    String link = getString(R.string.server_address) + "login.php";
                     JSONParser jsonParser;
                     JSONObject feedback;
 
@@ -135,7 +114,7 @@ public class LoginFragment extends Fragment {
                         pDialog.dismiss();
                         try{
                             if(feedback.getInt("success") == 1) {
-                                SharedPreferences sp = getActivity().getSharedPreferences("JustFindIt", Context.MODE_PRIVATE);
+                                SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                                 SharedPreferences.Editor sp_editor = sp.edit();
                                 sp_editor.putString("login", login.getText().toString());
                                 sp_editor.putString("email", feedback.getString("email"));
@@ -145,7 +124,7 @@ public class LoginFragment extends Fragment {
                                 sp_editor.commit();
 
                                 if(feedback.getInt("avatar") == 1) {
-                                    new GetImage().execute("http://192.168.0.3/TM/avatars/" + feedback.getString("id") + ".jpg");
+                                    new GetImage().execute(getString(R.string.server_address) + "avatars/" + feedback.getString("id") + ".jpg");
                                 }
                                 else{
                                     updateNavigationHeader();
@@ -194,6 +173,27 @@ public class LoginFragment extends Fragment {
         return root;
     }
 
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void updateNavigationHeader(){
+        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        ImageView profile_image = (ImageView) hView.findViewById(R.id.profile_image);
+        TextView profile_login = (TextView) hView.findViewById(R.id.profile_login);
+        TextView profile_email = (TextView) hView.findViewById(R.id.profile_email);
+
+        SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        profile_login.setText(sp.getString("login", ""));
+        profile_email.setText(sp.getString("email", ""));
+        String avatar_path = sp.getString("avatar", "");
+        if(avatar_path != "") {
+            profile_image.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
+        }
+    }
+
     private String saveToInternalStorage(Bitmap bitmapImage) {
         ContextWrapper cw = new ContextWrapper(getContext());
         File directory = cw.getDir("data", Context.MODE_PRIVATE);
@@ -230,7 +230,7 @@ public class LoginFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(Bitmap result) {
-            SharedPreferences sp = getActivity().getSharedPreferences("JustFindIt", Context.MODE_PRIVATE);
+            SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor sp_editor = sp.edit();
             sp_editor.putString("avatar", saveToInternalStorage(result));
             sp_editor.commit();

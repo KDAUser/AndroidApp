@@ -33,7 +33,8 @@ public class HomeFragment extends Fragment {
 
     public void navigateFromHome() {
         locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
-        if(!isUserLogin()){
+        SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        if(sp.getString("login", "") == ""){
             navController.navigate(R.id.nav_login);
         }
         else if (locationsViewModel.getmLastLocationId()!=0) {
@@ -52,28 +53,5 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    public boolean isUserLogin(){
-        SharedPreferences sp = getActivity().getSharedPreferences("JustFindIt", Context.MODE_PRIVATE);
-        if(sp.getString("login", "") != ""){
-            NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-            View hView = navigationView.getHeaderView(0);
-            ImageView profile_image = (ImageView) hView.findViewById(R.id.profile_image);
-            TextView profile_login = (TextView) hView.findViewById(R.id.profile_login);
-            TextView profile_email = (TextView) hView.findViewById(R.id.profile_email);
-            profile_login.setText(sp.getString("login", ""));
-            profile_email.setText(sp.getString("email", ""));
-            String avatar_path = sp.getString("avatar", "");
-            if(avatar_path != "") {
-                profile_image.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
-            }
 
-            navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-            navController.navigate(R.id.nav_home);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().show(); //show toolbar
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 }

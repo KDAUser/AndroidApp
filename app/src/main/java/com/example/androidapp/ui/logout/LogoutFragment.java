@@ -39,7 +39,7 @@ public class LogoutFragment extends Fragment {
     }
 
     public void clearSharedPreferences(){
-        SharedPreferences sp = getActivity().getSharedPreferences("JustFindIt", Context.MODE_PRIVATE);
+        SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor sp_editor = sp.edit();
         sp_editor.clear();
         sp_editor.commit();

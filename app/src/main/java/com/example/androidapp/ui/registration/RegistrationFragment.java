@@ -55,20 +55,6 @@ public class RegistrationFragment extends Fragment {
     private Uri imageUri;
     private Boolean imageSet = false;
 
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    private void startCropImageActivity() {
-        CropImage.activity()
-                .setActivityTitle(getString(R.string.registrationPage_editAvatar))
-                .setCropMenuCropButtonTitle(getString(R.string.registrationPage_cropAvatar))
-                .setAspectRatio(1, 1)
-                .setMinCropResultSize(200, 200)
-                .start(getContext(), this);
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         registrationViewModel =
@@ -122,7 +108,7 @@ public class RegistrationFragment extends Fragment {
                 class ConnectMySQL extends AsyncTask<String, Void, String> {
                     ProgressDialog pDialog;
                     List<NameValuePair> params;
-                    String link = "http://192.168.0.3/TM/register.php";
+                    String link = getString(R.string.server_address) + "register.php";
                     JSONParser jsonParser;
                     JSONObject feedback;
 
@@ -162,7 +148,7 @@ public class RegistrationFragment extends Fragment {
                         pDialog.dismiss();
                         try{
                             if(feedback.getInt("success") == 1) {
-                                navController.navigate(R.id.nav_home);
+                                navController.navigate(R.id.nav_login);
                                 ((AppCompatActivity)getActivity()).getSupportActionBar().show(); //show toolbar
                                 Toast.makeText(getContext(), "Successful registered", Toast.LENGTH_SHORT).show();
                             }
@@ -263,5 +249,19 @@ public class RegistrationFragment extends Fragment {
                 Exception error = result.getError();
             }
         }
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void startCropImageActivity() {
+        CropImage.activity()
+                .setActivityTitle(getString(R.string.registrationPage_editAvatar))
+                .setCropMenuCropButtonTitle(getString(R.string.registrationPage_cropAvatar))
+                .setAspectRatio(1, 1)
+                .setMinCropResultSize(200, 200)
+                .start(getContext(), this);
     }
 }

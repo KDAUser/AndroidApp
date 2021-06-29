@@ -14,7 +14,8 @@
         android:layout_margin="16dp"
         android:hint="@string/searchLocation_hint"
         android:textColor="@color/textColor"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/locationsView"

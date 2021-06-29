@@ -2,12 +2,15 @@ package com.example.androidapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,30 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private static final String TAG = "MainActivity";
-    private ProfileViewModel profileViewModel;
-
-    public void setupNavigationMenu(){
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,
-                R.id.nav_locations,
-                R.id.nav_add_locations,
-                R.id.nav_profile,
-                R.id.nav_edit_profile,
-                R.id.nav_search_profile,
-                R.id.nav_search_location,
-                R.id.nav_login,
-                R.id.nav_registration,
-                R.id.nav_logout_profile)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +50,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
         setupNavigationMenu();
+
+        getSupportActionBar().setTitle("");
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES);
+
+        isUserLogin();
 
         Log.d(TAG, "onCreate: out");
     }
@@ -131,5 +115,49 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG, "onRestoreInstanceState: out");
+    }
+
+    public void setupNavigationMenu(){
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home,
+                R.id.nav_locations,
+                R.id.nav_add_locations,
+                R.id.nav_profile,
+                R.id.nav_edit_profile,
+                R.id.nav_search_profile,
+                R.id.nav_search_location,
+                R.id.nav_login,
+                R.id.nav_registration,
+                R.id.nav_logout_profile)
+                .setDrawerLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    public boolean isUserLogin(){
+        SharedPreferences sp = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        if(sp.getString("login", "") != ""){
+            NavigationView navigationView = (NavigationView) this.findViewById(R.id.nav_view);
+            View hView = navigationView.getHeaderView(0);
+            ImageView profile_image = (ImageView) hView.findViewById(R.id.profile_image);
+            TextView profile_login = (TextView) hView.findViewById(R.id.profile_login);
+            TextView profile_email = (TextView) hView.findViewById(R.id.profile_email);
+            profile_login.setText(sp.getString("login", ""));
+            profile_email.setText(sp.getString("email", ""));
+            String avatar_path = sp.getString("avatar", "");
+            if(avatar_path != "") {
+                profile_image.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
