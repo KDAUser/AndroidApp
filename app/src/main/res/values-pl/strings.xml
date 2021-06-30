@@ -69,4 +69,6 @@
     <string name="navHeader_noUser_login">User name</string>
     <string name="navHeader_noUser_email">email</string>
     <string name="upload_location">Upload location</string>
+    <string name="profilePage_registeredLabelText">Registered since:</string>
+    <string name="profilePage_descriptionLabelText">Description</string>
 </resources>

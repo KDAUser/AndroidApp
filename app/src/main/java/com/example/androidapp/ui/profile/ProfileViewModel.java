@@ -66,8 +66,8 @@ public class ProfileViewModel extends ViewModel {
 
     public void setView() {
         setmTrophiesList();
-        setProfileDescription();
-        setAvatar();
+        //setProfileDescription();
+        //setAvatar();
     }
 
     public void buildRecyclerView(RecyclerView mTrophiesView, Context context) {

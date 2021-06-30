@@ -149,7 +149,6 @@ public class RegistrationFragment extends Fragment {
                         try{
                             if(feedback.getInt("success") == 1) {
                                 navController.navigate(R.id.nav_login);
-                                ((AppCompatActivity)getActivity()).getSupportActionBar().show(); //show toolbar
                                 Toast.makeText(getContext(), "Successful registered", Toast.LENGTH_SHORT).show();
                             }
                             else {
@@ -208,13 +207,10 @@ public class RegistrationFragment extends Fragment {
                         }
                     }
                 }
-
                 ConnectMySQL conn = new ConnectMySQL();
                 conn.execute();
             }
         });
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide(); //hide toolbar
 
         return root;
     }

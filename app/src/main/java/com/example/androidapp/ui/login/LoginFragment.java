@@ -123,7 +123,7 @@ public class LoginFragment extends Fragment {
                                 sp_editor.putString("login", login.getText().toString());
                                 sp_editor.putString("email", feedback.getString("email"));
                                 sp_editor.putString("note", feedback.getString("note"));
-                                sp_editor.putString("registred", feedback.getString("registred"));
+                                sp_editor.putString("registered", feedback.getString("registered"));
                                 sp_editor.putString("updated", feedback.getString("updated"));
                                 sp_editor.commit();
 

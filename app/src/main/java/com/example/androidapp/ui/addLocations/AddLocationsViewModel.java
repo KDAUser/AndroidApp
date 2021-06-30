@@ -85,15 +85,13 @@ public class AddLocationsViewModel extends ViewModel {
     }
 
     public Boolean uploadLocation() {
-        JFILocation location = getmLocation();
-        ArrayList<TipItem> locationTips = location.getLocationTips();
         int i = 0;
-        for (TipItem locationTip: locationTips) {
+        for (TipItem locationTip: mLocation.getLocationTips()) {
             if (!locationTip.getmTipText().equals("")) {
                 i++;
             }
         }
-        if ((!location.getLocationName().equals(""))&(i==5)&(location.getLatitude()!=0.0)&(location.getLatitude()!=0.0)) {
+        if ((!mLocation.getLocationName().equals(""))&(i==5)&(mLocation.getLatitude()!=0.0)&(mLocation.getLatitude()!=0.0)) {
             return true;
         }
         return false;

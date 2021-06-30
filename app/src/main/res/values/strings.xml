@@ -8,7 +8,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_menu">Settings</string>
     <string name="preference_file_key">JustFindIt_SP_file</string>
-    <string name="server_address">http://185.237.157.193/TM/</string>
+    <string name="server_address">http://192.168.0.3/TM/</string>
 
     <string name="menu_group_general">General</string>
     <string name="menu_group_profile">Profile</string>
@@ -68,4 +68,6 @@
     <string name="navHeader_noUser_login">User name</string>
     <string name="navHeader_noUser_email">email</string>
     <string name="upload_location">Upload location</string>
+    <string name="profilePage_registeredLabelText">Registered since:</string>
+    <string name="profilePage_descriptionLabelText">Description</string>
 </resources>
