@@ -1,6 +1,8 @@
 package com.example.androidapp.ui.addLocations;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.lifecycle.LiveData;
@@ -27,12 +29,14 @@ public class AddLocationsViewModel extends ViewModel {
         ImageView[] tipImagesTab = new ImageView[5];
         ArrayList<TipItem> newTips = new ArrayList<>();
         int i = 0;
-        for (ImageView tipImage: tipImages) {
-            tipImagesTab[i] = tipImage;
+        for (ImageView tipImage : tipImages) {
+            if (tipImage.getVisibility() == View.VISIBLE) {
+                tipImagesTab[i] = tipImage;
+            }
             i++;
         }
         i = 0;
-        for (String tipText: tipTexts) {
+        for (String tipText : tipTexts) {
             tipTextsTab[i] = tipText;
             i++;
         }
@@ -55,6 +59,10 @@ public class AddLocationsViewModel extends ViewModel {
         mLocation.setLocationTips(newTips);
     }*/
 
+    public JFILocation getmLocation() {
+        return mLocation;
+    }
+
     private void setCoordinates() {
         mLocation.setLongitude(mLongitude);
         mLocation.setLatitude(mLatitude);
@@ -74,5 +82,20 @@ public class AddLocationsViewModel extends ViewModel {
         setLocationName(locationName);
         addTips(tipTexts, tipImages);
         setCoordinates();
+    }
+
+    public Boolean uploadLocation() {
+        JFILocation location = getmLocation();
+        ArrayList<TipItem> locationTips = location.getLocationTips();
+        int i = 0;
+        for (TipItem locationTip: locationTips) {
+            if (!locationTip.getmTipText().equals("")) {
+                i++;
+            }
+        }
+        if ((!location.getLocationName().equals(""))&(i==5)&(location.getLatitude()!=0.0)&(location.getLatitude()!=0.0)) {
+            return true;
+        }
+        return false;
     }
 }
