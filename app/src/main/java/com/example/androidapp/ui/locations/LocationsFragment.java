@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 
 import java.util.ArrayList;
@@ -31,7 +33,6 @@ public class LocationsFragment extends Fragment {
     private String[] starsOn = new String[]{"firstStarOn", "secondStarOn", "thirdStarOn", "fourthStarOn", "fifthStarOn"};
     private String[] starsOff = new String[]{"firstStarOff", "secondStarOff", "thirdStarOff", "fourthStarOff", "fifthStarOff"};
     private NavController navController;
-    private LocationManager locationManager;
 
     private void prepareLocationView(View root, JFILocation location) {
         ImageView firstStarOn = (ImageView) root.findViewById(R.id.firstStarOn);
@@ -53,7 +54,6 @@ public class LocationsFragment extends Fragment {
         locationName.setText(location.getLocationName());
 
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        locationManager = (LocationManager) root.getContext().getSystemService(Context.LOCATION_SERVICE);
 
         ArrayList<ImageView> starsOn;
         starsOn = new ArrayList<>();
@@ -101,7 +101,7 @@ public class LocationsFragment extends Fragment {
                     // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
-                Toast.makeText(root.getContext(), locationsViewModel.checkLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(root.getContext(), locationsViewModel.checkLocation(((MainActivity) getActivity()).getActualLocation()), Toast.LENGTH_SHORT).show();
             }
         });
 

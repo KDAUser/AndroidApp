@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,10 +22,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.locations.JFILocation;
 import com.example.androidapp.ui.locations.LocationsViewModel;
@@ -39,7 +42,7 @@ import static android.app.Activity.RESULT_OK;
 public class AddLocationsFragment extends Fragment {
 
     private AddLocationsViewModel addLocationsViewModel;
-    private LocationManager locationManager;
+    //private LocationManager locationManager;
     private Uri[] imageUri = new Uri[5];
     private Boolean[] imageSet = {false, false, false, false, false};
     private ImageView[] tipImage = new ImageView[5];
@@ -78,8 +81,6 @@ public class AddLocationsFragment extends Fragment {
         tipImage[3] = (ImageView) root.findViewById(R.id.fourthTipImage);
         tipImage[4] = (ImageView) root.findViewById(R.id.fifthTipImage);
 
-        locationManager = (LocationManager) root.getContext().getSystemService(Context.LOCATION_SERVICE);
-
         setTipImageButtons(firstTipBrowseButton, secondTipBrowseButton, thirdTipBrowseButton, fourthTipBrowseButton, fifthTipBrowseButton);
 
         saveWrittenValuesButton.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +93,7 @@ public class AddLocationsFragment extends Fragment {
         saveActualValuesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(root.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(root.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                /*if (ActivityCompat.checkSelfPermission(root.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(root.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
@@ -101,11 +102,12 @@ public class AddLocationsFragment extends Fragment {
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
                     return;
-                }
-                Location actualLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                addLocationsViewModel.saveActualValues(actualLocation);
-                editTextLongitude.setText("" + Math.floor(actualLocation.getLongitude() * 100000) / 100000);
-                editTextLatitude.setText("" + Math.floor(actualLocation.getLatitude() * 100000) / 100000);
+                }*/
+                //locationManager = ;
+                //Location actualLocation = ((LocationManager) root.getContext().getSystemService(Context.LOCATION_SERVICE)).getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                addLocationsViewModel.saveActualValues(((MainActivity) getActivity()).getActualLocation());
+                editTextLongitude.setText("" + Math.floor(((MainActivity) getActivity()).getActualLocation().getLongitude() * 100000) / 100000);
+                editTextLatitude.setText("" + Math.floor(((MainActivity) getActivity()).getActualLocation().getLatitude() * 100000) / 100000);
             }
         });
 
@@ -131,7 +133,7 @@ public class AddLocationsFragment extends Fragment {
         uploadLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(addLocationsViewModel.uploadLocation()) {
+                if (addLocationsViewModel.uploadLocation()) {
                     Toast.makeText(root.getContext(), "Location is complete!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(root.getContext(), "Location is not complete!", Toast.LENGTH_SHORT).show();
