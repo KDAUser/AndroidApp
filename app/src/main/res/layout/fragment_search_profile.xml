@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.searchProfile.SearchProfileFragment">
+    tools:context=".ui.searchProfile.SearchProfileFragment"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:focusable="true">
 
     <EditText
         android:id="@+id/searchProfileField"

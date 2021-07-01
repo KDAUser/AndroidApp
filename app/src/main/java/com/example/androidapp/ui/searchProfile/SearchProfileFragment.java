@@ -1,11 +1,13 @@
 package com.example.androidapp.ui.searchProfile;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.searchLocation.LocationItem;
 
@@ -45,6 +48,15 @@ public class SearchProfileFragment extends Fragment implements SearchProfileAdap
             @Override
             public void afterTextChanged(Editable s) {
                 searchProfileViewModel.filter(s.toString());
+            }
+        });
+
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    ((MainActivity) getActivity()).hideKeyboard(v);
+                }
             }
         });
 

@@ -28,6 +28,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.profile.ProfileViewModel;
 import com.example.androidapp.JSONParser;
@@ -81,7 +82,7 @@ public class RegistrationFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    hideKeyboard(v);
+                    ((MainActivity) getActivity()).hideKeyboard(v);
                 }
             }
         };
@@ -245,11 +246,6 @@ public class RegistrationFragment extends Fragment {
                 Exception error = result.getError();
             }
         }
-    }
-
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void startCropImageActivity() {

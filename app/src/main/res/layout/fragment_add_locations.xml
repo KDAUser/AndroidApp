@@ -11,7 +11,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.addLocations.AddLocationsFragment">
+        tools:context=".ui.addLocations.AddLocationsFragment"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/addLocationPage_locationName"

@@ -6,7 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/bgColor"
     android:orientation="vertical"
-    tools:context=".ui.searchLocation.SearchLocationFragment">
+    tools:context=".ui.searchLocation.SearchLocationFragment"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:focusable="true">
 
     <EditText
         android:id="@+id/searchLocationField"
@@ -25,7 +28,6 @@
         android:layout_marginTop="80dp"
         android:padding="5dp"
         android:scrollbars="vertical"
-        android:onClick="onLocationClick"
         app:layout_constraintTop_toBottomOf="@+id/searchLocationField"
         tools:layout_editor_absoluteX="16dp" />
 

@@ -1,6 +1,7 @@
 package com.example.androidapp.ui.addLocations;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -83,6 +85,24 @@ public class AddLocationsFragment extends Fragment {
 
         setTipImageButtons(firstTipBrowseButton, secondTipBrowseButton, thirdTipBrowseButton, fourthTipBrowseButton, fifthTipBrowseButton);
 
+        View.OnFocusChangeListener hideSoftKeyboard = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    ((MainActivity) getActivity()).hideKeyboard(v);
+                }
+            }
+        };
+
+        addLocationName.setOnFocusChangeListener(hideSoftKeyboard);
+        tipText[0].setOnFocusChangeListener(hideSoftKeyboard);
+        tipText[1].setOnFocusChangeListener(hideSoftKeyboard);
+        tipText[2].setOnFocusChangeListener(hideSoftKeyboard);
+        tipText[3].setOnFocusChangeListener(hideSoftKeyboard);
+        tipText[4].setOnFocusChangeListener(hideSoftKeyboard);
+        editTextLatitude.setOnFocusChangeListener(hideSoftKeyboard);
+        editTextLongitude.setOnFocusChangeListener(hideSoftKeyboard);
+
         saveWrittenValuesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,18 +113,6 @@ public class AddLocationsFragment extends Fragment {
         saveActualValuesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (ActivityCompat.checkSelfPermission(root.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(root.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }*/
-                //locationManager = ;
-                //Location actualLocation = ((LocationManager) root.getContext().getSystemService(Context.LOCATION_SERVICE)).getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 addLocationsViewModel.saveActualValues(((MainActivity) getActivity()).getActualLocation());
                 editTextLongitude.setText("" + Math.floor(((MainActivity) getActivity()).getActualLocation().getLongitude() * 100000) / 100000);
                 editTextLatitude.setText("" + Math.floor(((MainActivity) getActivity()).getActualLocation().getLatitude() * 100000) / 100000);
@@ -205,7 +213,6 @@ public class AddLocationsFragment extends Fragment {
                     imageSet[imageIndex] = true;
                     tipImage[imageIndex].setImageBitmap(bitmap);
                     tipImage[imageIndex].setVisibility(View.VISIBLE);
-                    //Toast.makeText(getActivity(), imageUri.toString(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Log.e("Tip " + (imageIndex + 1) + " image", e.getMessage(), e);
                 }

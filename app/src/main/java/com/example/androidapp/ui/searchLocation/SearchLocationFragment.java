@@ -30,11 +30,6 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
     private View root;
     private NavController navController;
 
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -46,6 +41,7 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         EditText editText = root.findViewById(R.id.searchLocationField);
+
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -60,6 +56,15 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
             @Override
             public void afterTextChanged(Editable s) {
                 searchLocationViewModel.filter(s.toString());
+            }
+        });
+
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    ((MainActivity) getActivity()).hideKeyboard(v);
+                }
             }
         });
 
