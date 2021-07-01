@@ -71,4 +71,10 @@
     <string name="upload_location">Upload location</string>
     <string name="profilePage_registeredLabelText">Registered since:</string>
     <string name="profilePage_descriptionLabelText">Description</string>
+    <string name="editProfilePage_editDescriptionLabelText">Edit your profile description</string>
+    <string name="editProfilePage_editLoginLabelText">Edit your profile name</string>
+    <string name="editProfilePage_editAvatarLabelText">Edit your avatar</string>
+    <string name="editProfilePage_editEmailLabelText">Change associated email</string>
+    <string name="editProfilePage_editPasswordLabelText">Set new account password</string>
+    <string name="editProfilePage_saveButtonText">Save changes</string>
 </resources>

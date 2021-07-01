@@ -11,12 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.androidapp.R;
@@ -39,8 +36,8 @@ public class EditProfileFragment extends Fragment {
                 new ViewModelProvider(this).get(EditProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
-        Button changeAvatarButton = (Button) root.findViewById(R.id.changeAvatarButton);
-        avatarImage = (ImageView) root.findViewById(R.id.editAvatarImage);
+        Button changeAvatarButton = (Button) root.findViewById(R.id.editProfilePage_avatarButton);
+        //avatarImage = (ImageView) root.findViewById(R.id.editAvatarImage);
 
         changeAvatarButton.setOnClickListener(new View.OnClickListener() {
             @Override

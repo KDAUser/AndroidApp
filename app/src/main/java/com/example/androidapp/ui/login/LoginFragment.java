@@ -30,6 +30,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.androidapp.JSONParser;
+import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.profile.ProfileViewModel;
 import com.google.android.material.navigation.NavigationView;
