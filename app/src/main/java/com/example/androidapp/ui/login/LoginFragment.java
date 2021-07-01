@@ -123,7 +123,7 @@ public class LoginFragment extends Fragment {
                                 SharedPreferences.Editor sp_editor = sp.edit();
                                 sp_editor.putString("login", login.getText().toString());
                                 sp_editor.putString("email", feedback.getString("email"));
-                                sp_editor.putString("note", feedback.getString("note"));
+                                sp_editor.putString("description", feedback.getString("description"));
                                 sp_editor.putString("registered", feedback.getString("registered"));
                                 sp_editor.putString("updated", feedback.getString("updated"));
                                 sp_editor.commit();

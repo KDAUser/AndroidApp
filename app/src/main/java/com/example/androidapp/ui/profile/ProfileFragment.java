@@ -38,7 +38,7 @@ public class ProfileFragment extends Fragment {
         login.setText(sp.getString("login", ""));
         email.setText(sp.getString("email", ""));
         registeredDate.setText(sp.getString("registered", ""));
-        description.setText(sp.getString("note", ""));
+        description.setText(sp.getString("description", ""));
         String avatar_path = sp.getString("avatar", "");
         if(avatar_path != "") {
             profileImage.setImageBitmap(BitmapFactory.decodeFile(avatar_path));

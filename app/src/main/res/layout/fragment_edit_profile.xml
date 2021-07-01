@@ -1,213 +1,326 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgColor"
-    tools:context=".ui.editProfile.EditProfileFragment">
+    android:clickable="true"
+    android:fillViewport="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
-    <Button
-        android:id="@+id/editProfilePage_avatarButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="@string/change_avatar"
-        app:layout_constraintBottom_toBottomOf="@+id/editProfilePage_avatar"
-        app:layout_constraintStart_toEndOf="@+id/editProfilePage_avatar"
-        app:layout_constraintTop_toTopOf="@+id/editProfilePage_avatar" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/editProfilePage_saveButtonText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider5" />
-
-    <EditText
-        android:id="@+id/editProfilePage_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgColor"
+        android:clickable="true"
         android:focusable="true"
-        android:inputType="textEmailAddress"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_emailLabel" />
+        android:focusableInTouchMode="true"
+        tools:context=".ui.editProfile.EditProfileFragment">
 
-    <EditText
-        android:id="@+id/editProfilePage_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:focusable="true"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_loginLabel" />
+        <Button
+            android:id="@+id/editProfilePage_avatarButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/change_avatar"
+            app:layout_constraintBottom_toBottomOf="@+id/editProfilePage_avatar"
+            app:layout_constraintStart_toEndOf="@+id/editProfilePage_avatar"
+            app:layout_constraintTop_toTopOf="@+id/editProfilePage_avatar" />
 
-    <EditText
-        android:id="@+id/editProfilePage_confPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints="password"
-        android:ems="10"
-        android:focusable="true"
-        android:hint="@string/registrationPage_confPass"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editProfilePage_password"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/editProfilePage_password"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_password" />
+        <Button
+            android:id="@+id/editProfilePage_saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/editProfilePage_saveButtonText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
-    <EditText
-        android:id="@+id/editProfilePage_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints="password"
-        android:ems="10"
-        android:focusable="true"
-        android:hint="@string/loginPage_password"
-        android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="@+id/editProfilePage_passwordLabel"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_passwordLabel" />
+        <EditText
+            android:id="@+id/editProfilePage_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:focusable="true"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_emailLabel" />
 
-    <EditText
-        android:id="@+id/editProfilePage_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:focusable="true"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_descriptionLabel" />
+        <EditText
+            android:id="@+id/editProfilePage_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:focusable="true"
+            android:inputType="textPersonName"
+            android:textColor="@color/textColor"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_loginLabel" />
 
-    <ImageView
-        android:id="@+id/editProfilePage_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:minWidth="200px"
-        android:minHeight="200px"
-        android:src="@drawable/ic_no_avatar"
-        app:layout_constraintStart_toStartOf="@+id/editProfilePage_avatarLabel"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_avatarLabel" />
+        <EditText
+            android:id="@+id/editProfilePage_confPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:autofillHints="password"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/registrationPage_confPass"
+            android:inputType="textPassword"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toEndOf="@+id/editProfilePage_password"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_password"
+            app:layout_constraintTop_toBottomOf="@+id/editProfileError_passwordLength" />
 
-    <TextView
-        android:id="@+id/editProfilePage_descriptionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/editProfilePage_editDescriptionLabelText"
-        app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+        <EditText
+            android:id="@+id/editProfilePage_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:autofillHints="password"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/loginPage_password"
+            android:inputType="textPassword"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_passwordLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_passwordLabel" />
 
-    <TextView
-        android:id="@+id/editProfilePage_loginLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/editProfilePage_editLoginLabelText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/editProfilePage_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_descriptionLabel" />
 
-    <TextView
-        android:id="@+id/editProfilePage_avatarLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/editProfilePage_editAvatarLabelText"
-        app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        <ImageView
+            android:id="@+id/editProfilePage_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minWidth="200px"
+            android:minHeight="200px"
+            android:src="@drawable/ic_no_avatar"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_avatarLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_avatarLabel" />
 
-    <TextView
-        android:id="@+id/editProfilePage_emailLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/editProfilePage_editEmailLabelText"
-        app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
-        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+        <TextView
+            android:id="@+id/editProfilePage_descriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/editProfilePage_editDescriptionLabelText"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
-    <TextView
-        android:id="@+id/editProfilePage_passwordLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/editProfilePage_editPasswordLabelText"
-        app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
-        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+        <TextView
+            android:id="@+id/editProfilePage_loginLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/editProfilePage_editLoginLabelText"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_login" />
+        <TextView
+            android:id="@+id/editProfilePage_avatarLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/editProfilePage_editAvatarLabelText"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_avatar" />
+        <TextView
+            android:id="@+id/editProfilePage_emailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/editProfilePage_editEmailLabelText"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
+            app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_description" />
+        <TextView
+            android:id="@+id/editProfilePage_passwordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/editProfilePage_editPasswordLabelText"
+            android:textColor="@color/textColor"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
+            app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_email" />
+        <TextView
+            android:id="@+id/editProfileError_loginLength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_loginLength"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_login" />
 
-    <View
-        android:id="@+id/divider5"
-        android:layout_width="404dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfilePage_confPassword" />
+        <TextView
+            android:id="@+id/editProfileError_loginSyntax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_loginSyntax"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfileError_loginLength" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/editProfileError_loginOccupied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_loginOccupied"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_loginLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfileError_loginSyntax" />
+
+        <TextView
+            android:id="@+id/editProfileError_imageNotLoad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_imageNotLoad"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_avatarLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_avatar" />
+
+        <TextView
+            android:id="@+id/editProfileError_emailSyntax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_emailSyntax"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_emailLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_email" />
+
+        <TextView
+            android:id="@+id/editProfileError_emailOccupied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_emailOccupied"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_emailLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfileError_emailSyntax" />
+
+        <TextView
+            android:id="@+id/editProfileError_passwordLength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_passwordLength"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_passwordLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_password" />
+
+        <TextView
+            android:id="@+id/editProfileError_passwordsNotMatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/registerError_passwordsNotMatch"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_passwordLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_confPassword" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editProfileError_loginOccupied" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editProfileError_imageNotLoad" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_description" />
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.333"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editProfileError_emailOccupied" />
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="404dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editProfileError_passwordsNotMatch" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
