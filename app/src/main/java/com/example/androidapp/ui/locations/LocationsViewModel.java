@@ -160,4 +160,8 @@ public class LocationsViewModel extends ViewModel {
     public void sendLocationToDB(){
 
     }
+
+    public void setLocationName(String name) {
+        mLocation.setLocationName(name);
+    }
 }

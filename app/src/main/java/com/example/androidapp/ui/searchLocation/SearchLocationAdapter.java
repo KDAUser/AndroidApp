@@ -1,5 +1,7 @@
 package com.example.androidapp.ui.searchLocation;
 
+
+import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,25 +16,35 @@ import java.util.ArrayList;
 public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAdapter.LocationsViewHolder> {
 
     private ArrayList<LocationItem> mLocationsList;
+    private OnLocationListener mOnLocationListener;
 
-    public static class LocationsViewHolder extends RecyclerView.ViewHolder {
+    public static class LocationsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mSearchItemLocationName;
+        OnLocationListener onLocationListener;
 
-        public LocationsViewHolder(View itemView) {
+        public LocationsViewHolder(View itemView, OnLocationListener onLocationListener) {
             super(itemView);
             mSearchItemLocationName = itemView.findViewById(R.id.searchItemLocationName);
+            this.onLocationListener = onLocationListener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onLocationListener.onLocationClick(getAdapterPosition());
         }
     }
 
-    public SearchLocationAdapter(ArrayList<LocationItem> locationsList) {
+    public SearchLocationAdapter(ArrayList<LocationItem> locationsList, OnLocationListener onLocationListener) {
         mLocationsList = locationsList;
+        mOnLocationListener = onLocationListener;
     }
 
     @Override
     public LocationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_search_item,
                 parent, false);
-        LocationsViewHolder evh = new LocationsViewHolder(v);
+        LocationsViewHolder evh = new LocationsViewHolder(v, mOnLocationListener);
         return evh;
     }
 
@@ -51,5 +63,9 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
     public void filterList(ArrayList<LocationItem> filteredList) {
         mLocationsList = filteredList;
         notifyDataSetChanged();
+    }
+
+    public interface OnLocationListener {
+        void onLocationClick(int position);
     }
 }

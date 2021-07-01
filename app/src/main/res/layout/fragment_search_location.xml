@@ -25,6 +25,7 @@
         android:layout_marginTop="80dp"
         android:padding="5dp"
         android:scrollbars="vertical"
+        android:onClick="onLocationClick"
         app:layout_constraintTop_toBottomOf="@+id/searchLocationField"
         tools:layout_editor_absoluteX="16dp" />
 

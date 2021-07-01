@@ -14,25 +14,35 @@ import java.util.ArrayList;
 public class SearchProfileAdapter extends RecyclerView.Adapter<SearchProfileAdapter.ProfilesViewHolder> {
 
     private ArrayList<ProfileItem> mProfilesList;
+    private OnProfileListener mOnProfileListener;
 
-    public static class ProfilesViewHolder extends RecyclerView.ViewHolder {
+    public static class ProfilesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mSearchItemProfileName;
+        OnProfileListener onProfileListener;
 
-        public ProfilesViewHolder(View itemView) {
+        public ProfilesViewHolder(View itemView, OnProfileListener onProfileListener) {
             super(itemView);
             mSearchItemProfileName = itemView.findViewById(R.id.searchItemProfileName);
+            this.onProfileListener = onProfileListener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onProfileListener.onProfileClick(getAdapterPosition());
         }
     }
 
-    public SearchProfileAdapter(ArrayList<ProfileItem> profilesList) {
+    public SearchProfileAdapter(ArrayList<ProfileItem> profilesList, OnProfileListener onProfileListener) {
         mProfilesList = profilesList;
+        mOnProfileListener = onProfileListener;
     }
 
     @Override
     public SearchProfileAdapter.ProfilesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_search_item,
                 parent, false);
-        SearchProfileAdapter.ProfilesViewHolder evh = new SearchProfileAdapter.ProfilesViewHolder(v);
+        SearchProfileAdapter.ProfilesViewHolder evh = new SearchProfileAdapter.ProfilesViewHolder(v, mOnProfileListener);
         return evh;
     }
 
@@ -51,5 +61,9 @@ public class SearchProfileAdapter extends RecyclerView.Adapter<SearchProfileAdap
     public void filterList(ArrayList<ProfileItem> filteredList) {
         mProfilesList = filteredList;
         notifyDataSetChanged();
+    }
+
+    public interface OnProfileListener {
+        void onProfileClick(int position);
     }
 }

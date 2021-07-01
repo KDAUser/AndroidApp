@@ -11,13 +11,14 @@ import java.util.ArrayList;
 public class SearchProfileViewModel extends ViewModel {
 
     private ArrayList<ProfileItem> mProfilesList;
+    private ArrayList<ProfileItem> filteredList;
 
     private RecyclerView mProfilesView;
     private SearchProfileAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     public void filter(String text) {
-        ArrayList<ProfileItem> filteredList = new ArrayList<>();
+        filteredList = new ArrayList<>();
 
         for (ProfileItem item : mProfilesList) {
             if (item.getSearchItemProfileName().toLowerCase().contains(text.toLowerCase())) {
@@ -41,13 +42,17 @@ public class SearchProfileViewModel extends ViewModel {
         mProfilesList.add(new ProfileItem("Susan"));
     }
 
-    public void buildRecyclerView(RecyclerView mProfilesView, Context context) {
+    public void buildRecyclerView(RecyclerView mProfilesView, Context context, SearchProfileAdapter.OnProfileListener onProfileListener) {
         mProfilesView = mProfilesView;
         mProfilesView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
-        mAdapter = new SearchProfileAdapter(mProfilesList);
+        mAdapter = new SearchProfileAdapter(mProfilesList, onProfileListener);
 
         mProfilesView.setLayoutManager(mLayoutManager);
         mProfilesView.setAdapter(mAdapter);
+    }
+
+    public ArrayList<ProfileItem> getFilteredList() {
+        return filteredList;
     }
 }
