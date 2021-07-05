@@ -133,25 +133,14 @@ public class AddLocationsFragment extends Fragment {
         saveLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> currentTipTextArray = new ArrayList<>();
-                ArrayList<ImageView> currentTipImageArray = new ArrayList<>();
-                currentTipTextArray.add(tipText[0].getText().toString());
-                currentTipTextArray.add(tipText[1].getText().toString());
-                currentTipTextArray.add(tipText[2].getText().toString());
-                currentTipTextArray.add(tipText[3].getText().toString());
-                currentTipTextArray.add(tipText[4].getText().toString());
-                currentTipImageArray.add(tipImage[0]);
-                currentTipImageArray.add(tipImage[1]);
-                currentTipImageArray.add(tipImage[2]);
-                currentTipImageArray.add(tipImage[3]);
-                currentTipImageArray.add(tipImage[4]);
-                addLocationsViewModel.saveLocation(addLocationName.getText().toString(), currentTipTextArray, currentTipImageArray);
+                saveLocation(addLocationName);
             }
         });
 
         uploadLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveLocation(addLocationName);
                 if (addLocationsViewModel.isLocationComplete()) {
                     new addLocation().execute(addLocationsViewModel.prepareParams(imageSet));
                     addLocationsViewModel.clearObject();
@@ -331,5 +320,21 @@ public class AddLocationsFragment extends Fragment {
         currentTipImageArray.add(tipImage[3]);
         currentTipImageArray.add(tipImage[4]);
         addLocationsViewModel.addTips(currentTipTextArray, currentTipImageArray);
+    }
+
+    public void saveLocation(EditText locationName) {
+        ArrayList<String> currentTipTextArray = new ArrayList<>();
+        ArrayList<ImageView> currentTipImageArray = new ArrayList<>();
+        currentTipTextArray.add(tipText[0].getText().toString());
+        currentTipTextArray.add(tipText[1].getText().toString());
+        currentTipTextArray.add(tipText[2].getText().toString());
+        currentTipTextArray.add(tipText[3].getText().toString());
+        currentTipTextArray.add(tipText[4].getText().toString());
+        currentTipImageArray.add(tipImage[0]);
+        currentTipImageArray.add(tipImage[1]);
+        currentTipImageArray.add(tipImage[2]);
+        currentTipImageArray.add(tipImage[3]);
+        currentTipImageArray.add(tipImage[4]);
+        addLocationsViewModel.saveLocation(locationName.getText().toString(), currentTipTextArray, currentTipImageArray);
     }
 }
