@@ -46,6 +46,7 @@ import org.json.JSONObject;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -59,11 +60,12 @@ public class AddLocationsFragment extends Fragment {
     private ImageView[] tipImage = new ImageView[5];
     private EditText[] tipText = new EditText[5];
     private int imageIndex = 0;
+    private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_add_locations, container, false);
+        root = inflater.inflate(R.layout.fragment_add_locations, container, false);
 
         addLocationsViewModel = new ViewModelProvider(requireActivity()).get(AddLocationsViewModel.class);
 
@@ -151,13 +153,16 @@ public class AddLocationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (addLocationsViewModel.isLocationComplete()) {
-                    Toast.makeText(root.getContext(), "Location is complete!", Toast.LENGTH_SHORT).show();
+                    new addLocation().execute(addLocationsViewModel.prepareParams(imageSet));
+                    addLocationsViewModel.clearObject();
+                    clearView(addLocationName, editTextLatitude, editTextLongitude);
+                    setupTips();
                 } else {
                     Toast.makeText(root.getContext(), "Location is not complete!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
+        setupTips();
         setupView(addLocationName, editTextLatitude, editTextLongitude);
         return root;
     }
@@ -266,6 +271,20 @@ public class AddLocationsFragment extends Fragment {
         }
     }
 
+    public void clearView(EditText locationName, EditText latitude, EditText longitude) {
+        JFILocation location = addLocationsViewModel.getmLocation();
+        locationName.setText(location.getLocationName());
+        for(EditText tiptext: tipText) {
+            tiptext.setText("");
+        }
+        for(ImageView tipimage: tipImage) {
+            tipimage.setVisibility(View.GONE);
+        }
+        Arrays.fill(imageSet, false);
+        latitude.setText("");
+        longitude.setText("");
+    }
+
     class addLocation extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
         private final String link = getString(R.string.server_address) + "addLocation.php";
         private ProgressDialog pDialog;
@@ -289,12 +308,28 @@ public class AddLocationsFragment extends Fragment {
             pDialog.dismiss();
             try{
                 if(feedback.getInt("success") == 1) {
-
+                    Toast.makeText(root.getContext(), feedback.getString("name"), Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setupTips() {
+        ArrayList<String> currentTipTextArray = new ArrayList<>();
+        ArrayList<ImageView> currentTipImageArray = new ArrayList<>();
+        currentTipTextArray.add(tipText[0].getText().toString());
+        currentTipTextArray.add(tipText[1].getText().toString());
+        currentTipTextArray.add(tipText[2].getText().toString());
+        currentTipTextArray.add(tipText[3].getText().toString());
+        currentTipTextArray.add(tipText[4].getText().toString());
+        currentTipImageArray.add(tipImage[0]);
+        currentTipImageArray.add(tipImage[1]);
+        currentTipImageArray.add(tipImage[2]);
+        currentTipImageArray.add(tipImage[3]);
+        currentTipImageArray.add(tipImage[4]);
+        addLocationsViewModel.addTips(currentTipTextArray, currentTipImageArray);
     }
 }

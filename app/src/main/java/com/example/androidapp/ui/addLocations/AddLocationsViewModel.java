@@ -1,7 +1,9 @@
 package com.example.androidapp.ui.addLocations;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -15,6 +17,7 @@ import com.example.androidapp.ui.locations.TipItem;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class AddLocationsViewModel extends ViewModel {
         mLocation.setLocationName(locationName);
     }
 
-    private void addTips(ArrayList<String> tipTexts, ArrayList<ImageView> tipImages) {
+    public void addTips(ArrayList<String> tipTexts, ArrayList<ImageView> tipImages) {
         String[] tipTextsTab = new String[5];
         ImageView[] tipImagesTab = new ImageView[5];
         ArrayList<TipItem> newTips = new ArrayList<>();
@@ -101,9 +104,28 @@ public class AddLocationsViewModel extends ViewModel {
         return false;
     }
 
-    public List<NameValuePair> uploadLocation(){
-        List<NameValuePair>  params = new ArrayList<>();
-        //params.add(new BasicNameValuePair("pass", currPasswordStr));
+    public List<NameValuePair> prepareParams(Boolean[] areImagesSet){
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("name", mLocation.getLocationName()));
+        params.add(new BasicNameValuePair("latitude", String.valueOf(mLocation.getLatitude())));
+        params.add(new BasicNameValuePair("longitude", String.valueOf(mLocation.getLongitude())));
+        int i = 0;
+        for(TipItem tip: mLocation.getLocationTips()) {
+            params.add(new BasicNameValuePair("tip"+(i+1), tip.getmTipText()));
+            if (areImagesSet[i]) {
+                Bitmap bitmap = ((BitmapDrawable) tip.getmTipImage().getDrawable()).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+                byte[] byte_arr = stream.toByteArray();
+                String encodedImage = Base64.encodeToString(byte_arr, Base64.DEFAULT);
+                params.add(new BasicNameValuePair("tip"+(i+1)+"image", encodedImage));
+            }
+            i++;
+        }
         return params;
+    }
+
+    public void clearObject() {
+        mLocation = new JFILocation(0, false, "", 5, null);
     }
 }
