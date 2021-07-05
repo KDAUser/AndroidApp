@@ -12,7 +12,11 @@ import androidx.lifecycle.ViewModel;
 import com.example.androidapp.ui.locations.JFILocation;
 import com.example.androidapp.ui.locations.TipItem;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddLocationsViewModel extends ViewModel {
 
@@ -84,7 +88,7 @@ public class AddLocationsViewModel extends ViewModel {
         setCoordinates();
     }
 
-    public Boolean uploadLocation() {
+    public Boolean isLocationComplete() {
         int i = 0;
         for (TipItem locationTip: mLocation.getLocationTips()) {
             if (!locationTip.getmTipText().equals("")) {
@@ -95,5 +99,11 @@ public class AddLocationsViewModel extends ViewModel {
             return true;
         }
         return false;
+    }
+
+    public List<NameValuePair> uploadLocation(){
+        List<NameValuePair>  params = new ArrayList<>();
+        //params.add(new BasicNameValuePair("pass", currPasswordStr));
+        return params;
     }
 }

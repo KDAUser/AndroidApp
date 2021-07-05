@@ -2,8 +2,10 @@ package com.example.androidapp.ui.addLocations;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +14,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +32,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.locations.JFILocation;
@@ -36,8 +40,13 @@ import com.example.androidapp.ui.locations.LocationsViewModel;
 import com.example.androidapp.ui.locations.TipItem;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import org.apache.http.NameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -141,7 +150,7 @@ public class AddLocationsFragment extends Fragment {
         uploadLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (addLocationsViewModel.uploadLocation()) {
+                if (addLocationsViewModel.isLocationComplete()) {
                     Toast.makeText(root.getContext(), "Location is complete!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(root.getContext(), "Location is not complete!", Toast.LENGTH_SHORT).show();
@@ -254,6 +263,38 @@ public class AddLocationsFragment extends Fragment {
         }
         if (location.getLongitude() != 0.0) {
             longitude.setText("" + Math.floor(location.getLongitude() * 100000) / 100000);
+        }
+    }
+
+    class addLocation extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
+        private final String link = getString(R.string.server_address) + "addLocation.php";
+        private ProgressDialog pDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pDialog = new ProgressDialog(getContext());
+            pDialog.setMessage("Loading data. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+        @Override
+        protected JSONObject doInBackground(List<NameValuePair>... args) {
+            return new JSONParser().makeHttpRequest(link, "POST", args[0]);
+        }
+        @Override
+        protected void onPostExecute(JSONObject feedback) {
+            pDialog.dismiss();
+            try{
+                if(feedback.getInt("success") == 1) {
+
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
