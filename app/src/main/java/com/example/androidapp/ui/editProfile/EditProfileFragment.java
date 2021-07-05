@@ -1,6 +1,5 @@
 package com.example.androidapp.ui.editProfile;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,16 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
-import com.example.androidapp.ui.login.LoginFragment;
-import com.google.android.material.navigation.NavigationView;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.apache.http.NameValuePair;
@@ -42,7 +35,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +42,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class EditProfileFragment extends Fragment {
     private View root;
+    private SharedPreferences sp;
 
     private EditText login;
     private ImageView avatar;
@@ -58,6 +51,7 @@ public class EditProfileFragment extends Fragment {
     private EditText email;
     private EditText password;
     private EditText confPassword;
+    private EditText currPassword;
     private Button saveButton;
 
     private TextView error_loginLength;
@@ -68,18 +62,15 @@ public class EditProfileFragment extends Fragment {
     private TextView error_emailOccupied;
     private TextView error_loginOccupied;
     private TextView error_imageNotLoad;
+    private TextView error_badCurrPassword;
 
     private Uri newAvatarUri;
     private Boolean newAvatarSet = false;
-    private EditProfileViewModel editProfileViewModel;
-    private SharedPreferences sp;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        editProfileViewModel =
-                new ViewModelProvider(this).get(EditProfileViewModel.class);
         root = inflater.inflate(R.layout.fragment_edit_profile, container, false);
-        sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        sp = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         loadViewElements();
         loadViewData();
@@ -124,7 +115,7 @@ public class EditProfileFragment extends Fragment {
         email = (EditText) root.findViewById(R.id.editProfilePage_email);
         password = (EditText) root.findViewById(R.id.editProfilePage_password);
         confPassword = (EditText) root.findViewById(R.id.editProfilePage_confPassword);
-        description = (EditText) root.findViewById(R.id.editProfilePage_description);
+        currPassword = (EditText) root.findViewById(R.id.editProfilePage_currPassword);
         saveButton = (Button) root.findViewById(R.id.editProfilePage_saveButton);
 
         error_loginLength = (TextView) root.findViewById(R.id.editProfileError_loginLength);
@@ -135,16 +126,11 @@ public class EditProfileFragment extends Fragment {
         error_emailOccupied = (TextView) root.findViewById(R.id.editProfileError_emailOccupied);
         error_loginOccupied = (TextView) root.findViewById(R.id.editProfileError_loginOccupied);
         error_imageNotLoad = (TextView) root.findViewById(R.id.editProfileError_imageNotLoad);
+        error_badCurrPassword = (TextView) root.findViewById(R.id.editProfileError_badCurrPassword);
     }
 
     private void loadViewData(){
-        login.setHint(sp.getString("login", ""));
-        String avatar_path = sp.getString("avatar", "");
-        if(avatar_path != "") {
-            avatar.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
-        }
-        description.setText(sp.getString("description", ""));
-        email.setHint(sp.getString("email", ""));
+        loadUserData();
 
         avatarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +149,7 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    ((MainActivity)getActivity()).hideKeyboard(v);
+                    ((MainActivity) requireActivity()).hideKeyboard(v);
                 }
             }
         };
@@ -172,6 +158,18 @@ public class EditProfileFragment extends Fragment {
         email.setOnFocusChangeListener(hideSoftKeyboard);
         password.setOnFocusChangeListener(hideSoftKeyboard);
         confPassword.setOnFocusChangeListener(hideSoftKeyboard);
+        currPassword.setOnFocusChangeListener(hideSoftKeyboard);
+    }
+
+    private void loadUserData() {
+        login.setHint(sp.getString("login", ""));
+        login.setText("");
+        String avatar_path = sp.getString("avatar", "");
+        if (!avatar_path.equals("")) {
+            avatar.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
+        }
+        description.setText(sp.getString("description", ""));
+        email.setHint(sp.getString("email", ""));
     }
 
     private void startCropImageActivity() {
@@ -180,7 +178,7 @@ public class EditProfileFragment extends Fragment {
                 .setCropMenuCropButtonTitle(getString(R.string.registrationPage_cropAvatar))
                 .setAspectRatio(1, 1)
                 .setMinCropResultSize(200, 200)
-                .start(getContext(), this);
+                .start(requireContext(), this);
     }
 
     private void saveChanges(){
@@ -189,9 +187,11 @@ public class EditProfileFragment extends Fragment {
         String emailStr = email.getText().toString();
         String passwordStr = password.getText().toString();
         String confPasswordStr = confPassword.getText().toString();
+        String currPasswordStr = currPassword.getText().toString();
 
-
-        List<NameValuePair>  params = new ArrayList<NameValuePair>();
+        List<NameValuePair>  params = new ArrayList<>();
+        if(!currPasswordStr.equals(""))
+            params.add(new BasicNameValuePair("pass", currPasswordStr));
         if(!loginStr.equals(sp.getString("login", "")) & !loginStr.equals(""))
             params.add(new BasicNameValuePair("login", loginStr));
         if(!descriptionStr.equals(sp.getString("description", "")))
@@ -213,16 +213,25 @@ public class EditProfileFragment extends Fragment {
         }
 
         if(params.isEmpty()){
-            Toast.makeText(getContext(), "No changes provided", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.editProfileNote_noChanges, Toast.LENGTH_SHORT).show();
         }
         else{
-            new updateUserProfile().execute(params);
-            Toast.makeText(getContext(), "Changes detected", Toast.LENGTH_SHORT).show();
+            if(!currPasswordStr.equals("")) {
+                if(params.size()>1) {
+                    params.add(new BasicNameValuePair("id", sp.getString("id", "")));
+                    new updateUserProfile().execute(params);
+                    Toast.makeText(getContext(), R.string.editProfileNote_changesDetected, Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(getContext(), R.string.editProfileNote_noChanges, Toast.LENGTH_SHORT).show();
+            }
+            else
+                Toast.makeText(getContext(), R.string.editProfileNote_noCurrPassword, Toast.LENGTH_SHORT).show();
         }
     }
 
     class updateUserProfile extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
-        private String link = getString(R.string.server_address) + "editProfile.php";
+        private final String link = getString(R.string.server_address) + "editProfile.php";
         private ProgressDialog pDialog;
 
         @Override
@@ -244,57 +253,69 @@ public class EditProfileFragment extends Fragment {
             pDialog.dismiss();
             try{
                 if(feedback.getInt("success") == 1) {
+                    SharedPreferences.Editor sp_editor = sp.edit();
+                    if(feedback.has("newLogin")) {
+                        sp_editor.putString ("login", feedback.getString("newLogin"));
+                    }
+                    sp_editor.apply();
+
+                    loadUserData();
+                    ((MainActivity) requireActivity()).isUserLogin();
                     Toast.makeText(getContext(), "Proper PHP script feedback", Toast.LENGTH_SHORT).show();
                 }
-                else {
-                    if(feedback.getInt("error_loginLength") == 1){
-                        error_loginLength.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        error_loginLength.setVisibility(View.GONE);
-                    }
-                    if(feedback.getInt("error_loginSyntax") == 1){
-                        error_loginSyntax.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        error_loginSyntax.setVisibility(View.GONE);
-                    }
-                    if(feedback.getInt("error_emailSyntax") == 1){
-                        error_emailSyntax.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        error_emailSyntax.setVisibility(View.GONE);
-                    }
-                    if(feedback.getInt("error_passwordLength") == 1){
-                        error_passwordLength.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        error_passwordLength.setVisibility(View.GONE);
-                    }
-                    if(feedback.getInt("error_passwordsNotMatch") == 1){
-                        error_passwordsNotMatch.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        error_passwordsNotMatch.setVisibility(View.GONE);
-                    }
-                    if(feedback.getInt("error_emailOccupied") == 1){
-                        error_emailOccupied.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        error_emailOccupied.setVisibility(View.GONE);
-                    }
-                    if(feedback.getInt("error_loginOccupied") == 1){
-                        error_loginOccupied.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        error_loginOccupied.setVisibility(View.GONE);
-                    }
-                    if(feedback.getInt("error_imageNotLoad") == 1){
-                        error_imageNotLoad.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        error_imageNotLoad.setVisibility(View.GONE);
-                    }
+                if(feedback.getInt("error_loginLength") == 1){
+                    error_loginLength.setVisibility(View.VISIBLE);
+                }
+                else{
+                    error_loginLength.setVisibility(View.GONE);
+                }
+                if(feedback.getInt("error_loginSyntax") == 1){
+                    error_loginSyntax.setVisibility(View.VISIBLE);
+                }
+                else{
+                    error_loginSyntax.setVisibility(View.GONE);
+                }
+                if(feedback.getInt("error_emailSyntax") == 1){
+                    error_emailSyntax.setVisibility(View.VISIBLE);
+                }
+                else{
+                    error_emailSyntax.setVisibility(View.GONE);
+                }
+                if(feedback.getInt("error_passwordLength") == 1){
+                    error_passwordLength.setVisibility(View.VISIBLE);
+                }
+                else{
+                    error_passwordLength.setVisibility(View.GONE);
+                }
+                if(feedback.getInt("error_passwordsNotMatch") == 1){
+                    error_passwordsNotMatch.setVisibility(View.VISIBLE);
+                }
+                else{
+                    error_passwordsNotMatch.setVisibility(View.GONE);
+                }
+                if(feedback.getInt("error_emailOccupied") == 1){
+                    error_emailOccupied.setVisibility(View.VISIBLE);
+                }
+                else{
+                    error_emailOccupied.setVisibility(View.GONE);
+                }
+                if(feedback.getInt("error_loginOccupied") == 1){
+                    error_loginOccupied.setVisibility(View.VISIBLE);
+                }
+                else{
+                    error_loginOccupied.setVisibility(View.GONE);
+                }
+                if(feedback.getInt("error_imageNotLoad") == 1){
+                    error_imageNotLoad.setVisibility(View.VISIBLE);
+                }
+                else{
+                    error_imageNotLoad.setVisibility(View.GONE);
+                }
+                if(feedback.getInt("error_badCurrPassword") == 1){
+                    error_badCurrPassword.setVisibility(View.VISIBLE);
+                }
+                else{
+                    error_badCurrPassword.setVisibility(View.GONE);
                 }
             }
             catch (JSONException e) {

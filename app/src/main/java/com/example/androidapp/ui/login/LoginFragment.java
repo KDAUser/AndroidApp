@@ -121,6 +121,7 @@ public class LoginFragment extends Fragment {
                             if(feedback.getInt("success") == 1) {
                                 SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                                 SharedPreferences.Editor sp_editor = sp.edit();
+                                sp_editor.putString("id", feedback.getString("id"));
                                 sp_editor.putString("login", login.getText().toString());
                                 sp_editor.putString("email", feedback.getString("email"));
                                 sp_editor.putString("description", feedback.getString("description"));

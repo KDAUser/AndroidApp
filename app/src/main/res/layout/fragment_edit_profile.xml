@@ -35,9 +35,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/editProfilePage_saveButtonText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider5" />
+            app:layout_constraintEnd_toEndOf="@+id/editProfilePage_currPasswordLabel"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_currPasswordLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfileError_badCurrPassword" />
 
         <EditText
             android:id="@+id/editProfilePage_email"
@@ -102,6 +103,21 @@
             android:textColor="@color/textColor"
             app:layout_constraintStart_toStartOf="@+id/editProfilePage_passwordLabel"
             app:layout_constraintTop_toBottomOf="@+id/editProfilePage_passwordLabel" />
+
+        <EditText
+            android:id="@+id/editProfilePage_currPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:autofillHints="password"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="@string/loginPage_password"
+            android:inputType="textPassword"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toEndOf="@+id/editProfilePage_currPasswordLabel"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_currPasswordLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_currPasswordLabel" />
 
         <EditText
             android:id="@+id/editProfilePage_description"
@@ -270,7 +286,7 @@
 
         <View
             android:id="@+id/divider"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/listDivider"
@@ -281,7 +297,7 @@
 
         <View
             android:id="@+id/divider2"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/listDivider"
@@ -292,7 +308,7 @@
 
         <View
             android:id="@+id/divider3"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/listDivider"
@@ -302,7 +318,7 @@
 
         <View
             android:id="@+id/divider4"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/listDivider"
@@ -313,7 +329,7 @@
 
         <View
             android:id="@+id/divider5"
-            android:layout_width="404dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/listDivider"
@@ -321,6 +337,29 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editProfileError_passwordsNotMatch" />
+
+        <TextView
+            android:id="@+id/editProfilePage_currPasswordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/editProfilePage_currPasswordLabelText"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider5" />
+
+        <TextView
+            android:id="@+id/editProfileError_badCurrPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/editProfileError_badCurrPassword"
+            android:textColor="#F44336"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/editProfilePage_currPasswordLabel"
+            app:layout_constraintStart_toStartOf="@+id/editProfilePage_currPasswordLabel"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePage_currPassword" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

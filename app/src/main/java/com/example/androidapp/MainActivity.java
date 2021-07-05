@@ -6,19 +6,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,17 +23,16 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.androidapp.ui.profile.ProfileViewModel;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
 
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setupNavigationMenu();
         setupLocationListener();
 
-        getSupportActionBar().setTitle("");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES);
 
         isUserLogin();
@@ -160,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    public boolean isUserLogin(){
+    public void isUserLogin(){
         SharedPreferences sp = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        if(sp.getString("login", "") != ""){
+        if(!sp.getString("login", "").equals("")){
             NavigationView navigationView = (NavigationView) this.findViewById(R.id.nav_view);
             View hView = navigationView.getHeaderView(0);
             ImageView profile_image = (ImageView) hView.findViewById(R.id.profile_image);
@@ -171,22 +167,18 @@ public class MainActivity extends AppCompatActivity {
             profile_login.setText(sp.getString("login", ""));
             profile_email.setText(sp.getString("email", ""));
             String avatar_path = sp.getString("avatar", "");
-            if(avatar_path != "") {
+            if(!avatar_path.equals("")) {
                 profile_image.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
             }
-            return true;
-        }
-        else{
-            return false;
         }
     }
 
     public void setupLocationListener() {
-        LocationManager loacationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        loacationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
     }
 
     public void hideKeyboard(View view) {

@@ -77,4 +77,9 @@
     <string name="editProfilePage_editEmailLabelText">Change associated email</string>
     <string name="editProfilePage_editPasswordLabelText">Set new account password</string>
     <string name="editProfilePage_saveButtonText">Save changes</string>
+    <string name="editProfilePage_currPasswordLabelText">Provide current password</string>
+    <string name="editProfileError_badCurrPassword">Bad current password</string>
+    <string name="editProfileNote_noChanges">No changes provided</string>
+    <string name="editProfileNote_noCurrPassword">Current password is necessary</string>
+    <string name="editProfileNote_changesDetected">Changes detected</string>
 </resources>
