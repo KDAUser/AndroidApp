@@ -76,8 +76,12 @@ public class LocationsFragment extends Fragment {
         addTipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                locationsViewModel.addTip();
-                locationsViewModel.setStars(locationsViewModel.getAreStarsOn(), starsOn, starsOff);
+                if(!locationsViewModel.isLocationSolved()) {
+                    locationsViewModel.addTip();
+                    locationsViewModel.setStars(locationsViewModel.getAreStarsOn(), starsOn, starsOff);
+                } else {
+                    Toast.makeText(root.getContext(), "This location is already solved!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -91,7 +95,17 @@ public class LocationsFragment extends Fragment {
         checkPositionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(root.getContext(), locationsViewModel.checkLocation(((MainActivity) getActivity()).getActualLocation()), Toast.LENGTH_SHORT).show();
+                if(!locationsViewModel.isLocationSolved()) {
+                    if (locationsViewModel.checkLocation(((MainActivity) getActivity()).getActualLocation())) {
+                        Toast.makeText(root.getContext(), "Nice man! You solved this location!", Toast.LENGTH_SHORT).show();
+                        locationsViewModel.setLocationSolved();
+
+                    } else {
+                        Toast.makeText(root.getContext(), "Too bad!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(root.getContext(), "This location is already solved!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -105,8 +119,7 @@ public class LocationsFragment extends Fragment {
                 new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_locations, container, false);
         locationsViewModel.createExampleItemList();
-        JFILocation jfiLocation = locationsViewModel.getmLocation();
-        prepareLocationView(root, jfiLocation);
+        prepareLocationView(root, locationsViewModel.getmLocation());
         locationsViewModel.getLocationCoordinates();
         return root;
     }

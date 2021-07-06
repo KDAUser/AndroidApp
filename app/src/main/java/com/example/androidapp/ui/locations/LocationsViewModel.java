@@ -11,7 +11,11 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class LocationsViewModel extends ViewModel {
 
@@ -133,16 +137,12 @@ public class LocationsViewModel extends ViewModel {
         return areStarsOn;
     }
 
-    public String checkLocation(Location location){
+    public Boolean checkLocation(Location location){
         double distance = Math.sqrt(Math.pow(mLocation.getLatitude()-location.getLatitude(),2)+Math.pow(mLocation.getLongitude()-location.getLongitude(),2))*111.139;
         if(distance<10) {
-            return "Nice man! "+distance;
+            return true;
         }
-        return "Too bad! "+distance;
-    }
-
-    public void setmLastLocationId(int mLastLocationId) {
-        this.mLastLocationId = mLastLocationId;
+        return false;
     }
 
     public int getmLastLocationId() {
@@ -153,15 +153,39 @@ public class LocationsViewModel extends ViewModel {
         return mLocation;
     }
 
-    public void getLocationFromDB(){
-
+    public void getLocationFromDB(int id, Boolean isSolved, String locationName, int numberOfStars, double latitude, double longitude){
+        mLastLocationId = id;
+        ArrayList<TipItem> tipsList = new ArrayList<>();
+        //tipsList.add()
+        mLocation.setLocationTips(tipsList);
+        //firstTip =
+        mLocation = new JFILocation(id, isSolved, locationName, numberOfStars, null);
+        mLocation.setLatitude(latitude);
+        mLocation.setLongitude(longitude);
+        updateStars(mLocation.getNumberOfStars());
+        updateTipList();
     }
 
-    public void sendLocationToDB(){
-
+    public List<NameValuePair> prepareParams(Boolean isSolved, int numberOfStars) {
+        List<NameValuePair> params = new ArrayList<>();
+        if(isSolved!=null){
+            params.add(new BasicNameValuePair("solved", String.valueOf(mLocation.isSolved())));
+        }
+        if(numberOfStars!=0){
+            params.add(new BasicNameValuePair("numberofstars", String.valueOf(mLocation.getNumberOfStars())));
+        }
+        return params;
     }
 
     public void setLocationName(String name) {
         mLocation.setLocationName(name);
+    }
+
+    public void setLocationSolved() {
+        mLocation.setSolved(true);
+    }
+
+    public Boolean isLocationSolved() {
+        return mLocation.isSolved();
     }
 }
