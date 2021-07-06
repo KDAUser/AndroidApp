@@ -86,4 +86,5 @@
     <string name="editProfileNote_noChanges">No changes provided</string>
     <string name="editProfileNote_noCurrPassword">Current password is necessary</string>
     <string name="editProfileNote_changesDetected">Changes detected</string>
+    <string name="addLocation_cropImageTitle">Choose image</string>
 </resources>

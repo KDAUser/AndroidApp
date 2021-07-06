@@ -153,8 +153,8 @@ public class AddLocationsFragment extends Fragment {
                 }
             }
         });
-        setupTips();
         setupView(addLocationName, editTextLatitude, editTextLongitude);
+        setupTips();
         return root;
     }
 
@@ -229,7 +229,7 @@ public class AddLocationsFragment extends Fragment {
 
     private void startCropImageActivity() {
         CropImage.activity()
-                .setActivityTitle(getString(R.string.registrationPage_editAvatar))
+                .setActivityTitle(getString(R.string.addLocation_cropImageTitle))
                 .setCropMenuCropButtonTitle(getString(R.string.registrationPage_cropAvatar))
                 .setMinCropResultSize(200, 200)
                 .start(getContext(), this);
