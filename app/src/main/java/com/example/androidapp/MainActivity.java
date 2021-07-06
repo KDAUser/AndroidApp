@@ -3,8 +3,10 @@ package com.example.androidapp;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
@@ -32,6 +34,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Objects;
 
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
@@ -159,11 +163,11 @@ public class MainActivity extends AppCompatActivity {
     public void isUserLogin(){
         SharedPreferences sp = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         if(!sp.getString("login", "").equals("")){
-            NavigationView navigationView = (NavigationView) this.findViewById(R.id.nav_view);
+            NavigationView navigationView = this.findViewById(R.id.nav_view);
             View hView = navigationView.getHeaderView(0);
-            ImageView profile_image = (ImageView) hView.findViewById(R.id.profile_image);
-            TextView profile_login = (TextView) hView.findViewById(R.id.profile_login);
-            TextView profile_email = (TextView) hView.findViewById(R.id.profile_email);
+            ImageView profile_image = hView.findViewById(R.id.profile_image);
+            TextView profile_login = hView.findViewById(R.id.profile_login);
+            TextView profile_email = hView.findViewById(R.id.profile_email);
             profile_login.setText(sp.getString("login", ""));
             profile_email.setText(sp.getString("email", ""));
             String avatar_path = sp.getString("avatar", "");
@@ -171,6 +175,21 @@ public class MainActivity extends AppCompatActivity {
                 profile_image.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
             }
         }
+    }
+
+    public String saveAvatarToInternalStorage(Bitmap bitmapImage) {
+        ContextWrapper cw = new ContextWrapper(this);
+        File directory = cw.getDir("data", Context.MODE_PRIVATE);
+        File file_path = new File(directory, "avatar.jpg");
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file_path);
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file_path.getAbsolutePath();
     }
 
     public void setupLocationListener() {

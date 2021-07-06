@@ -1,11 +1,13 @@
 package com.example.androidapp.ui.editProfile;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -81,12 +83,10 @@ public class EditProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                newAvatarUri = result.getUri();
-
-                try
-                {
+            try {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK) {
+                    newAvatarUri = result.getUri();
                     // Resize chosen image
                     Bitmap bm_in = BitmapFactory.decodeFile(newAvatarUri.getEncodedPath());
                     Bitmap bm_out = Bitmap.createScaledBitmap(bm_in, 200, 200, false);
@@ -96,37 +96,35 @@ public class EditProfileFragment extends Fragment {
                     // Update view
                     newAvatarSet = true;
                     avatar.setImageBitmap(bm_out);
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    throw result.getError();
                 }
-                catch (Exception e)
-                {
-                    Log.e("Edit Profile image", e.getMessage(), e);
-                }
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+            } catch (Exception e) {
+                Log.e("Edit Profile image", e.getMessage(), e);
             }
         }
     }
 
     private void loadViewElements(){
-        login = (EditText) root.findViewById(R.id.editProfilePage_login);
-        avatar = (ImageView) root.findViewById(R.id.editProfilePage_avatar);
-        avatarButton = (Button) root.findViewById(R.id.editProfilePage_avatarButton);
-        description = (EditText) root.findViewById(R.id.editProfilePage_description);
-        email = (EditText) root.findViewById(R.id.editProfilePage_email);
-        password = (EditText) root.findViewById(R.id.editProfilePage_password);
-        confPassword = (EditText) root.findViewById(R.id.editProfilePage_confPassword);
-        currPassword = (EditText) root.findViewById(R.id.editProfilePage_currPassword);
-        saveButton = (Button) root.findViewById(R.id.editProfilePage_saveButton);
+        login = root.findViewById(R.id.editProfilePage_login);
+        avatar = root.findViewById(R.id.editProfilePage_avatar);
+        avatarButton = root.findViewById(R.id.editProfilePage_avatarButton);
+        description = root.findViewById(R.id.editProfilePage_description);
+        email = root.findViewById(R.id.editProfilePage_email);
+        password = root.findViewById(R.id.editProfilePage_password);
+        confPassword = root.findViewById(R.id.editProfilePage_confPassword);
+        currPassword = root.findViewById(R.id.editProfilePage_currPassword);
+        saveButton = root.findViewById(R.id.editProfilePage_saveButton);
 
-        error_loginLength = (TextView) root.findViewById(R.id.editProfileError_loginLength);
-        error_loginSyntax = (TextView) root.findViewById(R.id.editProfileError_loginSyntax);
-        error_emailSyntax = (TextView) root.findViewById(R.id.editProfileError_emailSyntax);
-        error_passwordLength = (TextView) root.findViewById(R.id.editProfileError_passwordLength);
-        error_passwordsNotMatch = (TextView) root.findViewById(R.id.editProfileError_passwordsNotMatch);
-        error_emailOccupied = (TextView) root.findViewById(R.id.editProfileError_emailOccupied);
-        error_loginOccupied = (TextView) root.findViewById(R.id.editProfileError_loginOccupied);
-        error_imageNotLoad = (TextView) root.findViewById(R.id.editProfileError_imageNotLoad);
-        error_badCurrPassword = (TextView) root.findViewById(R.id.editProfileError_badCurrPassword);
+        error_loginLength = root.findViewById(R.id.editProfileError_loginLength);
+        error_loginSyntax = root.findViewById(R.id.editProfileError_loginSyntax);
+        error_emailSyntax = root.findViewById(R.id.editProfileError_emailSyntax);
+        error_passwordLength = root.findViewById(R.id.editProfileError_passwordLength);
+        error_passwordsNotMatch = root.findViewById(R.id.editProfileError_passwordsNotMatch);
+        error_emailOccupied = root.findViewById(R.id.editProfileError_emailOccupied);
+        error_loginOccupied = root.findViewById(R.id.editProfileError_loginOccupied);
+        error_imageNotLoad =  root.findViewById(R.id.editProfileError_imageNotLoad);
+        error_badCurrPassword = root.findViewById(R.id.editProfileError_badCurrPassword);
     }
 
     private void loadViewData(){
@@ -170,6 +168,7 @@ public class EditProfileFragment extends Fragment {
         }
         description.setText(sp.getString("description", ""));
         email.setHint(sp.getString("email", ""));
+        email.setText("");
     }
 
     private void startCropImageActivity() {
@@ -213,23 +212,24 @@ public class EditProfileFragment extends Fragment {
         }
 
         if(params.isEmpty()){
-            Toast.makeText(getContext(), R.string.editProfileNote_noChanges, Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), R.string.editProfileNote_noChanges, Toast.LENGTH_SHORT).show();
         }
         else{
             if(!currPasswordStr.equals("")) {
                 if(params.size()>1) {
                     params.add(new BasicNameValuePair("id", sp.getString("id", "")));
                     new updateUserProfile().execute(params);
-                    Toast.makeText(getContext(), R.string.editProfileNote_changesDetected, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.editProfileNote_changesDetected, Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(getContext(), R.string.editProfileNote_noChanges, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.editProfileNote_noChanges, Toast.LENGTH_SHORT).show();
             }
             else
-                Toast.makeText(getContext(), R.string.editProfileNote_noCurrPassword, Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), R.string.editProfileNote_noCurrPassword, Toast.LENGTH_SHORT).show();
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     class updateUserProfile extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
         private final String link = getString(R.string.server_address) + "editProfile.php";
         private ProgressDialog pDialog;
@@ -239,13 +239,14 @@ public class EditProfileFragment extends Fragment {
             super.onPreExecute();
 
             pDialog = new ProgressDialog(getContext());
-            pDialog.setMessage("Loading data. Please wait...");
+            pDialog.setMessage(getString(R.string.note_loadingScreen));
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();
         }
+        @SafeVarargs
         @Override
-        protected JSONObject doInBackground(List<NameValuePair>... args) {
+        protected final JSONObject doInBackground(List<NameValuePair>... args) {
             return new JSONParser().makeHttpRequest(link, "POST", args[0]);
         }
         @Override
@@ -257,11 +258,20 @@ public class EditProfileFragment extends Fragment {
                     if(feedback.has("newLogin")) {
                         sp_editor.putString ("login", feedback.getString("newLogin"));
                     }
+                    if(feedback.has("newEmail")){
+                        sp_editor.putString ("email", feedback.getString("newEmail"));
+                    }
+                    if(feedback.has("newDescription")){
+                        sp_editor.putString ("description", feedback.getString("newDescription"));
+                    }
                     sp_editor.apply();
+                    if(feedback.has("newAvatar")){
+                        ((MainActivity)requireActivity()).saveAvatarToInternalStorage(((BitmapDrawable)avatar.getDrawable()).getBitmap());
+                    }
 
                     loadUserData();
                     ((MainActivity) requireActivity()).isUserLogin();
-                    Toast.makeText(getContext(), "Proper PHP script feedback", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.note_successfulEditProfile, Toast.LENGTH_SHORT).show();
                 }
                 if(feedback.getInt("error_loginLength") == 1){
                     error_loginLength.setVisibility(View.VISIBLE);

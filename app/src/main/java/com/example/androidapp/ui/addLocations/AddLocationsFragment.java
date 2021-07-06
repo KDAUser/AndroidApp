@@ -117,7 +117,9 @@ public class AddLocationsFragment extends Fragment {
         saveWrittenValuesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addLocationsViewModel.saveWrittenValues(Double.parseDouble(editTextLongitude.getText().toString()), Double.parseDouble(editTextLatitude.getText().toString()));
+                if(!editTextLongitude.getText().toString().isEmpty())
+                    if(!editTextLatitude.getText().toString().isEmpty())
+                        addLocationsViewModel.saveWrittenValues(Double.parseDouble(editTextLongitude.getText().toString()), Double.parseDouble(editTextLatitude.getText().toString()));
             }
         });
 
