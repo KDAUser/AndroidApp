@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class SearchLocationViewModel extends ViewModel {
 
-    private ArrayList<LocationItem> mLocationsList;
+    private ArrayList<LocationItem> mLocationsList = new ArrayList<>();
     private ArrayList<LocationItem> filteredList;
 
     private RecyclerView mLocationsView;
@@ -36,19 +36,6 @@ public class SearchLocationViewModel extends ViewModel {
         mAdapter.filterList(filteredList);
     }
 
-    public void createExampleLocationsList() {
-        mLocationsList = new ArrayList<>();
-//        mLocationsList.add(new LocationItem(1, "Białystok"));
-//        mLocationsList.add(new LocationItem(2, "Bydgoszcz"));
-//        mLocationsList.add(new LocationItem(3, "Gdańsk"));
-//        mLocationsList.add(new LocationItem(4, "Gorzów Wielkopolski"));
-//        mLocationsList.add(new LocationItem(5, "Katowice"));
-//        mLocationsList.add(new LocationItem(6, "Kielce"));
-//        mLocationsList.add(new LocationItem(7, "Kraków"));
-//        mLocationsList.add(new LocationItem(8, "Lublin"));
-//        mLocationsList.add(new LocationItem(9, "Łódź"));
-    }
-
     public void createLocationsList(JSONArray locationsList) {
         mLocationsList = new ArrayList<>();
         try{
@@ -56,6 +43,8 @@ public class SearchLocationViewModel extends ViewModel {
                 JSONObject location = locationsList.getJSONObject(i);
                 mLocationsList.add(new LocationItem(location.getInt("id"), location.getString("name")));
             }
+            mAdapter.filterList(mLocationsList);
+            filteredList = mLocationsList;
         } catch (JSONException e) {
             e.printStackTrace();
         }

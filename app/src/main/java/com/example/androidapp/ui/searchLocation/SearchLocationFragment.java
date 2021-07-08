@@ -49,7 +49,7 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
         searchLocationViewModel =
                 new ViewModelProvider(requireActivity()).get(SearchLocationViewModel.class);
         root = inflater.inflate(R.layout.fragment_search_location, container, false);
-        searchLocationViewModel.createExampleLocationsList();
+
         searchLocationViewModel.buildRecyclerView(root.findViewById(R.id.locationsView), root.getContext(),this);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
@@ -71,7 +71,6 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
             public void afterTextChanged(Editable s) {
                 searchLocationViewModel.setFilterText(s.toString());
                 searchLocationViewModel.filter(s.toString());
-                getResult();
             }
         });
 
@@ -83,15 +82,9 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
                 }
             }
         });
-
-        searchLocationViewModel.filter(editText.getText().toString());
-
-        return root;
-    }
-
-    public void getResult(){
         GetLocationsList getLocationsList = new GetLocationsList();
         getLocationsList.execute();
+        return root;
     }
 
     @Override
@@ -107,17 +100,11 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
 
     class GetLocationsList extends AsyncTask<Void, Void, JSONObject> {
         private final String link = getString(R.string.server_address) + "getLocationsList.php";
-        private ProgressDialog pDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            pDialog = new ProgressDialog(getContext());
-            pDialog.setMessage(getString(R.string.note_loadingScreen));
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
         }
         @Override
         protected JSONObject doInBackground(Void... voids) {
@@ -127,12 +114,10 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
         }
         @Override
         protected void onPostExecute(JSONObject feedback) {
-            pDialog.dismiss();
             try{
                 if(feedback.getInt("success") == 1) {
                     JSONArray locationsList = feedback.getJSONArray("locationsList");
                     searchLocationViewModel.createLocationsList(locationsList);
-                    //Toast.makeText(root.getContext(), "pobrano liste lokacji", Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e) {
