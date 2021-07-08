@@ -285,7 +285,7 @@ public class AddLocationsFragment extends Fragment {
             super.onPreExecute();
 
             pDialog = new ProgressDialog(getContext());
-            pDialog.setMessage("Loading data. Please wait...");
+            pDialog.setMessage(getString(R.string.note_loadingScreen));
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();

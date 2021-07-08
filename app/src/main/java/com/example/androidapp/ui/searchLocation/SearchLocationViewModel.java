@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class SearchLocationViewModel extends ViewModel {
@@ -17,6 +21,8 @@ public class SearchLocationViewModel extends ViewModel {
     private RecyclerView mLocationsView;
     private SearchLocationAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private String filterText;
 
     public void filter(String text) {
         filteredList = new ArrayList<>();
@@ -32,15 +38,27 @@ public class SearchLocationViewModel extends ViewModel {
 
     public void createExampleLocationsList() {
         mLocationsList = new ArrayList<>();
-        mLocationsList.add(new LocationItem("Białystok"));
-        mLocationsList.add(new LocationItem("Bydgoszcz"));
-        mLocationsList.add(new LocationItem("Gdańsk"));
-        mLocationsList.add(new LocationItem("Gorzów Wielkopolski"));
-        mLocationsList.add(new LocationItem("Katowice"));
-        mLocationsList.add(new LocationItem("Kielce"));
-        mLocationsList.add(new LocationItem("Kraków"));
-        mLocationsList.add(new LocationItem("Lublin"));
-        mLocationsList.add(new LocationItem("Łódź"));
+//        mLocationsList.add(new LocationItem(1, "Białystok"));
+//        mLocationsList.add(new LocationItem(2, "Bydgoszcz"));
+//        mLocationsList.add(new LocationItem(3, "Gdańsk"));
+//        mLocationsList.add(new LocationItem(4, "Gorzów Wielkopolski"));
+//        mLocationsList.add(new LocationItem(5, "Katowice"));
+//        mLocationsList.add(new LocationItem(6, "Kielce"));
+//        mLocationsList.add(new LocationItem(7, "Kraków"));
+//        mLocationsList.add(new LocationItem(8, "Lublin"));
+//        mLocationsList.add(new LocationItem(9, "Łódź"));
+    }
+
+    public void createLocationsList(JSONArray locationsList) {
+        mLocationsList = new ArrayList<>();
+        try{
+            for(int i=0; i<locationsList.length(); i++) {
+                JSONObject location = locationsList.getJSONObject(i);
+                mLocationsList.add(new LocationItem(location.getInt("id"), location.getString("name")));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void buildRecyclerView(RecyclerView mLocationsView, Context context, SearchLocationAdapter.OnLocationListener onLocationListener) {
@@ -55,5 +73,12 @@ public class SearchLocationViewModel extends ViewModel {
 
     public ArrayList<LocationItem> getFilteredList() {
         return filteredList;
+    }
+
+    public void setFilterText(String filterText) {
+        this.filterText = filterText;
+    }
+    public String getFilterText() {
+        return filterText;
     }
 }

@@ -1,6 +1,8 @@
 package com.example.androidapp.ui.searchLocation;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,15 +15,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.locations.LocationsViewModel;
 import com.google.android.material.navigation.NavigationView;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchLocationFragment extends Fragment implements SearchLocationAdapter.OnLocationListener {
 
@@ -41,6 +54,7 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         EditText editText = root.findViewById(R.id.searchLocationField);
+        editText.setText(searchLocationViewModel.getFilterText());
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -55,7 +69,9 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
 
             @Override
             public void afterTextChanged(Editable s) {
+                searchLocationViewModel.setFilterText(s.toString());
                 searchLocationViewModel.filter(s.toString());
+                getResult();
             }
         });
 
@@ -68,7 +84,14 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
             }
         });
 
+        searchLocationViewModel.filter(editText.getText().toString());
+
         return root;
+    }
+
+    public void getResult(){
+        GetLocationsList getLocationsList = new GetLocationsList();
+        getLocationsList.execute();
     }
 
     @Override
@@ -80,5 +103,41 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
         NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         navController.navigate(R.id.nav_locations);
         navigationView.setCheckedItem(R.id.nav_locations);
+    }
+
+    class GetLocationsList extends AsyncTask<Void, Void, JSONObject> {
+        private final String link = getString(R.string.server_address) + "getLocationsList.php";
+        private ProgressDialog pDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pDialog = new ProgressDialog(getContext());
+            pDialog.setMessage(getString(R.string.note_loadingScreen));
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+        @Override
+        protected JSONObject doInBackground(Void... voids) {
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("default", "test"));
+            return new JSONParser().makeHttpRequest(link, "POST", params);
+        }
+        @Override
+        protected void onPostExecute(JSONObject feedback) {
+            pDialog.dismiss();
+            try{
+                if(feedback.getInt("success") == 1) {
+                    JSONArray locationsList = feedback.getJSONArray("locationsList");
+                    searchLocationViewModel.createLocationsList(locationsList);
+                    //Toast.makeText(root.getContext(), "pobrano liste lokacji", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
