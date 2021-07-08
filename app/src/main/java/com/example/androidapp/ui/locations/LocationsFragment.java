@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +23,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
+import com.example.androidapp.ui.searchLocation.SearchLocationFragment;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LocationsFragment extends Fragment {
 
@@ -111,6 +121,8 @@ public class LocationsFragment extends Fragment {
 
         locationsViewModel.updateTipList();
         locationsViewModel.setStars(locationsViewModel.getAreStarsOn(), starsOn, starsOff);
+
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -118,9 +130,38 @@ public class LocationsFragment extends Fragment {
         locationsViewModel =
                 new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_locations, container, false);
-        locationsViewModel.createExampleItemList();
+        //locationsViewModel.createExampleItemList();
+
+        //locationsViewModel.getLocationCoordinates();
+        LocationsFragment.GetLocationData getLocationData = new LocationsFragment.GetLocationData();
+        getLocationData.execute();
         prepareLocationView(root, locationsViewModel.getmLocation());
-        locationsViewModel.getLocationCoordinates();
         return root;
+    }
+
+    class GetLocationData extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
+        private final String link = getString(R.string.server_address) + "getLocationData.php";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+        @Override
+        protected JSONObject doInBackground(List<NameValuePair>... params) {
+            return new JSONParser().makeHttpRequest(link, "POST", params[0]);
+        }
+        @Override
+        protected void onPostExecute(JSONObject feedback) {
+            try{
+                if(feedback.getInt("success") == 1) {
+                    JSONObject locationData = feedback.getJSONObject("locationData");
+                    locationsViewModel.getLocationFromDB(locationData);
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

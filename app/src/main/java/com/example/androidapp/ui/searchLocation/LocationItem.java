@@ -12,4 +12,8 @@ public class LocationItem {
     public String getSearchItemLocationName() {
         return mSearchItemLocationName;
     }
+
+    public int getId() {
+        return id;
+    }
 }

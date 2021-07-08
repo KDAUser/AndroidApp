@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
         if(sp.getString("login", "") == ""){
             navController.navigate(R.id.nav_login);
         }
-        else if (locationsViewModel.getmLastLocationId()!=0) {
+        else if (locationsViewModel.getLocationId()!=0) {
             navController.navigate(R.id.nav_locations);
             navigationView.setCheckedItem(R.id.nav_locations);
         } else {

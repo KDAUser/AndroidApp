@@ -91,11 +91,8 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
     public void onLocationClick(int position) {
         LocationItem locationItem = searchLocationViewModel.getFilteredList().get(position);
         LocationsViewModel locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
-        locationsViewModel.setLocationName(locationItem.getSearchItemLocationName());
-
-        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
-        navController.navigate(R.id.nav_locations);
-        navigationView.setCheckedItem(R.id.nav_locations);
+        locationsViewModel.setLocationId(locationItem.getId());
+        navController.navigate(R.id.nav_home);
     }
 
     class GetLocationsList extends AsyncTask<Void, Void, JSONObject> {
