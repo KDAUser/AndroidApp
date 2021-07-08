@@ -24,6 +24,7 @@ import androidx.navigation.Navigation;
 import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
+import com.example.androidapp.ui.locations.LocationsFragment;
 import com.example.androidapp.ui.locations.LocationsViewModel;
 import com.google.android.material.navigation.NavigationView;
 
@@ -42,6 +43,7 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
     private TextView searchItemLocationName;
     private View root;
     private NavController navController;
+    private LocationsViewModel locationsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
 
         searchLocationViewModel.buildRecyclerView(root.findViewById(R.id.locationsView), root.getContext(),this);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+        locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
 
         EditText editText = root.findViewById(R.id.searchLocationField);
         editText.setText(searchLocationViewModel.getFilterText());
@@ -90,9 +94,10 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
     @Override
     public void onLocationClick(int position) {
         LocationItem locationItem = searchLocationViewModel.getFilteredList().get(position);
-        LocationsViewModel locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
-        locationsViewModel.setLocationId(locationItem.getId());
-        navController.navigate(R.id.nav_home);
+        SearchLocationFragment.GetLocationData getLocationData = new SearchLocationFragment.GetLocationData();
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("id", String.valueOf(locationItem.getId())));
+        getLocationData.execute(params);
     }
 
     class GetLocationsList extends AsyncTask<Void, Void, JSONObject> {
@@ -115,6 +120,34 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
                 if(feedback.getInt("success") == 1) {
                     JSONArray locationsList = feedback.getJSONArray("locationsList");
                     searchLocationViewModel.createLocationsList(locationsList);
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class GetLocationData extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
+        private final String link = getString(R.string.server_address) + "getLocationData.php";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+        @Override
+        protected JSONObject doInBackground(List<NameValuePair>... params) {
+            return new JSONParser().makeHttpRequest(link, "POST", params[0]);
+        }
+        @Override
+        protected void onPostExecute(JSONObject feedback) {
+            try{
+                if(feedback.getInt("success") == 1) {
+                    JSONArray locationData = feedback.getJSONArray("locationData");
+                    JSONObject location = locationData.getJSONObject(0);
+                    locationsViewModel.getLocationFromDB(location);
+                    navController.navigate(R.id.nav_home);
                 }
             }
             catch (JSONException e) {

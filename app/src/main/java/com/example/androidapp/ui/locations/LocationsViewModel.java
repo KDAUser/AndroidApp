@@ -2,8 +2,11 @@ package com.example.androidapp.ui.locations;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -31,11 +34,6 @@ public class LocationsViewModel extends ViewModel {
     private LocationTipsAdapter mAdapter;
     private JFILocation mLocation = new JFILocation(0, false, "Example location", 5, null);
 
-//    public void getLocationCoordinates() {
-//        mLocation.setLatitude(52.2318);
-//        mLocation.setLongitude(21.0060);
-//    }
-
     public void setStars (Boolean[] starStatus, ArrayList<ImageView> starsON, ArrayList<ImageView> starsOFF) {
         int i = 0;
 
@@ -57,15 +55,6 @@ public class LocationsViewModel extends ViewModel {
             i++;
         }
     }
-
-//    public void createExampleItemList(){
-//        ArrayList<TipItem> tipsList = new ArrayList<>();
-//        tipsList.add(new TipItem("Tip 2", "Turn left", null));
-//        tipsList.add(new TipItem("Tip 3", "Turn right", null));
-//        tipsList.add(new TipItem("Tip 4", "Turn back", null));
-//        tipsList.add(new TipItem("Tip 5", "Look around", null));
-//        mLocation.setLocationTips(tipsList);
-//    }
 
     public void buildRecyclerView(RecyclerView mTipsView, Context context) {
         mTipsView = mTipsView;
@@ -149,10 +138,6 @@ public class LocationsViewModel extends ViewModel {
         return false;
     }
 
-    public void setLocationId(int id) {
-        mLocation.setLocationId(id);
-    }
-
     public int getLocationId() {
         return mLocation.getLocationId();
     }
@@ -164,16 +149,25 @@ public class LocationsViewModel extends ViewModel {
     public void getLocationFromDB(JSONObject location){
         try{
             ArrayList<TipItem> tipsList = new ArrayList<>();
-            firstTip = new TipItem("Tip 2", location.getString("tip1"), null);
-            tipsList.add(new TipItem("Tip 2", location.getString("tip2"), null));
-            tipsList.add(new TipItem("Tip 2", location.getString("tip3"), null));
-            tipsList.add(new TipItem("Tip 2", location.getString("tip4"), null));
-            tipsList.add(new TipItem("Tip 2", location.getString("tip5"), null));
+            ImageView[] imageList = new ImageView[5];
+            for (int i = 0; i < 5; i++) {
+//                if(location.has("tip"+(i+1)+"image")) {
+//                    byte[] imageBytes = Base64.decode(location.getString("tip" + (i + 1) + "image"), Base64.DEFAULT);
+//                    Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+//                    imageList[i].setImageBitmap(decodedImage);
+//                } else {
+                    imageList[i] = null;
+//                }
+            }
+            firstTip = new TipItem("Tip 1", location.getString("tip1"), imageList[0]);
+            tipsList.add(new TipItem("Tip 2", location.getString("tip2"), imageList[1]));
+            tipsList.add(new TipItem("Tip 3", location.getString("tip3"), imageList[2]));
+            tipsList.add(new TipItem("Tip 4", location.getString("tip4"), imageList[3]));
+            tipsList.add(new TipItem("Tip 5", location.getString("tip5"), imageList[4]));
             mLocation = new JFILocation(location.getInt("id"), false, location.getString("name"), 5, tipsList);//location.getBoolean("isSolved") location.getInt("starsNumber")
             mLocation.setLatitude(location.getDouble("latitude"));
             mLocation.setLongitude(location.getDouble("longitude"));
             updateStars(mLocation.getNumberOfStars());
-            updateTipList();
         } catch (JSONException e) {
             e.printStackTrace();
         }

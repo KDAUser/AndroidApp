@@ -43,6 +43,7 @@ public class LocationsFragment extends Fragment {
     private String[] starsOn = new String[]{"firstStarOn", "secondStarOn", "thirdStarOn", "fourthStarOn", "fifthStarOn"};
     private String[] starsOff = new String[]{"firstStarOff", "secondStarOff", "thirdStarOff", "fourthStarOff", "fifthStarOff"};
     private NavController navController;
+    private View root;
 
     private void prepareLocationView(View root, JFILocation location) {
         ImageView firstStarOn = (ImageView) root.findViewById(R.id.firstStarOn);
@@ -62,8 +63,6 @@ public class LocationsFragment extends Fragment {
 
         TextView locationName = (TextView) root.findViewById(R.id.locationName);
         locationName.setText(location.getLocationName());
-
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         ArrayList<ImageView> starsOn;
         starsOn = new ArrayList<>();
@@ -129,39 +128,14 @@ public class LocationsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         locationsViewModel =
                 new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_locations, container, false);
-        //locationsViewModel.createExampleItemList();
-
-        //locationsViewModel.getLocationCoordinates();
-        LocationsFragment.GetLocationData getLocationData = new LocationsFragment.GetLocationData();
-        getLocationData.execute();
-        prepareLocationView(root, locationsViewModel.getmLocation());
+        root = inflater.inflate(R.layout.fragment_locations, container, false);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        if(locationsViewModel.getLocationId()==0) {
+            navController.navigate(R.id.nav_home);
+        }
+        else {
+            prepareLocationView(root, locationsViewModel.getmLocation());
+        }
         return root;
-    }
-
-    class GetLocationData extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
-        private final String link = getString(R.string.server_address) + "getLocationData.php";
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-        @Override
-        protected JSONObject doInBackground(List<NameValuePair>... params) {
-            return new JSONParser().makeHttpRequest(link, "POST", params[0]);
-        }
-        @Override
-        protected void onPostExecute(JSONObject feedback) {
-            try{
-                if(feedback.getInt("success") == 1) {
-                    JSONObject locationData = feedback.getJSONObject("locationData");
-                    locationsViewModel.getLocationFromDB(locationData);
-                }
-            }
-            catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

@@ -5,7 +5,7 @@ public class LocationItem {
     private String mSearchItemLocationName;
 
     public LocationItem(int id, String Name) {
-        id = id;
+        this.id = id;
         mSearchItemLocationName = Name;
     }
 
