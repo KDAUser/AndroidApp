@@ -46,7 +46,11 @@ public class LocationTipsAdapter extends RecyclerView.Adapter<LocationTipsAdapte
 
         holder.mTipName.setText(currentItem.getmTipName());
         holder.mTipText.setText(currentItem.getmTipText());
-        //holder.mTipImage.setImage(currentItem.getmTipImage());
+        if (currentItem.getmTipImage()!=null) {
+            holder.mTipImage.setImageBitmap(currentItem.getmTipImage());
+        } else {
+            holder.mTipImage.setVisibility(View.GONE);
+        }
     }
 
     @Override

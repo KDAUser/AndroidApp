@@ -33,12 +33,12 @@ public class AddLocationsViewModel extends ViewModel {
 
     public void addTips(ArrayList<String> tipTexts, ArrayList<ImageView> tipImages) {
         String[] tipTextsTab = new String[5];
-        ImageView[] tipImagesTab = new ImageView[5];
+        Bitmap[] tipImagesTab = new Bitmap[5];
         ArrayList<TipItem> newTips = new ArrayList<>();
         int i = 0;
         for (ImageView tipImage : tipImages) {
             if (tipImage.getVisibility() == View.VISIBLE) {
-                tipImagesTab[i] = tipImage;
+                tipImagesTab[i] = ((BitmapDrawable) tipImage.getDrawable()).getBitmap();
             }
             i++;
         }
@@ -113,7 +113,7 @@ public class AddLocationsViewModel extends ViewModel {
         for(TipItem tip: mLocation.getLocationTips()) {
             params.add(new BasicNameValuePair("tip"+(i+1), tip.getmTipText()));
             if (areImagesSet[i]) {
-                Bitmap bitmap = ((BitmapDrawable) tip.getmTipImage().getDrawable()).getBitmap();
+                Bitmap bitmap = tip.getmTipImage();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
                 byte[] byte_arr = stream.toByteArray();

@@ -149,15 +149,14 @@ public class LocationsViewModel extends ViewModel {
     public void getLocationFromDB(JSONObject location){
         try{
             ArrayList<TipItem> tipsList = new ArrayList<>();
-            ImageView[] imageList = new ImageView[5];
+            Bitmap[] imageList = new Bitmap[5];
             for (int i = 0; i < 5; i++) {
-//                if(location.has("tip"+(i+1)+"image")) {
-//                    byte[] imageBytes = Base64.decode(location.getString("tip" + (i + 1) + "image"), Base64.DEFAULT);
-//                    Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-//                    imageList[i].setImageBitmap(decodedImage);
-//                } else {
+                if(location.has("tip"+(i+1)+"image")) {
+                    byte[] imageBytes = Base64.decode(location.getString("tip" + (i + 1) + "image"), Base64.DEFAULT);
+                    imageList[i] = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                } else {
                     imageList[i] = null;
-//                }
+                }
             }
             firstTip = new TipItem("Tip 1", location.getString("tip1"), imageList[0]);
             tipsList.add(new TipItem("Tip 2", location.getString("tip2"), imageList[1]));

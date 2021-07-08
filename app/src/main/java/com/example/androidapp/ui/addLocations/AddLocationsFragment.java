@@ -248,7 +248,7 @@ public class AddLocationsFragment extends Fragment {
                     tipText[i].setText(locationTip.getmTipText());
                 }
                 if (locationTip.getmTipImage() != null) {
-                    tipImage[i].setImageBitmap(((BitmapDrawable) locationTip.getmTipImage().getDrawable()).getBitmap());
+                    tipImage[i].setImageBitmap(locationTip.getmTipImage());
                     tipImage[i].setVisibility(View.VISIBLE);
                 }
                 i++;
