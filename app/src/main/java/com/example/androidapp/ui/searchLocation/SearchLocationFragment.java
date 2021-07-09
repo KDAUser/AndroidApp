@@ -1,7 +1,8 @@
 package com.example.androidapp.ui.searchLocation;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,13 +10,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -24,9 +21,7 @@ import androidx.navigation.Navigation;
 import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
-import com.example.androidapp.ui.locations.LocationsFragment;
 import com.example.androidapp.ui.locations.LocationsViewModel;
-import com.google.android.material.navigation.NavigationView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -40,8 +35,6 @@ import java.util.List;
 public class SearchLocationFragment extends Fragment implements SearchLocationAdapter.OnLocationListener {
 
     private SearchLocationViewModel searchLocationViewModel;
-    private TextView searchItemLocationName;
-    private View root;
     private NavController navController;
     private LocationsViewModel locationsViewModel;
 
@@ -50,10 +43,10 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
 
         searchLocationViewModel =
                 new ViewModelProvider(requireActivity()).get(SearchLocationViewModel.class);
-        root = inflater.inflate(R.layout.fragment_search_location, container, false);
+        View root = inflater.inflate(R.layout.fragment_search_location, container, false);
 
         searchLocationViewModel.buildRecyclerView(root.findViewById(R.id.locationsView), root.getContext(),this);
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
         locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
 
@@ -62,15 +55,9 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
             public void afterTextChanged(Editable s) {
                 searchLocationViewModel.setFilterText(s.toString());
@@ -82,12 +69,11 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus) {
-                    ((MainActivity) getActivity()).hideKeyboard(v);
+                    ((MainActivity) requireActivity()).hideKeyboard(v);
                 }
             }
         });
-        GetLocationsList getLocationsList = new GetLocationsList();
-        getLocationsList.execute();
+        new GetLocationsList().execute();
         return root;
     }
 
@@ -95,18 +81,21 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
     public void onLocationClick(int position) {
         LocationItem locationItem = searchLocationViewModel.getFilteredList().get(position);
         SearchLocationFragment.GetLocationData getLocationData = new SearchLocationFragment.GetLocationData();
+
+        SharedPreferences sp = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("id", String.valueOf(locationItem.getId())));
+        params.add(new BasicNameValuePair("id_u", sp.getString("id", "")));
         getLocationData.execute(params);
     }
 
+    @SuppressLint("StaticFieldLeak")
     class GetLocationsList extends AsyncTask<Void, Void, JSONObject> {
         private final String link = getString(R.string.server_address) + "getLocationsList.php";
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
         @Override
         protected JSONObject doInBackground(Void... voids) {
@@ -128,16 +117,17 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     class GetLocationData extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
         private final String link = getString(R.string.server_address) + "getLocationData.php";
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
+        @SafeVarargs
         @Override
-        protected JSONObject doInBackground(List<NameValuePair>... params) {
+        protected final JSONObject doInBackground(List<NameValuePair>... params) {
             return new JSONParser().makeHttpRequest(link, "POST", params[0]);
         }
         @Override

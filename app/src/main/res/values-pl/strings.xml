@@ -88,4 +88,8 @@
     <string name="editProfileNote_noCurrPassword">Current password is necessary</string>
     <string name="editProfileNote_changesDetected">Changes detected</string>
     <string name="addLocation_cropImageTitle">Choose image</string>
+    <string name="locationFragment_note_alreadySolved">This location is already solved!</string>
+    <string name="locationFragment_note_locationSolved">Nice man! You solved this location!</string>
+    <string name="locationFragment_note_badPosition">Too bad!</string>
+    <string name="locationFragment_errorOnServerUpdate">Error during progress update on sorver.</string>
 </resources>

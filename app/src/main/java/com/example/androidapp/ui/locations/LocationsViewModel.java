@@ -32,7 +32,7 @@ public class LocationsViewModel extends ViewModel {
     private RecyclerView mTipsView;
     private RecyclerView.LayoutManager mLayoutManager;
     private LocationTipsAdapter mAdapter;
-    private JFILocation mLocation = new JFILocation(0, false, "Example location", 5, null);
+    private JFILocation mLocation = new JFILocation(0, false, "Example location", 5, "Never started", null);
 
     public void setStars (Boolean[] starStatus, ArrayList<ImageView> starsON, ArrayList<ImageView> starsOFF) {
         int i = 0;
@@ -163,7 +163,16 @@ public class LocationsViewModel extends ViewModel {
             tipsList.add(new TipItem("Tip 3", location.getString("tip3"), imageList[2]));
             tipsList.add(new TipItem("Tip 4", location.getString("tip4"), imageList[3]));
             tipsList.add(new TipItem("Tip 5", location.getString("tip5"), imageList[4]));
-            mLocation = new JFILocation(location.getInt("id"), false, location.getString("name"), 5, tipsList);//location.getBoolean("isSolved") location.getInt("starsNumber")
+            Boolean isSolved = false;
+            if(location.getInt("isSolved") == 1)
+                isSolved = true;
+
+            mLocation = new JFILocation(location.getInt("id"),
+                    isSolved,
+                    location.getString("name"),
+                    location.getInt("stars"),
+                    location.getString("updated"),
+                    tipsList);
             mLocation.setLatitude(location.getDouble("latitude"));
             mLocation.setLongitude(location.getDouble("longitude"));
             updateStars(mLocation.getNumberOfStars());
@@ -190,4 +199,8 @@ public class LocationsViewModel extends ViewModel {
     public Boolean isLocationSolved() {
         return mLocation.isSolved();
     }
+
+    public int getLocationNumberOfStars(){return mLocation.getNumberOfStars();}
+
+    public void clearViewModel(){mLocation.clearJFILocation();}
 }

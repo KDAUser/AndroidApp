@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.androidapp.R;
+import com.example.androidapp.ui.locations.LocationsViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 public class LogoutFragment extends Fragment {
@@ -25,6 +27,10 @@ public class LogoutFragment extends Fragment {
 
         clearSharedPreferences();
         updateNavigationHeader();
+
+        LocationsViewModel locationsViewModel =
+                new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
+        locationsViewModel.clearViewModel();
 
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         navController.navigate(R.id.nav_login);

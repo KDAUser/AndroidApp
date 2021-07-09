@@ -23,7 +23,7 @@ import java.util.List;
 
 public class AddLocationsViewModel extends ViewModel {
 
-    private JFILocation mLocation = new JFILocation(0, false, "", 5, null);
+    private JFILocation mLocation = new JFILocation(0, false, "", 5, "", null);
     private double mLongitude = 0.0;
     private double mLatitude = 0.0;
 
@@ -126,6 +126,6 @@ public class AddLocationsViewModel extends ViewModel {
     }
 
     public void clearObject() {
-        mLocation = new JFILocation(0, false, "", 5, null);
+        mLocation.clearJFILocation();
     }
 }
