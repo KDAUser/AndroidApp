@@ -3,6 +3,7 @@ package com.example.androidapp.ui.profile;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,16 +36,29 @@ public class ProfileFragment extends Fragment {
         TextView description = (TextView) root.findViewById(R.id.profilePage_description);
 
         SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        login.setText(sp.getString("login", ""));
-        email.setText(sp.getString("email", ""));
-        registeredDate.setText(sp.getString("registered", ""));
-        description.setText(sp.getString("description", ""));
-        String avatar_path = sp.getString("avatar", "");
-        if(avatar_path != "") {
-            profileImage.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
+        if(sp.getString("id", "")==String.valueOf(profileViewModel.getId())){
+            login.setText(sp.getString("login", ""));
+            email.setText(sp.getString("email", ""));
+            registeredDate.setText(sp.getString("registered", ""));
+            description.setText(sp.getString("description", ""));
+            String avatar_path = sp.getString("avatar", "");
+            if(avatar_path != "") {
+                profileImage.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
+            }
+        } else {
+            login.setText(profileViewModel.getLogin());
+            email.setText(profileViewModel.getEmail());
+            registeredDate.setText(profileViewModel.getRegisteredDate());
+            description.setText(profileViewModel.getDescription());
+            if(profileViewModel.getAvatar()!=null) {
+                profileImage.setImageBitmap(profileViewModel.getAvatar());
+            } else {
+                profileImage.setImageBitmap(((BitmapDrawable)getResources().getDrawable(R.drawable.ic_no_avatar)).getBitmap());
+            }
         }
 
-        profileViewModel.setView();
+
+        //profileViewModel.setView();
 
         profileViewModel.buildRecyclerView(root.findViewById(R.id.trophiesView),root.getContext());
         profileViewModel.updateTrophiesList();

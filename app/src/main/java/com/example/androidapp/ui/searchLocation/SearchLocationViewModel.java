@@ -22,7 +22,7 @@ public class SearchLocationViewModel extends ViewModel {
     private SearchLocationAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private String filterText;
+    private String filterText = "";
 
     public void filter(String text) {
         filteredList = new ArrayList<>();

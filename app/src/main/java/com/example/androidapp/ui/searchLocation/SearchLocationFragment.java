@@ -109,6 +109,7 @@ public class SearchLocationFragment extends Fragment implements SearchLocationAd
                 if(feedback.getInt("success") == 1) {
                     JSONArray locationsList = feedback.getJSONArray("locationsList");
                     searchLocationViewModel.createLocationsList(locationsList);
+                    searchLocationViewModel.filter(searchLocationViewModel.getFilterText());
                 }
             }
             catch (JSONException e) {

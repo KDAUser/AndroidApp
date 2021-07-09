@@ -16,10 +16,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
+import com.example.androidapp.ui.profile.ProfileViewModel;
 import com.example.androidapp.ui.searchLocation.LocationItem;
 
 import org.apache.http.NameValuePair;
@@ -34,15 +37,21 @@ import java.util.List;
 public class SearchProfileFragment extends Fragment implements SearchProfileAdapter.OnProfileListener {
 
     private SearchProfileViewModel searchProfileViewModel;
+    private ProfileViewModel profileViewModel;
+    private NavController navController;
     private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         searchProfileViewModel =
                 new ViewModelProvider(requireActivity()).get(SearchProfileViewModel.class);
+        profileViewModel =
+                new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         root = inflater.inflate(R.layout.fragment_search_profile, container, false);
 
         searchProfileViewModel.buildRecyclerView(root.findViewById(R.id.profilesView), root.getContext(), this);
+
 
         EditText editText = root.findViewById(R.id.searchProfileField);
         editText.setText(searchProfileViewModel.getFilterText());
@@ -75,7 +84,9 @@ public class SearchProfileFragment extends Fragment implements SearchProfileAdap
     @Override
     public void onProfileClick(int position) {
         ProfileItem profileItem = searchProfileViewModel.getFilteredList().get(position);
-        Toast.makeText(root.getContext(), profileItem.getSearchItemProfileName(), Toast.LENGTH_SHORT).show();
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("id", String.valueOf(profileItem.getSearchItemProfileId())));
+        new GetProfileData().execute(params);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -98,6 +109,37 @@ public class SearchProfileFragment extends Fragment implements SearchProfileAdap
                 if(feedback.getInt("success") == 1) {
                     JSONArray usersList = feedback.getJSONArray("usersList");
                     searchProfileViewModel.createProfilesList(usersList);
+                    searchProfileViewModel.filter(searchProfileViewModel.getFilterText());
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    class GetProfileData extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
+        private final String link = getString(R.string.server_address) + "getLocationData.php";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @SafeVarargs
+        @Override
+        protected final JSONObject doInBackground(List<NameValuePair>... params) {
+            return new JSONParser().makeHttpRequest(link, "POST", params[0]);
+        }
+        @Override
+        protected void onPostExecute(JSONObject feedback) {
+            try{
+                if(feedback.getInt("success") == 1) {
+                    JSONArray userData = feedback.getJSONArray("userData");
+                    JSONObject user = userData.getJSONObject(0);
+                    JSONArray trophies = feedback.getJSONArray("trophies");
+                    profileViewModel.getProfileFromDB(user, trophies);
+                    navController.navigate(R.id.nav_profile);
                 }
             }
             catch (JSONException e) {

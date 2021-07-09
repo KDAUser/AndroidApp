@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidapp.ui.searchProfile.ProfileItem;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +24,7 @@ public class ProfileViewModel extends ViewModel {
     private String email;
     private String description;
     private Bitmap avatar;
+    private String registeredDate;
 
     private RecyclerView mTrophiesView;
     private ProfileTrophiesAdapter mAdapter;
@@ -32,33 +36,28 @@ public class ProfileViewModel extends ViewModel {
     public String getEmail() { return email; }
     public String getDescription() { return description; }
     public Bitmap getAvatar() { return avatar; }
+    public String getRegisteredDate() { return registeredDate; }
 
-    public void getProfileFromDB(JSONObject user){
+    public void getProfileFromDB(JSONObject user, JSONArray trophiesList){
         try {
             id = user.getInt("id");
             login = user.getString("login");
             email = user.getString("email");
             description = user.getString("description");
-            byte[] avatarBytes = Base64.decode(user.getString("avatar"), Base64.DEFAULT);
-            avatar = BitmapFactory.decodeByteArray(avatarBytes, 0, avatarBytes.length);
+            registeredDate = user.getString("registered");
+            if(user.has("avatar")) {
+                byte[] avatarBytes = Base64.decode(user.getString("avatar"), Base64.DEFAULT);
+                avatar = BitmapFactory.decodeByteArray(avatarBytes, 0, avatarBytes.length);
+            } else {
+                avatar = null;
+            }
+            for(int i=0; i<trophiesList.length(); i++) {
+                JSONObject trophy = trophiesList.getJSONObject(i);
+                mTrophiesList.add(new TrophyItem(trophy.getString("name"), trophy.getInt("stars")));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    private void setmTrophiesList() {
-        //TODO: pobranie nazw rozwiązanych lokalizacji i ich ilości gwiazdek dla danego userId
-        mTrophiesList = new ArrayList<>();
-        mTrophiesList.add(new TrophyItem("First location", 4));
-        mTrophiesList.add(new TrophyItem("Second location", 2));
-        mTrophiesList.add(new TrophyItem("Third location", 3));
-        mTrophiesList.add(new TrophyItem("Fourth location", 5));
-    }
-
-    public void setView() {
-        setmTrophiesList();
-        //setProfileDescription();
-        //setAvatar();
     }
 
     public void buildRecyclerView(RecyclerView mTrophiesView, Context context) {
