@@ -6,16 +6,22 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class SearchProfileViewModel extends ViewModel {
 
-    private ArrayList<ProfileItem> mProfilesList;
+    private ArrayList<ProfileItem> mProfilesList = new ArrayList<>();
     private ArrayList<ProfileItem> filteredList;
 
     private RecyclerView mProfilesView;
     private SearchProfileAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private String filterText;
 
     public void filter(String text) {
         filteredList = new ArrayList<>();
@@ -29,17 +35,18 @@ public class SearchProfileViewModel extends ViewModel {
         mAdapter.filterList(filteredList);
     }
 
-    public void createExampleProfilesList() {
+    public void createProfilesList(JSONArray usersList) {
         mProfilesList = new ArrayList<>();
-        mProfilesList.add(new ProfileItem("Jake"));
-        mProfilesList.add(new ProfileItem("Emily"));
-        mProfilesList.add(new ProfileItem("Harry"));
-        mProfilesList.add(new ProfileItem("Jacob"));
-        mProfilesList.add(new ProfileItem("Linda"));
-        mProfilesList.add(new ProfileItem("James"));
-        mProfilesList.add(new ProfileItem("William"));
-        mProfilesList.add(new ProfileItem("Conor"));
-        mProfilesList.add(new ProfileItem("Susan"));
+        try{
+            for(int i=0; i<usersList.length(); i++) {
+                JSONObject user = usersList.getJSONObject(i);
+                mProfilesList.add(new ProfileItem(user.getInt("id"), user.getString("login")));
+            }
+            mAdapter.filterList(mProfilesList);
+            filteredList = mProfilesList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void buildRecyclerView(RecyclerView mProfilesView, Context context, SearchProfileAdapter.OnProfileListener onProfileListener) {
@@ -54,5 +61,12 @@ public class SearchProfileViewModel extends ViewModel {
 
     public ArrayList<ProfileItem> getFilteredList() {
         return filteredList;
+    }
+
+    public void setFilterText(String filterText) {
+        this.filterText = filterText;
+    }
+    public String getFilterText() {
+        return filterText;
     }
 }

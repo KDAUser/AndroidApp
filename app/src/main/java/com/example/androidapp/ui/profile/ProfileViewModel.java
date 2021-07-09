@@ -1,54 +1,49 @@
 package com.example.androidapp.ui.profile;
 
 import android.content.Context;
-import android.widget.ImageView;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class ProfileViewModel extends ViewModel {
 
-//    private boolean isUser;
-    private String profileDescription;
-    private ImageView Avatar;
-    private ArrayList<TrophyItem> mTrophiesList;
+    private int id;
+    private String login;
+    private String email;
+    private String description;
+    private Bitmap avatar;
+
     private RecyclerView mTrophiesView;
-    private RecyclerView.LayoutManager mLayoutManager;
     private ProfileTrophiesAdapter mAdapter;
-    private int userId;
+    private ArrayList<TrophyItem> mTrophiesList;
+    private RecyclerView.LayoutManager mLayoutManager;
 
-//    public Boolean isUser() {
-//        return isUser;
-//    }
-//
-//    public ProfileViewModel() {
-//        isUser = false;
-//    }
-//
-//    public void setUser() {
-//        isUser = true;
-//    }
-//    public void logout() {
-//        isUser = false;
-//    }
+    public int getId() { return id; }
+    public String getLogin() { return login; }
+    public String getEmail() { return email; }
+    public String getDescription() { return description; }
+    public Bitmap getAvatar() { return avatar; }
 
-    public ImageView getAvatar() {
-        return Avatar;
-    }
-
-    private void setProfileDescription() {
-        //TODO: pobranie opisu użytkownika po userId
-        profileDescription = "Here is the profile description";
-    }
-
-    private void setAvatar() {
-        //TODO: pobranie zdjęcia awataru dla danego userId
-        Avatar = null;
+    public void getProfileFromDB(JSONObject user){
+        try {
+            id = user.getInt("id");
+            login = user.getString("login");
+            email = user.getString("email");
+            description = user.getString("description");
+            byte[] avatarBytes = Base64.decode(user.getString("avatar"), Base64.DEFAULT);
+            avatar = BitmapFactory.decodeByteArray(avatarBytes, 0, avatarBytes.length);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setmTrophiesList() {
@@ -58,10 +53,6 @@ public class ProfileViewModel extends ViewModel {
         mTrophiesList.add(new TrophyItem("Second location", 2));
         mTrophiesList.add(new TrophyItem("Third location", 3));
         mTrophiesList.add(new TrophyItem("Fourth location", 5));
-    }
-
-    public String getProfileDescription() {
-        return profileDescription;
     }
 
     public void setView() {
