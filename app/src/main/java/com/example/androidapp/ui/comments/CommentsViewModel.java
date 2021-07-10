@@ -6,6 +6,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -21,15 +25,15 @@ public class CommentsViewModel extends ViewModel {
         mAdapter.filterList(mCommentsList);
     }
 
-    public void createExampleCommentsList() {
-        if(!wasExampleListCreated) {
-            mCommentsList = new ArrayList<>();
-            mCommentsList.add(new CommentItem("Jake", "Nice location", Calendar.getInstance().getTime().toString()));
-            mCommentsList.add(new CommentItem("Linda", "I like this location", Calendar.getInstance().getTime().toString()));
-            mCommentsList.add(new CommentItem("Conor", "Man, this location is pretty scary", Calendar.getInstance().getTime().toString()));
-            wasExampleListCreated = true;
-        }
-    }
+//    public void createExampleCommentsList() {
+//        if(!wasExampleListCreated) {
+//            mCommentsList = new ArrayList<>();
+//            mCommentsList.add(new CommentItem("Jake", "Nice location", Calendar.getInstance().getTime().toString()));
+//            mCommentsList.add(new CommentItem("Linda", "I like this location", Calendar.getInstance().getTime().toString()));
+//            mCommentsList.add(new CommentItem("Conor", "Man, this location is pretty scary", Calendar.getInstance().getTime().toString()));
+//            wasExampleListCreated = true;
+//        }
+//    }
 
     public void addComment(CommentItem newItem){
         mCommentsList.add(newItem);
@@ -43,5 +47,17 @@ public class CommentsViewModel extends ViewModel {
 
         mCommentsView.setLayoutManager(mLayoutManager);
         mCommentsView.setAdapter(mAdapter);
+    }
+
+    public void getCommentsFromDB(JSONArray comments) {
+        try {
+            for(int i = 0; i<comments.length(); i++) {
+                JSONObject comment = comments.getJSONObject(i);
+                mCommentsList.add(new CommentItem(comment.getString("author"), comment.getString("text"), comment.getString("date")));
+            }
+            mAdapter.filterList(mCommentsList);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

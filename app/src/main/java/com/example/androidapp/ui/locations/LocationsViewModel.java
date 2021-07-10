@@ -181,17 +181,6 @@ public class LocationsViewModel extends ViewModel {
         }
     }
 
-    public List<NameValuePair> prepareParams(Boolean isSolved, int numberOfStars) {
-        List<NameValuePair> params = new ArrayList<>();
-        if (isSolved != null) {
-            params.add(new BasicNameValuePair("solved", String.valueOf(mLocation.isSolved())));
-        }
-        if (numberOfStars != 0) {
-            params.add(new BasicNameValuePair("numberofstars", String.valueOf(mLocation.getNumberOfStars())));
-        }
-        return params;
-    }
-
     public void setLocationSolved() {
         mLocation.setSolved(true);
     }

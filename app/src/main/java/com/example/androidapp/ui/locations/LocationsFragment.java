@@ -31,6 +31,7 @@ import androidx.navigation.Navigation;
 import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
+import com.example.androidapp.ui.comments.CommentsViewModel;
 import com.example.androidapp.ui.login.LoginFragment;
 import com.example.androidapp.ui.searchLocation.SearchLocationFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -48,6 +49,7 @@ import java.util.Objects;
 public class LocationsFragment extends Fragment {
 
     private LocationsViewModel locationsViewModel;
+    private CommentsViewModel commentsViewModel;
     private String[] starsOn = new String[]{"firstStarOn", "secondStarOn", "thirdStarOn", "fourthStarOn", "fifthStarOn"};
     private String[] starsOff = new String[]{"firstStarOff", "secondStarOff", "thirdStarOff", "fourthStarOff", "fifthStarOff"};
     private NavController navController;
@@ -114,7 +116,9 @@ public class LocationsFragment extends Fragment {
         commentsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.nav_comments);
+                List<NameValuePair> params = new ArrayList<>();
+                params.add(new BasicNameValuePair("id", String.valueOf(locationsViewModel.getLocationId())));
+                new GetCommentsData().execute(params);
             }
         });
 
@@ -148,6 +152,8 @@ public class LocationsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         locationsViewModel =
                 new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
+        commentsViewModel =
+                new ViewModelProvider(requireActivity()).get(CommentsViewModel.class);
         root = inflater.inflate(R.layout.fragment_locations, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         if(locationsViewModel.getLocationId()==0) {
@@ -175,6 +181,34 @@ public class LocationsFragment extends Fragment {
             try{
                 if(feedback.getInt("success") != 1) {
                     Toast.makeText(requireContext(), R.string.locationFragment_errorOnServerUpdate, Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    class GetCommentsData extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
+        private final String link = getString(R.string.server_address) + "getCommentsData.php";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @SafeVarargs
+        @Override
+        protected final JSONObject doInBackground(List<NameValuePair>... params) {
+            return new JSONParser().makeHttpRequest(link, "POST", params[0]);
+        }
+        @Override
+        protected void onPostExecute(JSONObject feedback) {
+            try{
+                if(feedback.getInt("success") == 1) {
+                    JSONArray comments = feedback.getJSONArray("comments");
+                    commentsViewModel.getCommentsFromDB(comments);
+                    navController.navigate(R.id.nav_comments);
                 }
             }
             catch (JSONException e) {
