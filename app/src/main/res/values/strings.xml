@@ -91,4 +91,5 @@
     <string name="locationFragment_note_locationSolved">Nice man! You solved this location!</string>
     <string name="locationFragment_note_badPosition">Too bad!</string>
     <string name="locationFragment_errorOnServerUpdate">Error during progress update on sorver.</string>
+    <string name="profilePage_noTrophiesText">No trophies to show</string>
 </resources>

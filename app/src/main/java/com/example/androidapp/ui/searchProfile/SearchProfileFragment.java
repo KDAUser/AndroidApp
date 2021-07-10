@@ -1,7 +1,6 @@
 package com.example.androidapp.ui.searchProfile;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,9 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,7 +20,7 @@ import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.profile.ProfileViewModel;
-import com.example.androidapp.ui.searchLocation.LocationItem;
+import com.google.android.material.navigation.NavigationView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -38,8 +35,6 @@ public class SearchProfileFragment extends Fragment implements SearchProfileAdap
 
     private SearchProfileViewModel searchProfileViewModel;
     private ProfileViewModel profileViewModel;
-    private NavController navController;
-    private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,8 +42,7 @@ public class SearchProfileFragment extends Fragment implements SearchProfileAdap
                 new ViewModelProvider(requireActivity()).get(SearchProfileViewModel.class);
         profileViewModel =
                 new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-        root = inflater.inflate(R.layout.fragment_search_profile, container, false);
+        View root = inflater.inflate(R.layout.fragment_search_profile, container, false);
 
         searchProfileViewModel.buildRecyclerView(root.findViewById(R.id.profilesView), root.getContext(), this);
 
@@ -72,7 +66,7 @@ public class SearchProfileFragment extends Fragment implements SearchProfileAdap
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    ((MainActivity) getActivity()).hideKeyboard(v);
+                    ((MainActivity) requireActivity()).hideKeyboard(v);
                 }
             }
         });
@@ -120,7 +114,7 @@ public class SearchProfileFragment extends Fragment implements SearchProfileAdap
 
     @SuppressLint("StaticFieldLeak")
     class GetProfileData extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
-        private final String link = getString(R.string.server_address) + "getLocationData.php";
+        private final String link = getString(R.string.server_address) + "getUserData.php";
 
         @Override
         protected void onPreExecute() {
@@ -137,8 +131,11 @@ public class SearchProfileFragment extends Fragment implements SearchProfileAdap
                 if(feedback.getInt("success") == 1) {
                     JSONArray userData = feedback.getJSONArray("userData");
                     JSONObject user = userData.getJSONObject(0);
-                    JSONArray trophies = feedback.getJSONArray("trophies");
-                    profileViewModel.getProfileFromDB(user, trophies);
+                    profileViewModel.getProfileFromDB(user);
+
+                    NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
+                    navigationView.setCheckedItem(R.id.nav_profile);
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
                     navController.navigate(R.id.nav_profile);
                 }
             }

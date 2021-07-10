@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidapp.ui.searchProfile.ProfileItem;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,22 +21,25 @@ public class ProfileViewModel extends ViewModel {
     private String login;
     private String email;
     private String description;
-    private Bitmap avatar;
     private String registeredDate;
+    private Bitmap avatar;
 
     private RecyclerView mTrophiesView;
     private ProfileTrophiesAdapter mAdapter;
-    private ArrayList<TrophyItem> mTrophiesList;
+    private ArrayList<TrophyItem> mTrophiesList = new ArrayList<>();
     private RecyclerView.LayoutManager mLayoutManager;
 
     public int getId() { return id; }
     public String getLogin() { return login; }
     public String getEmail() { return email; }
     public String getDescription() { return description; }
-    public Bitmap getAvatar() { return avatar; }
     public String getRegisteredDate() { return registeredDate; }
+    public Bitmap getAvatar() { return avatar; }
+    public int getTrophiesListSize(){return mTrophiesList.size(); }
 
-    public void getProfileFromDB(JSONObject user, JSONArray trophiesList){
+    public void setId(int id) { this.id = id; }
+
+    public void getProfileFromDB(JSONObject user){
         try {
             id = user.getInt("id");
             login = user.getString("login");
@@ -51,9 +52,13 @@ public class ProfileViewModel extends ViewModel {
             } else {
                 avatar = null;
             }
-            for(int i=0; i<trophiesList.length(); i++) {
-                JSONObject trophy = trophiesList.getJSONObject(i);
-                mTrophiesList.add(new TrophyItem(trophy.getString("name"), trophy.getInt("stars")));
+            mTrophiesList.clear();
+            if(user.has("trophies")){
+                JSONArray trophies = user.getJSONArray("trophies");
+                for(int i=0; i<trophies.length(); i++) {
+                    JSONObject trophy = trophies.getJSONObject(i);
+                    mTrophiesList.add(new TrophyItem(trophy.getString("name"), trophy.getInt("stars")));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

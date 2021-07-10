@@ -25,11 +25,13 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.androidapp.ui.profile.ProfileViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -174,6 +176,9 @@ public class MainActivity extends AppCompatActivity {
             if(!avatar_path.equals("")) {
                 profile_image.setImageBitmap(BitmapFactory.decodeFile(avatar_path));
             }
+
+            ProfileViewModel profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+            profileViewModel.setId(Integer.parseInt(sp.getString("id", "")));
         }
     }
 
