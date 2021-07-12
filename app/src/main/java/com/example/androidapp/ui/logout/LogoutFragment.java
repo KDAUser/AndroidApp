@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 
 import com.example.androidapp.R;
 import com.example.androidapp.ui.locations.LocationsViewModel;
+import com.example.androidapp.ui.profile.ProfileViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 public class LogoutFragment extends Fragment {
@@ -31,6 +32,9 @@ public class LogoutFragment extends Fragment {
         LocationsViewModel locationsViewModel =
                 new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
         locationsViewModel.clearViewModel();
+        ProfileViewModel profileViewModel =
+                new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
+        profileViewModel.clearViewModel();
 
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         navController.navigate(R.id.nav_login);

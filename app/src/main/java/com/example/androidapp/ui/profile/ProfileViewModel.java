@@ -36,7 +36,6 @@ public class ProfileViewModel extends ViewModel {
             return searchProfile;
     }
 
-
     public void getProfileFromDB(JSONObject user, JFIProfile profile){
         try {
             profile.setId(user.getInt("id"));
@@ -74,5 +73,11 @@ public class ProfileViewModel extends ViewModel {
 
     public void updateTrophiesList(JFIProfile profile){
         mAdapter.filterList(profile.getTrophiesList());
+    }
+
+    public void clearViewModel(){
+        loginProfile.clearJFIProfile();
+        searchProfile.clearJFIProfile();
+        showOwnProfile = true;
     }
 }

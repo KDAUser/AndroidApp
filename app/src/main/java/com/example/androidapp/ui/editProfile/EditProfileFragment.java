@@ -266,8 +266,10 @@ public class EditProfileFragment extends Fragment {
                     }
                     sp_editor.apply();
                     if(feedback.has("newAvatar")){
-                        ((MainActivity)requireActivity()).saveAvatarToInternalStorage(((BitmapDrawable)avatar.getDrawable()).getBitmap());
+                        String avatar_path = ((MainActivity)requireActivity()).saveAvatarToInternalStorage(((BitmapDrawable)avatar.getDrawable()).getBitmap());
+                        sp_editor.putString("avatar", avatar_path);
                     }
+                    sp_editor.apply();
 
                     loadUserData();
                     ((MainActivity) requireActivity()).isUserLogin();

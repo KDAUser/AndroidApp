@@ -23,6 +23,16 @@ public class JFIProfile {
         this.mTrophiesList = mTrophiesList;
     }
 
+    public void clearJFIProfile(){
+        this.id = 0;
+        this.login = "";
+        this.email = "";
+        this.description = "";
+        this.registeredDate = "";
+        this.avatar = null;
+        this.mTrophiesList = new ArrayList<>();
+    }
+
     public int getId() { return id; }
     public String getLogin() { return login; }
     public String getEmail() { return email; }
