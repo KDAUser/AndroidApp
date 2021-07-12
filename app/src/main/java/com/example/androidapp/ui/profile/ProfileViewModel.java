@@ -1,7 +1,6 @@
 package com.example.androidapp.ui.profile;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
@@ -17,64 +16,63 @@ import java.util.ArrayList;
 
 public class ProfileViewModel extends ViewModel {
 
-    private int id;
-    private String login;
-    private String email;
-    private String description;
-    private String registeredDate;
-    private Bitmap avatar;
+    private final JFIProfile loginProfile = new JFIProfile(0, "", "", "", "", null, new ArrayList<>());
+    private final JFIProfile searchProfile = new JFIProfile(0, "", "", "", "", null, new ArrayList<>());
+    private boolean showOwnProfile = true;
 
-    private RecyclerView mTrophiesView;
     private ProfileTrophiesAdapter mAdapter;
-    private ArrayList<TrophyItem> mTrophiesList = new ArrayList<>();
-    private RecyclerView.LayoutManager mLayoutManager;
 
-    public int getId() { return id; }
-    public String getLogin() { return login; }
-    public String getEmail() { return email; }
-    public String getDescription() { return description; }
-    public String getRegisteredDate() { return registeredDate; }
-    public Bitmap getAvatar() { return avatar; }
-    public int getTrophiesListSize(){return mTrophiesList.size(); }
+    public boolean isOwnProfileShow() { return showOwnProfile; }
+    public void toggleShownProfile(){
+        showOwnProfile = !showOwnProfile;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public JFIProfile getLoginProfile() { return loginProfile; }
+    public JFIProfile getSearchProfile() { return searchProfile; }
+    public JFIProfile getShownProfile(){
+        if(showOwnProfile)
+            return loginProfile;
+        else
+            return searchProfile;
+    }
 
-    public void getProfileFromDB(JSONObject user){
+
+    public void getProfileFromDB(JSONObject user, JFIProfile profile){
         try {
-            id = user.getInt("id");
-            login = user.getString("login");
-            email = user.getString("email");
-            description = user.getString("description");
-            registeredDate = user.getString("registered");
+            profile.setId(user.getInt("id"));
+            profile.setLogin(user.getString("login"));
+            profile.setEmail(user.getString("email"));
+            profile.setDescription(user.getString("description"));
+            profile.setRegisteredDate(user.getString("registered"));
             if(user.has("avatar")) {
                 byte[] avatarBytes = Base64.decode(user.getString("avatar"), Base64.DEFAULT);
-                avatar = BitmapFactory.decodeByteArray(avatarBytes, 0, avatarBytes.length);
+                profile.setAvatar(BitmapFactory.decodeByteArray(avatarBytes, 0, avatarBytes.length));
             } else {
-                avatar = null;
+                profile.setAvatar(null);
             }
-            mTrophiesList.clear();
+            ArrayList<TrophyItem> trophiesList = new ArrayList<>();
             if(user.has("trophies")){
                 JSONArray trophies = user.getJSONArray("trophies");
                 for(int i=0; i<trophies.length(); i++) {
                     JSONObject trophy = trophies.getJSONObject(i);
-                    mTrophiesList.add(new TrophyItem(trophy.getString("name"), trophy.getInt("stars")));
+                    trophiesList.add(new TrophyItem(trophy.getString("name"), trophy.getInt("stars")));
                 }
             }
+            profile.setTrophiesList(trophiesList);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void buildRecyclerView(RecyclerView mTrophiesView, Context context) {
-        mTrophiesView = mTrophiesView;
+    public void buildRecyclerView(RecyclerView mTrophiesView, Context context, JFIProfile profile) {
         mTrophiesView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(context);
-        mAdapter = new ProfileTrophiesAdapter(mTrophiesList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
+        mAdapter = new ProfileTrophiesAdapter(profile.getTrophiesList());
         mTrophiesView.setLayoutManager(mLayoutManager);
         mTrophiesView.setAdapter(mAdapter);
     }
 
-    public void updateTrophiesList(){
-        mAdapter.filterList(mTrophiesList);
+    public void updateTrophiesList(JFIProfile profile){
+        mAdapter.filterList(profile.getTrophiesList());
     }
 }

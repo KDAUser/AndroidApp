@@ -1,6 +1,8 @@
 package com.example.androidapp.ui.searchProfile;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -131,7 +133,16 @@ public class SearchProfileFragment extends Fragment implements SearchProfileAdap
                 if(feedback.getInt("success") == 1) {
                     JSONArray userData = feedback.getJSONArray("userData");
                     JSONObject user = userData.getJSONObject(0);
-                    profileViewModel.getProfileFromDB(user);
+
+                    if(profileViewModel.getLoginProfile().getId() == user.getInt("id")) {
+                        profileViewModel.getProfileFromDB(user, profileViewModel.getLoginProfile());
+                        if(!profileViewModel.isOwnProfileShow())
+                            profileViewModel.toggleShownProfile();
+                    } else {
+                        profileViewModel.getProfileFromDB(user, profileViewModel.getSearchProfile());
+                        if(profileViewModel.isOwnProfileShow())
+                            profileViewModel.toggleShownProfile();
+                    }
 
                     NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
                     navigationView.setCheckedItem(R.id.nav_profile);

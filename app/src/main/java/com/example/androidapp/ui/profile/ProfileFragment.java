@@ -10,15 +10,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.androidapp.JSONParser;
 import com.example.androidapp.R;
+import com.example.androidapp.ui.login.LoginFragment;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -41,6 +45,7 @@ public class ProfileFragment extends Fragment {
     private TextView description;
     private ImageView profileImage;
 
+    private ImageButton toggleProfile;
     private TextView noTrophies;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,15 +55,30 @@ public class ProfileFragment extends Fragment {
         sp = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
         loadViewElements();
-        profileViewModel.buildRecyclerView(root.findViewById(R.id.trophiesView),root.getContext());
-        if(sp.getString("id", "").equals(String.valueOf(profileViewModel.getId()))){
+        profileViewModel.buildRecyclerView(root.findViewById(R.id.trophiesView),root.getContext(), profileViewModel.getShownProfile());
+        if(sp.getString("id", "").equals(String.valueOf(profileViewModel.getShownProfile().getId()))){
             loadViewDataFromSP();
             List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair("id", String.valueOf(profileViewModel.getId())));
+            params.add(new BasicNameValuePair("id", String.valueOf(profileViewModel.getShownProfile().getId())));
             new GetProfileData().execute(params);
         } else {
             loadViewDataFromVM();
         }
+
+        if(profileViewModel.getSearchProfile().getId() != 0){
+            toggleProfile.setVisibility(View.VISIBLE);
+        } else {
+            toggleProfile.setVisibility(View.GONE);
+        }
+
+        toggleProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profileViewModel.toggleShownProfile();
+                NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+                navController.navigate(R.id.nav_profile);
+            }
+        });
 
         return root;
     }
@@ -70,6 +90,7 @@ public class ProfileFragment extends Fragment {
         description = root.findViewById(R.id.profilePage_description);
         profileImage = root.findViewById(R.id.profilePage_image);
 
+        toggleProfile = root.findViewById(R.id.profilePage_toggleProfileImgButton);
         noTrophies = root.findViewById(R.id.profilePage_noTrophies);
     }
 
@@ -85,8 +106,8 @@ public class ProfileFragment extends Fragment {
         }  else {
             profileImage.setImageBitmap(((BitmapDrawable)getResources().getDrawable(R.drawable.ic_no_avatar)).getBitmap());
         }
-        profileViewModel.updateTrophiesList();
-        if(profileViewModel.getTrophiesListSize() == 0){
+        profileViewModel.updateTrophiesList(profileViewModel.getShownProfile());
+        if(profileViewModel.getShownProfile().getTrophiesListSize() == 0){
             noTrophies.setVisibility(View.VISIBLE);
         } else {
             noTrophies.setVisibility(View.GONE);
@@ -95,17 +116,17 @@ public class ProfileFragment extends Fragment {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void loadViewDataFromVM(){
-        login.setText(profileViewModel.getLogin());
-        email.setText(profileViewModel.getEmail());
-        registeredDate.setText(profileViewModel.getRegisteredDate());
-        description.setText(profileViewModel.getDescription());
-        if(profileViewModel.getAvatar()!=null) {
-            profileImage.setImageBitmap(profileViewModel.getAvatar());
+        login.setText(profileViewModel.getShownProfile().getLogin());
+        email.setText(profileViewModel.getShownProfile().getEmail());
+        registeredDate.setText(profileViewModel.getShownProfile().getRegisteredDate());
+        description.setText(profileViewModel.getShownProfile().getDescription());
+        if(profileViewModel.getShownProfile().getAvatar()!=null) {
+            profileImage.setImageBitmap(profileViewModel.getShownProfile().getAvatar());
         } else {
             profileImage.setImageBitmap(((BitmapDrawable)getResources().getDrawable(R.drawable.ic_no_avatar)).getBitmap());
         }
-        profileViewModel.updateTrophiesList();
-        if(profileViewModel.getTrophiesListSize() == 0){
+        profileViewModel.updateTrophiesList(profileViewModel.getShownProfile());
+        if(profileViewModel.getShownProfile().getTrophiesListSize() == 0){
             noTrophies.setVisibility(View.VISIBLE);
         } else {
             noTrophies.setVisibility(View.GONE);
@@ -131,7 +152,7 @@ public class ProfileFragment extends Fragment {
                 if(feedback.getInt("success") == 1) {
                     JSONArray userData = feedback.getJSONArray("userData");
                     JSONObject user = userData.getJSONObject(0);
-                    profileViewModel.getProfileFromDB(user);
+                    profileViewModel.getProfileFromDB(user, profileViewModel.getShownProfile());
 
                     loadViewDataFromVM();
 

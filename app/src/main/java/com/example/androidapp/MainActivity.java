@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             ProfileViewModel profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-            profileViewModel.setId(Integer.parseInt(sp.getString("id", "")));
+            profileViewModel.getLoginProfile().setId(Integer.parseInt(sp.getString("id", "")));
         }
     }
 
