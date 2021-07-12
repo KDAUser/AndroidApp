@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.androidapp.JSONParser;
 import com.example.androidapp.R;
+import com.example.androidapp.ui.locations.LocationsViewModel;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -39,7 +40,7 @@ public class CommentsFragment extends Fragment {
                 new ViewModelProvider(requireActivity()).get(CommentsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_location_comments, container, false);
         commentDialog = new Dialog(requireContext());
-        Button addCommentButton = (Button) root.findViewById(R.id.addCommentButton);
+        Button addCommentButton = root.findViewById(R.id.addCommentButton);
         addCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +55,7 @@ public class CommentsFragment extends Fragment {
     private void showPopup(View v){
         commentDialog.setContentView(R.layout.add_comment_layout);
         Button acceptButton = (Button) commentDialog.findViewById(R.id.acceptCommentButton);
-        EditText commentText = (EditText) commentDialog.findViewById(R.id.addCommentText);
+        EditText commentText = commentDialog.findViewById(R.id.addCommentText);
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,10 +63,15 @@ public class CommentsFragment extends Fragment {
                 SharedPreferences sp = requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                 commentsViewModel.addComment(new CommentItem(sp.getString("login", ""), commentText.getText().toString(), Calendar.getInstance().getTime().toString()));
                 commentsViewModel.showComments();
+
+                LocationsViewModel locationsViewModel =
+                        new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
+
                 List<NameValuePair> params = new ArrayList<>();
-                params.add(new BasicNameValuePair("author", sp.getString("login", "")));
+                params.add(new BasicNameValuePair("id_u", sp.getString("id", "")));
+                params.add(new BasicNameValuePair("id_l", String.valueOf(locationsViewModel.getLocationId())));
                 params.add(new BasicNameValuePair("text", commentText.getText().toString()));
-                params.add(new BasicNameValuePair("date", Calendar.getInstance().getTime().toString()));
+                //params.add(new BasicNameValuePair("date", Calendar.getInstance().getTime().toString()));
                 new UpdateCommentsList().execute(params);
                 commentDialog.dismiss();
             }

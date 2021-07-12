@@ -11,10 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class CommentsViewModel extends ViewModel {
-    private ArrayList<CommentItem> mCommentsList;
+    private ArrayList<CommentItem> mCommentsList = new ArrayList<>();
 
     private RecyclerView mCommentsView;
     private CommentAdapter mAdapter;
@@ -40,22 +39,23 @@ public class CommentsViewModel extends ViewModel {
     }
 
     public void buildRecyclerView(RecyclerView mCommentsView, Context context) {
-        mCommentsView = mCommentsView;
-        mCommentsView.setHasFixedSize(true);
+        this.mCommentsView = mCommentsView;
+        this.mCommentsView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mAdapter = new CommentAdapter(mCommentsList);
 
-        mCommentsView.setLayoutManager(mLayoutManager);
-        mCommentsView.setAdapter(mAdapter);
+        this.mCommentsView.setLayoutManager(mLayoutManager);
+        this.mCommentsView.setAdapter(mAdapter);
     }
 
     public void getCommentsFromDB(JSONArray comments) {
         try {
+            mCommentsList.clear();
             for(int i = 0; i<comments.length(); i++) {
                 JSONObject comment = comments.getJSONObject(i);
                 mCommentsList.add(new CommentItem(comment.getString("author"), comment.getString("text"), comment.getString("date")));
             }
-            mAdapter.filterList(mCommentsList);
+            //mAdapter.filterList(mCommentsList);
         } catch (JSONException e) {
             e.printStackTrace();
         }

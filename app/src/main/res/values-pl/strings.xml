@@ -68,7 +68,7 @@
     <string name="registerError_passwordsNotMatch">Passwords are not the same.</string>
     <string name="registerError_emailSyntax">Put correct e-mail.</string>
     <string name="registerError_emailOccupied">Account with that email already exists.</string>
-    <string name="registerError_imageNotLoad">Error druing uploading profile image.</string>
+    <string name="registerError_imageNotLoad">Error during uploading profile image.</string>
     <string name="loginError_noCredential">Login or/and password not given.</string>
     <string name="loginError_wrongCredential">Login or/and password not match.</string>
     <string name="navHeader_noUser_login">User name</string>
@@ -91,6 +91,6 @@
     <string name="locationFragment_note_alreadySolved">This location is already solved!</string>
     <string name="locationFragment_note_locationSolved">Nice man! You solved this location!</string>
     <string name="locationFragment_note_badPosition">Too bad!</string>
-    <string name="locationFragment_errorOnServerUpdate">Error during progress update on sorver.</string>
+    <string name="locationFragment_errorOnServerUpdate">Error during progress update on server.</string>
     <string name="profilePage_noTrophiesText">No trophies to show</string>
 </resources>
