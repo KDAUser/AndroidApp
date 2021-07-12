@@ -22,7 +22,6 @@ import androidx.navigation.Navigation;
 
 import com.example.androidapp.JSONParser;
 import com.example.androidapp.R;
-import com.example.androidapp.ui.login.LoginFragment;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
