@@ -20,9 +20,9 @@ import java.util.ArrayList;
 public class LocationsViewModel extends ViewModel {
 
     private final Boolean[] areStarsOn = new Boolean[] {true, true, true, true, true};
-    private TipItem firstTip = new TipItem("Tip 1", "Go straight", null);
+    private TipItem firstTip = new TipItem("", "", null);
     private LocationTipsAdapter mAdapter;
-    private JFILocation mLocation = new JFILocation(0, false, "Example location", 5, "Never started", null);
+    private JFILocation mLocation = new JFILocation(0, false, "", 5, "", null);
 
     public void setStars (Boolean[] starStatus, ArrayList<ImageView> starsON, ArrayList<ImageView> starsOFF) {
         int i = 0;

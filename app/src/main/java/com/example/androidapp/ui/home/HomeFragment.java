@@ -19,7 +19,6 @@ import com.google.android.material.navigation.NavigationView;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
     private LocationsViewModel locationsViewModel;
     private NavController navController;
 

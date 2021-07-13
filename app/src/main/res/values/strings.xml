@@ -19,7 +19,7 @@
     <string name="menu_group_profile">Profile</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_locations">Locations</string>
+    <string name="menu_locations">Location</string>
     <string name="menu_add_locations">Add Locations</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_edit_profile">Edit Profile</string>
@@ -32,10 +32,10 @@
     <string name="loginPage_registerNote">You dont have an account?</string>
     <string name="loginPage_register">Registration</string>
     <string name="searchLocation_hint">Location Name</string>
-    <string name="registrationPage_title">Create new aacount</string>
+    <string name="registrationPage_title">Create new account</string>
     <string name="registrationPage_confPass">Confirm password</string>
     <string name="registrationPage_email">Email</string>
-    <string name="registrationPage_avatar">Choose your avatar</string>
+    <string name="registrationPage_avatar">Choose avatar</string>
     <string name="registrationPage_editAvatar">Edit avatar</string>
     <string name="registrationPage_cropAvatar">Crop</string>
     <string name="registrationPage_browse">Browse</string>
@@ -47,7 +47,7 @@
     <string name="addComment">Add comment</string>
     <string name="acceptComment">Publish</string>
     <string name="trophies">Trophies</string>
-    <string name="change_avatar">Change your avatar</string>
+    <string name="change_avatar">Change avatar</string>
     <string name="save_profile_description">Save profile description</string>
     <string name="save_new_password">Save new password</string>
     <string name="location_name">Location Name</string>
@@ -65,7 +65,7 @@
     <string name="registerError_loginOccupied">User with that name already exists.</string>
     <string name="registerError_passwordLength">Password must have from 8 to 30 characters.</string>
     <string name="registerError_passwordsNotMatch">Passwords are not the same.</string>
-    <string name="registerError_emailSyntax">Put correct e-mail.</string>
+    <string name="registerError_emailSyntax">Put correct email.</string>
     <string name="registerError_emailOccupied">Account with that email already exists.</string>
     <string name="registerError_imageNotLoad">Error during uploading profile image.</string>
     <string name="loginError_noCredential">Login or/and password not given.</string>
@@ -89,7 +89,7 @@
     <string name="addLocation_cropImageTitle">Choose image</string>
     <string name="locationFragment_note_alreadySolved">This location is already solved!</string>
     <string name="locationFragment_note_locationSolved">Nice man! You solved this location!</string>
-    <string name="locationFragment_note_badPosition">Too bad!</string>
+    <string name="locationFragment_note_badPosition">Current position doesnt match location coordinates!</string>
     <string name="locationFragment_errorOnServerUpdate">Error during progress update on server.</string>
     <string name="profilePage_noTrophiesText">No trophies to show</string>
 </resources>
