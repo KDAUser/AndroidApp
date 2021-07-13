@@ -53,17 +53,6 @@ public class AddLocationsViewModel extends ViewModel {
         mLocation.setLocationTips(newTips);
     }
 
-    /*private void addTips(ArrayList<String> tipTexts, ArrayList<ImageView> tipImages) {
-        ArrayList<TipItem> newTips = new ArrayList<>();
-        String[] tipNames = {"First Tip", "Second Tip", "Third Tip", "Fourth Tip", "Fifth Tip"};
-        int i = 0;
-        for (String tipText: tipTexts; ImageView tipImage: tipImages) {
-            newTips.add(new TipItem(tipNames[i], tipText, tipImage));
-            i++;
-        }
-        mLocation.setLocationTips(newTips);
-    }*/
-
     public JFILocation getLocation() {
         return mLocation;
     }
