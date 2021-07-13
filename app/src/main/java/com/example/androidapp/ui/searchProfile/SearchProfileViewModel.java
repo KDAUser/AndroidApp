@@ -16,11 +16,7 @@ public class SearchProfileViewModel extends ViewModel {
 
     private ArrayList<ProfileItem> mProfilesList = new ArrayList<>();
     private ArrayList<ProfileItem> filteredList;
-
-    private RecyclerView mProfilesView;
     private SearchProfileAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
     private String filterText = "";
 
     public void filter(String text) {
@@ -50,9 +46,8 @@ public class SearchProfileViewModel extends ViewModel {
     }
 
     public void buildRecyclerView(RecyclerView mProfilesView, Context context, SearchProfileAdapter.OnProfileListener onProfileListener) {
-        mProfilesView = mProfilesView;
         mProfilesView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         mAdapter = new SearchProfileAdapter(mProfilesList, onProfileListener);
 
         mProfilesView.setLayoutManager(mLayoutManager);

@@ -19,7 +19,6 @@ public class ProfileViewModel extends ViewModel {
     private final JFIProfile loginProfile = new JFIProfile(0, "", "", "", "", null, new ArrayList<>());
     private final JFIProfile searchProfile = new JFIProfile(0, "", "", "", "", null, new ArrayList<>());
     private boolean showOwnProfile = true;
-
     private ProfileTrophiesAdapter mAdapter;
 
     public boolean isOwnProfileShow() { return showOwnProfile; }
@@ -54,7 +53,7 @@ public class ProfileViewModel extends ViewModel {
                 JSONArray trophies = user.getJSONArray("trophies");
                 for(int i=0; i<trophies.length(); i++) {
                     JSONObject trophy = trophies.getJSONObject(i);
-                    trophiesList.add(new TrophyItem(trophy.getString("name"), trophy.getInt("stars")));
+                    trophiesList.add(new TrophyItem(trophy.getString("name"), trophy.getInt("stars"), trophy.getString("updated")));
                 }
             }
             profile.setTrophiesList(trophiesList);

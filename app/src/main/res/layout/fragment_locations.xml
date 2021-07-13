@@ -11,27 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bgColor"
         tools:context=".ui.locations.LocationsFragment">
-
-        <TextView
-            android:id="@+id/locationName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/location_name"
-            android:textAlignment="center"
-            android:textColor="@color/textColor"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tipsView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:scrollbars="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/locationName" />
 
         <Button
             android:id="@+id/addTipButton"
@@ -41,28 +22,6 @@
             android:text="+"
             android:textSize="25dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tipsView" />
-
-        <TextView
-            android:id="@+id/addTipText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/addTip"
-            android:textAlignment="center"
-            android:textColor="@color/textColor"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/addTipButton"
-            app:layout_constraintEnd_toStartOf="@+id/addTipImage"
-            app:layout_constraintStart_toEndOf="@+id/addTipButton"
-            app:layout_constraintTop_toBottomOf="@+id/tipsView" />
-
-        <ImageView
-            android:id="@+id/addTipImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="16dp"
-            android:src="@android:drawable/btn_star_big_off"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tipsView" />
 
         <Button
@@ -88,6 +47,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+        <ImageView
+            android:id="@+id/addTipImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:src="@android:drawable/btn_star_big_off"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tipsView" />
+
+        <TextView
+            android:id="@+id/addTipText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/addTip"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/addTipButton"
+            app:layout_constraintEnd_toStartOf="@+id/addTipImage"
+            app:layout_constraintStart_toEndOf="@+id/addTipButton"
+            app:layout_constraintTop_toBottomOf="@+id/tipsView" />
+
+        <TextView
+            android:id="@+id/locationName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/location_name"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
@@ -176,6 +169,14 @@
                 android:visibility="visible"
                 app:srcCompat="@android:drawable/btn_star_big_off" />
         </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tipsView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:scrollbars="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/locationName" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

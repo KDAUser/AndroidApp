@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class ProfileTrophiesAdapter extends RecyclerView.Adapter<ProfileTrophiesAdapter.TrophiesViewHolder> {
@@ -17,6 +19,7 @@ public class ProfileTrophiesAdapter extends RecyclerView.Adapter<ProfileTrophies
 
     public static class TrophiesViewHolder extends RecyclerView.ViewHolder {
         public TextView mLocationName;
+        public TextView mTrophyDate;
         public ImageView firstStarOn;
         public ImageView secondStarOn;
         public ImageView thirdStarOn;
@@ -31,6 +34,7 @@ public class ProfileTrophiesAdapter extends RecyclerView.Adapter<ProfileTrophies
         public TrophiesViewHolder(View itemView) {
             super(itemView);
             mLocationName = itemView.findViewById(R.id.trophyLocationName);
+            mTrophyDate = itemView.findViewById(R.id.trophyLocationDate);
             firstStarOn = itemView.findViewById(R.id.trophy_firstStarOn);
             secondStarOn = itemView.findViewById(R.id.trophy_secondStarOn);
             thirdStarOn = itemView.findViewById(R.id.trophy_thirdStarOn);
@@ -48,20 +52,21 @@ public class ProfileTrophiesAdapter extends RecyclerView.Adapter<ProfileTrophies
         mTrophiesList = trophiesList;
     }
 
+    @NotNull
     @Override
     public ProfileTrophiesAdapter.TrophiesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_trophy_item,
                 parent, false);
-        ProfileTrophiesAdapter.TrophiesViewHolder evh = new ProfileTrophiesAdapter.TrophiesViewHolder(v);
-        return evh;
+        return new TrophiesViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ProfileTrophiesAdapter.TrophiesViewHolder holder, int position) {
         TrophyItem currentItem = mTrophiesList.get(position);
 
-        holder.mLocationName.setText(currentItem.getmLocationName());
-        switch (currentItem.getmNumberOfStars()){
+        holder.mLocationName.setText(currentItem.getLocationName());
+        holder.mTrophyDate.setText(currentItem.getTrophyDate());
+        switch (currentItem.getNumberOfStars()){
             case 1:
                 holder.firstStarOn.setVisibility(View.VISIBLE);
                 holder.secondStarOn.setVisibility(View.GONE);

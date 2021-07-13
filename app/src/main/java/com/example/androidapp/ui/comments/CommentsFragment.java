@@ -44,7 +44,7 @@ public class CommentsFragment extends Fragment {
         addCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopup(root);
+                showPopup();
             }
         });
         commentsViewModel.buildRecyclerView(root.findViewById(R.id.commentsView), root.getContext());
@@ -52,7 +52,7 @@ public class CommentsFragment extends Fragment {
         return root;
     }
 
-    private void showPopup(View v){
+    private void showPopup(){
         commentDialog.setContentView(R.layout.add_comment_layout);
         Button acceptButton = (Button) commentDialog.findViewById(R.id.acceptCommentButton);
         EditText commentText = commentDialog.findViewById(R.id.addCommentText);

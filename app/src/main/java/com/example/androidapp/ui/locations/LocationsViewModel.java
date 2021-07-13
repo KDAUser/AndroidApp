@@ -1,11 +1,9 @@
 package com.example.androidapp.ui.locations;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.location.LocationManager;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,23 +12,15 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidapp.ui.searchLocation.LocationItem;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LocationsViewModel extends ViewModel {
 
-    private Boolean[] areStarsOn = new Boolean[] {true, true, true, true, true};
+    private final Boolean[] areStarsOn = new Boolean[] {true, true, true, true, true};
     private TipItem firstTip = new TipItem("Tip 1", "Go straight", null);
-    private RecyclerView mTipsView;
-    private RecyclerView.LayoutManager mLayoutManager;
     private LocationTipsAdapter mAdapter;
     private JFILocation mLocation = new JFILocation(0, false, "Example location", 5, "Never started", null);
 
@@ -57,9 +47,8 @@ public class LocationsViewModel extends ViewModel {
     }
 
     public void buildRecyclerView(RecyclerView mTipsView, Context context) {
-        mTipsView = mTipsView;
         mTipsView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         mAdapter = new LocationTipsAdapter(mLocation.getLocationTips());
         mTipsView.setLayoutManager(mLayoutManager);
         mTipsView.setAdapter(mAdapter);
@@ -132,17 +121,14 @@ public class LocationsViewModel extends ViewModel {
 
     public Boolean checkLocation(Location location){
         double distance = Math.sqrt(Math.pow(mLocation.getLatitude()-location.getLatitude(),2)+Math.pow(mLocation.getLongitude()-location.getLongitude(),2))*111.139;
-        if(distance<10) {
-            return true;
-        }
-        return false;
+        return distance < 10;
     }
 
     public int getLocationId() {
         return mLocation.getLocationId();
     }
 
-    public JFILocation getmLocation() {
+    public JFILocation getLocation() {
         return mLocation;
     }
 
@@ -163,7 +149,7 @@ public class LocationsViewModel extends ViewModel {
             tipsList.add(new TipItem("Tip 3", location.getString("tip3"), imageList[2]));
             tipsList.add(new TipItem("Tip 4", location.getString("tip4"), imageList[3]));
             tipsList.add(new TipItem("Tip 5", location.getString("tip5"), imageList[4]));
-            Boolean isSolved = false;
+            boolean isSolved = false;
             if(location.getInt("isSolved") == 1)
                 isSolved = true;
 

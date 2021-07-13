@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class SearchProfileAdapter extends RecyclerView.Adapter<SearchProfileAdapter.ProfilesViewHolder> {
 
     private ArrayList<ProfileItem> mProfilesList;
-    private OnProfileListener mOnProfileListener;
+    private final OnProfileListener mOnProfileListener;
 
     public static class ProfilesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mSearchItemProfileName;
@@ -38,12 +40,12 @@ public class SearchProfileAdapter extends RecyclerView.Adapter<SearchProfileAdap
         mOnProfileListener = onProfileListener;
     }
 
+    @NotNull
     @Override
     public SearchProfileAdapter.ProfilesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_search_item,
                 parent, false);
-        SearchProfileAdapter.ProfilesViewHolder evh = new SearchProfileAdapter.ProfilesViewHolder(v, mOnProfileListener);
-        return evh;
+        return new ProfilesViewHolder(v, mOnProfileListener);
     }
 
     @Override

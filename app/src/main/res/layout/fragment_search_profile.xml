@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.searchProfile.SearchProfileFragment"
-    android:focusableInTouchMode="true"
+    android:background="@color/bgColor"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".ui.searchProfile.SearchProfileFragment">
 
     <EditText
         android:id="@+id/searchProfileField"

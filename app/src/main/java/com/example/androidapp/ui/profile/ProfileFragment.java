@@ -154,11 +154,6 @@ public class ProfileFragment extends Fragment {
                     profileViewModel.getProfileFromDB(user, profileViewModel.getShownProfile());
 
                     loadViewDataFromVM();
-
-//                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-//                    navController.navigate(R.id.nav_profile);
-//                    NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
-//                    navigationView.setCheckedItem(R.id.nav_profile);
                 }
             }
             catch (JSONException e) {

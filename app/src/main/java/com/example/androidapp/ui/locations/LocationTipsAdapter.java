@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class LocationTipsAdapter extends RecyclerView.Adapter<LocationTipsAdapter.TipsViewHolder> {
@@ -32,22 +34,22 @@ public class LocationTipsAdapter extends RecyclerView.Adapter<LocationTipsAdapte
         mTipsList = tipsList;
     }
 
+    @NotNull
     @Override
     public LocationTipsAdapter.TipsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_tip_item,
                 parent, false);
-        LocationTipsAdapter.TipsViewHolder evh = new LocationTipsAdapter.TipsViewHolder(v);
-        return evh;
+        return new TipsViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(LocationTipsAdapter.TipsViewHolder holder, int position) {
         TipItem currentItem = mTipsList.get(position);
 
-        holder.mTipName.setText(currentItem.getmTipName());
-        holder.mTipText.setText(currentItem.getmTipText());
-        if (currentItem.getmTipImage()!=null) {
-            holder.mTipImage.setImageBitmap(currentItem.getmTipImage());
+        holder.mTipName.setText(currentItem.getTipName());
+        holder.mTipText.setText(currentItem.getTipText());
+        if (currentItem.getTipImage()!=null) {
+            holder.mTipImage.setImageBitmap(currentItem.getTipImage());
         } else {
             holder.mTipImage.setVisibility(View.GONE);
         }

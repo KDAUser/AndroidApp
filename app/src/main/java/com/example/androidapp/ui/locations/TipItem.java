@@ -1,11 +1,10 @@
 package com.example.androidapp.ui.locations;
 
 import android.graphics.Bitmap;
-import android.widget.ImageView;
 
 public class TipItem {
-    private String mTipName;
-    private String mTipText;
+    private final String mTipName;
+    private final String mTipText;
     private Bitmap mTipImage;
 
     public TipItem(String mTipName, String mTipText, Bitmap mTipImage) {
@@ -16,15 +15,15 @@ public class TipItem {
         }
     }
 
-    public String getmTipName() {
+    public String getTipName() {
         return mTipName;
     }
 
-    public String getmTipText() {
+    public String getTipText() {
         return mTipText;
     }
 
-    public Bitmap getmTipImage() {
+    public Bitmap getTipImage() {
         return mTipImage;
     }
 }

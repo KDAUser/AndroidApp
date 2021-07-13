@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment {
         NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         locationsViewModel = new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
         SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        if(sp.getString("login", "") == ""){
+        if(sp.getString("login", "").equals("")){
             navController.navigate(R.id.nav_login);
         }
         else if (locationsViewModel.getLocationId()!=0) {
@@ -43,10 +43,8 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         navigateFromHome();
         return root;
     }
-
-
 }

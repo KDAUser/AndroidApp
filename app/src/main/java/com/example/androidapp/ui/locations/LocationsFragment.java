@@ -1,14 +1,8 @@
 package com.example.androidapp.ui.locations;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,9 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -32,9 +23,6 @@ import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.comments.CommentsViewModel;
-import com.example.androidapp.ui.login.LoginFragment;
-import com.example.androidapp.ui.searchLocation.SearchLocationFragment;
-import com.google.android.material.navigation.NavigationView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -44,16 +32,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class LocationsFragment extends Fragment {
 
     private LocationsViewModel locationsViewModel;
     private CommentsViewModel commentsViewModel;
-    private String[] starsOn = new String[]{"firstStarOn", "secondStarOn", "thirdStarOn", "fourthStarOn", "fifthStarOn"};
-    private String[] starsOff = new String[]{"firstStarOff", "secondStarOff", "thirdStarOff", "fourthStarOff", "fifthStarOff"};
+    //private final String[] starsOn = new String[]{"firstStarOn", "secondStarOn", "thirdStarOn", "fourthStarOn", "fifthStarOn"};
+    //private final String[] starsOff = new String[]{"firstStarOff", "secondStarOff", "thirdStarOff", "fourthStarOff", "fifthStarOff"};
     private NavController navController;
-    private View root;
     private SharedPreferences sp;
 
     private void prepareLocationView(View root, JFILocation location) {
@@ -154,13 +140,13 @@ public class LocationsFragment extends Fragment {
                 new ViewModelProvider(requireActivity()).get(LocationsViewModel.class);
         commentsViewModel =
                 new ViewModelProvider(requireActivity()).get(CommentsViewModel.class);
-        root = inflater.inflate(R.layout.fragment_locations, container, false);
+        View root = inflater.inflate(R.layout.fragment_locations, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         if(locationsViewModel.getLocationId()==0) {
             navController.navigate(R.id.nav_home);
         }
         else {
-            prepareLocationView(root, locationsViewModel.getmLocation());
+            prepareLocationView(root, locationsViewModel.getLocation());
         }
         return root;
     }

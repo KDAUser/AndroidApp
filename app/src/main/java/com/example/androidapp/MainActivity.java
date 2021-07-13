@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -14,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -76,7 +78,10 @@ public class MainActivity extends AppCompatActivity {
         setupLocationListener();
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES);
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        if(sharedPref.getString("noNightMode", "").equals("")){
+            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES);
+        }
 
         isUserLogin();
 
@@ -89,6 +94,31 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId() == R.id.app_bar_switch) {
+            SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor sp_editor = sharedPref.edit();
+            switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+                case Configuration.UI_MODE_NIGHT_YES:
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    sp_editor.putString("noNightMode", "1");
+                    break;
+                case Configuration.UI_MODE_NIGHT_NO:
+                    AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES);
+                    getDelegate().setLocalNightMode(MODE_NIGHT_YES);
+                    sp_editor.putString("noNightMode", "");
+                    break;
+            }
+            sp_editor.apply();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {

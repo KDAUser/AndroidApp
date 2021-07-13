@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -139,14 +139,14 @@ public class LoginFragment extends Fragment {
                     sp_editor.putString("email", feedback.getString("email"));
                     sp_editor.putString("description", feedback.getString("description"));
                     sp_editor.putString("registered", feedback.getString("registered"));
+                    if(feedback.has("avatar")) {
+                        byte[] imageBytes = Base64.decode(feedback.getString("avatar"), Base64.DEFAULT);
+                        Bitmap avatar = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                        sp_editor.putString("avatar", ((MainActivity)requireActivity()).saveAvatarToInternalStorage(avatar));
+                    }
                     sp_editor.apply();
 
-                    if(feedback.getInt("avatar") == 1) {
-                        new GetImage().execute(getString(R.string.server_address) + "avatars/" + feedback.getString("id") + ".jpg");
-                    }
-                    else{
-                        ((MainActivity) requireActivity()).isUserLogin();
-                    }
+                    ((MainActivity) requireActivity()).isUserLogin();
 
                     NavigationView navigationView = requireActivity().findViewById(R.id.nav_view);
                     navigationView.setCheckedItem(R.id.nav_home);
@@ -173,35 +173,6 @@ public class LoginFragment extends Fragment {
             catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    class GetImage extends AsyncTask<String, Void, Bitmap> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-        @Override
-        protected Bitmap doInBackground(String... args) {
-            Bitmap bitmap = null;
-            try {
-                // Download Image from URL
-                InputStream input = new java.net.URL(args[0]).openStream();
-                // Decode Bitmap
-                bitmap = BitmapFactory.decodeStream(input);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            SharedPreferences.Editor sp_editor = sp.edit();
-            sp_editor.putString("avatar", ((MainActivity)requireActivity()).saveAvatarToInternalStorage(result));
-            sp_editor.apply();
-
-            ((MainActivity) requireActivity()).isUserLogin();
         }
     }
 }

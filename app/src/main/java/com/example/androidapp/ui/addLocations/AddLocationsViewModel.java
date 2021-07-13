@@ -7,8 +7,6 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.androidapp.ui.locations.JFILocation;
@@ -23,7 +21,7 @@ import java.util.List;
 
 public class AddLocationsViewModel extends ViewModel {
 
-    private JFILocation mLocation = new JFILocation(0, false, "", 5, "", null);
+    private final JFILocation mLocation = new JFILocation(0, false, "", 5, "", null);
     private double mLongitude = 0.0;
     private double mLatitude = 0.0;
 
@@ -66,7 +64,7 @@ public class AddLocationsViewModel extends ViewModel {
         mLocation.setLocationTips(newTips);
     }*/
 
-    public JFILocation getmLocation() {
+    public JFILocation getLocation() {
         return mLocation;
     }
 
@@ -94,14 +92,11 @@ public class AddLocationsViewModel extends ViewModel {
     public Boolean isLocationComplete() {
         int i = 0;
         for (TipItem locationTip: mLocation.getLocationTips()) {
-            if (!locationTip.getmTipText().equals("")) {
+            if (!locationTip.getTipText().equals("")) {
                 i++;
             }
         }
-        if ((!mLocation.getLocationName().equals(""))&(i==5)&(mLocation.getLatitude()!=0.0)&(mLocation.getLatitude()!=0.0)) {
-            return true;
-        }
-        return false;
+        return (!mLocation.getLocationName().equals("")) & (i == 5) & (mLocation.getLatitude() != 0.0) & (mLocation.getLatitude() != 0.0);
     }
 
     public List<NameValuePair> prepareParams(Boolean[] areImagesSet){
@@ -111,9 +106,9 @@ public class AddLocationsViewModel extends ViewModel {
         params.add(new BasicNameValuePair("longitude", String.valueOf(mLocation.getLongitude())));
         int i = 0;
         for(TipItem tip: mLocation.getLocationTips()) {
-            params.add(new BasicNameValuePair("tip"+(i+1), tip.getmTipText()));
+            params.add(new BasicNameValuePair("tip"+(i+1), tip.getTipText()));
             if (areImagesSet[i]) {
-                Bitmap bitmap = tip.getmTipImage();
+                Bitmap bitmap = tip.getTipImage();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
                 byte[] byte_arr = stream.toByteArray();

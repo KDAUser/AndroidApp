@@ -1,8 +1,8 @@
 package com.example.androidapp.ui.searchLocation;
 
 public class LocationItem {
-    private int id;
-    private String mSearchItemLocationName;
+    private final int id;
+    private final String mSearchItemLocationName;
 
     public LocationItem(int id, String Name) {
         this.id = id;

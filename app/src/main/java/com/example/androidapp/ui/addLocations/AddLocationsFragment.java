@@ -1,18 +1,10 @@
 package com.example.androidapp.ui.addLocations;
 
-import android.Manifest;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,15 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -36,7 +25,6 @@ import com.example.androidapp.JSONParser;
 import com.example.androidapp.MainActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ui.locations.JFILocation;
-import com.example.androidapp.ui.locations.LocationsViewModel;
 import com.example.androidapp.ui.locations.TipItem;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -55,10 +43,10 @@ public class AddLocationsFragment extends Fragment {
 
     private AddLocationsViewModel addLocationsViewModel;
     //private LocationManager locationManager;
-    private Uri[] imageUri = new Uri[5];
-    private Boolean[] imageSet = {false, false, false, false, false};
-    private ImageView[] tipImage = new ImageView[5];
-    private EditText[] tipText = new EditText[5];
+    private final Uri[] imageUri = new Uri[5];
+    private final Boolean[] imageSet = {false, false, false, false, false};
+    private final ImageView[] tipImage = new ImageView[5];
+    private final EditText[] tipText = new EditText[5];
     private int imageIndex = 0;
     private View root;
 
@@ -100,7 +88,7 @@ public class AddLocationsFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    ((MainActivity) getActivity()).hideKeyboard(v);
+                    ((MainActivity) requireActivity()).hideKeyboard(v);
                 }
             }
         };
@@ -126,9 +114,9 @@ public class AddLocationsFragment extends Fragment {
         saveActualValuesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addLocationsViewModel.saveActualValues(((MainActivity) getActivity()).getActualLocation());
-                editTextLongitude.setText("" + Math.floor(((MainActivity) getActivity()).getActualLocation().getLongitude() * 100000) / 100000);
-                editTextLatitude.setText("" + Math.floor(((MainActivity) getActivity()).getActualLocation().getLatitude() * 100000) / 100000);
+                addLocationsViewModel.saveActualValues(((MainActivity) requireActivity()).getActualLocation());
+                editTextLongitude.setText("" + Math.floor(((MainActivity) requireActivity()).getActualLocation().getLongitude() * 100000) / 100000);
+                editTextLatitude.setText("" + Math.floor(((MainActivity) requireActivity()).getActualLocation().getLatitude() * 100000) / 100000);
             }
         });
 
@@ -204,11 +192,10 @@ public class AddLocationsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                imageUri[imageIndex] = result.getUri();
-
-                try {
+            try{
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK) {
+                    imageUri[imageIndex] = result.getUri();
                     // Resize chosen image
                     Bitmap bitmap = BitmapFactory.decodeFile(imageUri[imageIndex].getEncodedPath());
                     // Write resized image
@@ -218,11 +205,11 @@ public class AddLocationsFragment extends Fragment {
                     imageSet[imageIndex] = true;
                     tipImage[imageIndex].setImageBitmap(bitmap);
                     tipImage[imageIndex].setVisibility(View.VISIBLE);
-                } catch (Exception e) {
-                    Log.e("Tip " + (imageIndex + 1) + " image", e.getMessage(), e);
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    throw  result.getError();
                 }
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+            }catch (Exception e) {
+                Log.e("Tip " + (imageIndex + 1) + " image", e.getMessage(), e);
             }
         }
     }
@@ -232,11 +219,11 @@ public class AddLocationsFragment extends Fragment {
                 .setActivityTitle(getString(R.string.addLocation_cropImageTitle))
                 .setCropMenuCropButtonTitle(getString(R.string.registrationPage_cropAvatar))
                 .setMinCropResultSize(200, 200)
-                .start(getContext(), this);
+                .start(requireContext(), this);
     }
 
     public void setupView(EditText locationName, EditText latitude, EditText longitude) {
-        JFILocation location = addLocationsViewModel.getmLocation();
+        JFILocation location = addLocationsViewModel.getLocation();
         if (!location.getLocationName().equals("")) {
             locationName.setText(location.getLocationName());
         }
@@ -244,11 +231,11 @@ public class AddLocationsFragment extends Fragment {
             ArrayList<TipItem> locationTips = location.getLocationTips();
             int i = 0;
             for (TipItem locationTip : locationTips) {
-                if (!locationTip.getmTipText().equals("")) {
-                    tipText[i].setText(locationTip.getmTipText());
+                if (!locationTip.getTipText().equals("")) {
+                    tipText[i].setText(locationTip.getTipText());
                 }
-                if (locationTip.getmTipImage() != null) {
-                    tipImage[i].setImageBitmap(locationTip.getmTipImage());
+                if (locationTip.getTipImage() != null) {
+                    tipImage[i].setImageBitmap(locationTip.getTipImage());
                     tipImage[i].setVisibility(View.VISIBLE);
                 }
                 i++;
@@ -263,7 +250,7 @@ public class AddLocationsFragment extends Fragment {
     }
 
     public void clearView(EditText locationName, EditText latitude, EditText longitude) {
-        JFILocation location = addLocationsViewModel.getmLocation();
+        JFILocation location = addLocationsViewModel.getLocation();
         locationName.setText(location.getLocationName());
         for(EditText tiptext: tipText) {
             tiptext.setText("");
@@ -276,6 +263,7 @@ public class AddLocationsFragment extends Fragment {
         longitude.setText("");
     }
 
+    @SuppressLint("StaticFieldLeak")
     class addLocation extends AsyncTask<List<NameValuePair>, Void, JSONObject> {
         private final String link = getString(R.string.server_address) + "addLocation.php";
         private ProgressDialog pDialog;
@@ -290,8 +278,9 @@ public class AddLocationsFragment extends Fragment {
             pDialog.setCancelable(false);
             pDialog.show();
         }
+        @SafeVarargs
         @Override
-        protected JSONObject doInBackground(List<NameValuePair>... args) {
+        protected final JSONObject doInBackground(List<NameValuePair>... args) {
             return new JSONParser().makeHttpRequest(link, "POST", args[0]);
         }
         @Override

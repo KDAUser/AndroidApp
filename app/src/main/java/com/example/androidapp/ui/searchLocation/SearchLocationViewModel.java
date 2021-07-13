@@ -1,7 +1,6 @@
 package com.example.androidapp.ui.searchLocation;
 
 import android.content.Context;
-import android.view.View;
 
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,11 +16,7 @@ public class SearchLocationViewModel extends ViewModel {
 
     private ArrayList<LocationItem> mLocationsList = new ArrayList<>();
     private ArrayList<LocationItem> filteredList;
-
-    private RecyclerView mLocationsView;
     private SearchLocationAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
     private String filterText = "";
 
     public void filter(String text) {
@@ -51,9 +46,8 @@ public class SearchLocationViewModel extends ViewModel {
     }
 
     public void buildRecyclerView(RecyclerView mLocationsView, Context context, SearchLocationAdapter.OnLocationListener onLocationListener) {
-        mLocationsView = mLocationsView;
         mLocationsView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
         mAdapter = new SearchLocationAdapter(mLocationsList, onLocationListener);
 
         mLocationsView.setLayoutManager(mLayoutManager);

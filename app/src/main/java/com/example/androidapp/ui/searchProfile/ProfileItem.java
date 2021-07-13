@@ -1,8 +1,8 @@
 package com.example.androidapp.ui.searchProfile;
 
 public class ProfileItem {
-    private int mSearchItemProfileId;
-    private String mSearchItemProfileName;
+    private final int mSearchItemProfileId;
+    private final String mSearchItemProfileName;
 
     public ProfileItem(int id, String Name) {
         mSearchItemProfileId = id;

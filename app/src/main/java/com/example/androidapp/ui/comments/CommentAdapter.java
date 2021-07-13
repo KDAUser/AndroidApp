@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentsViewHolder> {
@@ -32,21 +34,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Comments
         mCommentsList = commentsList;
     }
 
+    @NotNull
     @Override
     public CommentAdapter.CommentsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_comment_item,
                 parent, false);
-        CommentAdapter.CommentsViewHolder evh = new CommentAdapter.CommentsViewHolder(v);
-        return evh;
+        return new CommentsViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(CommentAdapter.CommentsViewHolder holder, int position) {
         CommentItem currentItem = mCommentsList.get(position);
 
-        holder.mCommentAuthor.setText(currentItem.getmCommentAuthor());
-        holder.mCommentText.setText(currentItem.getmCommentText());
-        holder.mCommentDate.setText(currentItem.getmCommentDate());
+        holder.mCommentAuthor.setText(currentItem.getCommentAuthor());
+        holder.mCommentText.setText(currentItem.getCommentText());
+        holder.mCommentDate.setText(currentItem.getCommentDate());
     }
 
     @Override

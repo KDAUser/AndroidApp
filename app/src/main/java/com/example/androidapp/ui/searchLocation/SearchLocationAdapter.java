@@ -1,7 +1,6 @@
 package com.example.androidapp.ui.searchLocation;
 
 
-import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAdapter.LocationsViewHolder> {
 
     private ArrayList<LocationItem> mLocationsList;
-    private OnLocationListener mOnLocationListener;
+    private final OnLocationListener mOnLocationListener;
 
     public static class LocationsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mSearchItemLocationName;
@@ -40,12 +41,12 @@ public class SearchLocationAdapter extends RecyclerView.Adapter<SearchLocationAd
         mOnLocationListener = onLocationListener;
     }
 
+    @NotNull
     @Override
     public LocationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_search_item,
                 parent, false);
-        LocationsViewHolder evh = new LocationsViewHolder(v, mOnLocationListener);
-        return evh;
+        return new LocationsViewHolder(v, mOnLocationListener);
     }
 
     @Override

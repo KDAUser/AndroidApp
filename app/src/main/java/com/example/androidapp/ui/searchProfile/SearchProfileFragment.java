@@ -1,8 +1,6 @@
 package com.example.androidapp.ui.searchProfile;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
