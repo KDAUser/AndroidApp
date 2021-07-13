@@ -57,13 +57,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:autofillHints="nickname name"
             android:ems="10"
             android:focusable="true"
-            android:hint="@string/loginPage_login"
+            android:hint="@string/loginPage_loginLabel"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/loginPage_passwordTitle"
-            app:layout_constraintStart_toStartOf="@+id/loginPage_passwordTitle"
-            android:autofillHints="nickname name" />
+            app:layout_constraintStart_toStartOf="@+id/loginPage_passwordTitle" />
 
         <ImageView
             android:id="@+id/loginPage_logo"
@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/loginPage_login"
+            android:text="@string/loginPage_loginLabel"
             android:textColor="@color/textColor"
             app:layout_constraintBottom_toTopOf="@+id/loginPage_login"
             app:layout_constraintStart_toStartOf="@+id/loginPage_login" />

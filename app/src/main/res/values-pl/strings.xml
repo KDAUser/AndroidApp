@@ -9,7 +9,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_menu">Settings</string>
     <string name="preference_file_key">JustFindIt_SP_file</string>
-    <string name="server_address">http://185.237.157.193/TM/</string>
+    <string name="server_address">http://192.168.0.3/TM/</string>
 
     <string name="note_loadingScreen">Ładowanie danych. Proszę czekać…</string>
     <string name="note_successfulLogin">Pomyślnie zalogowano</string>
@@ -24,7 +24,7 @@
     <string name="menu_add_locations">Dodaj Lokalizację</string>
     <string name="menu_profile">Profil</string>
     <string name="menu_edit_profile">Edytuj Profil</string>
-    <string name="menu_search_profile">Szukaj użytkownika</string>
+    <string name="menu_search_profile">Szukaj Użytkownika</string>
     <string name="menu_logout_profile">Wyloguj</string>
     <string name="menu_search_location">Szukaj Lokalizacji</string>
     <string name="login_page_title">Zacznij od zalogowania się do swojego konta</string>
@@ -32,7 +32,7 @@
     <string name="loginPage_password">Hasło</string>
     <string name="loginPage_registerNote">Nie masz swojego konta?</string>
     <string name="loginPage_register">Rejestracja</string>
-    <string name="searchLocation_hint">Nazwa Lokalizacji</string>
+    <string name="searchLocation_hint">Nazwa lokalizacji</string>
     <string name="registrationPage_title">Stwórz nowe konto</string>
     <string name="registrationPage_confPass">Powtórz hasło</string>
     <string name="registrationPage_email">Email</string>
@@ -51,14 +51,14 @@
     <string name="change_avatar">Zmień awatar</string>
     <string name="save_profile_description">Zapisz opis </string>
     <string name="save_new_password">Zapisz nowe hasło</string>
-    <string name="location_name">Nazwa Lokalizacji</string>
+    <string name="location_name">Nazwa lokalizacji</string>
     <string name="first_tip">Wskazówka 1</string>
     <string name="second_tip">Wskazówka 2</string>
     <string name="third_tip">Wskazówka 3</string>
     <string name="fourth_tip">Wskazówka 4</string>
     <string name="fifth_tip">Wskazówka 5</string>
-    <string name="longitude">Długość Geograficzna</string>
-    <string name="latitude">Szerokość Geograficzna</string>
+    <string name="longitude">Długość geograficzna</string>
+    <string name="latitude">Szerokość geograficzna</string>
     <string name="save_location">Zapisz Lokalizację</string>
     <string name="tip_text">Treść wskazówki</string>
     <string name="registerError_loginLength">Nazwa użytkownika musi zawierać od 3 do 20 znaków.</string>
@@ -93,4 +93,8 @@
     <string name="locationFragment_note_badPosition">Odczytana pozycja nie pokrywa się z koorydnatami lokalizacji!</string>
     <string name="locationFragment_errorOnServerUpdate">Błąd podczas aktualizacji stanu.</string>
     <string name="profilePage_noTrophiesText">Brak trofeów</string>
+    <string name="menuOption_themeMode">Motyw jasny/ciemny</string>
+    <string name="loginPage_loginLabel">Nazwa użytkownika</string>
+    <string name="addLocationPage_saveWrittenValuesText">Zapisz własne ko.</string>
+    <string name="addLocationPage_saveActualValuesText">Wczytaj z GPS</string>
 </resources>

@@ -5,7 +5,7 @@
         <item
             android:id="@+id/app_bar_switch"
             android:orderInCategory="101"
-            android:title="Light/Dark mode"
+            android:title="@string/menuOption_themeMode"
             app:actionLayout="@layout/switch_item"
             app:showAsAction="never" />
 </menu>

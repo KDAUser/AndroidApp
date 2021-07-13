@@ -45,7 +45,7 @@
             android:autofillHints="nickname name"
             android:ems="10"
             android:focusable="true"
-            android:hint="@string/loginPage_login"
+            android:hint="@string/loginPage_loginLabel"
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/registerError_loginLength"
             app:layout_constraintEnd_toEndOf="@+id/registrationPage_password"
@@ -122,7 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/loginPage_login"
+            android:text="@string/loginPage_loginLabel"
             android:textColor="@color/textColor"
             app:layout_constraintBottom_toTopOf="@+id/registrationPage_login"
             app:layout_constraintStart_toStartOf="@+id/registrationPage_login" />

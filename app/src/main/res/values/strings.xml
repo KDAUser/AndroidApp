@@ -92,4 +92,8 @@
     <string name="locationFragment_note_badPosition">Current position doesnt match location coordinates!</string>
     <string name="locationFragment_errorOnServerUpdate">Error during progress update on server.</string>
     <string name="profilePage_noTrophiesText">No trophies to show</string>
+    <string name="menuOption_themeMode">Light/Dark mode</string>
+    <string name="loginPage_loginLabel">Login</string>
+    <string name="addLocationPage_saveWrittenValuesText">Save own values</string>
+    <string name="addLocationPage_saveActualValuesText">Read GPS values</string>
 </resources>

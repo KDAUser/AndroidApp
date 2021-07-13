@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Save written values"
+            android:text="@string/addLocationPage_saveWrittenValuesText"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.419"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Save actual values"
+            android:text="@string/addLocationPage_saveActualValuesText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/editTextLatitude" />
@@ -197,6 +197,7 @@
             android:ems="10"
             android:hint="@string/longitude"
             android:inputType="numberDecimal"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/fifthTipImage" />
@@ -211,6 +212,7 @@
             android:ems="10"
             android:hint="@string/latitude"
             android:inputType="numberDecimal"
+            android:singleLine="true"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editTextLongitude" />

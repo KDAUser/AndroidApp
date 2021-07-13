@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidapp.R;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 public class LocationsViewModel extends ViewModel {
 
     private final Boolean[] areStarsOn = new Boolean[] {true, true, true, true, true};
-    private TipItem firstTip = new TipItem("", "", null);
+    private TipItem firstTip = new TipItem(R.string.first_tip, "", null);
     private LocationTipsAdapter mAdapter;
     private JFILocation mLocation = new JFILocation(0, false, "", 5, "", null);
 
@@ -144,11 +146,11 @@ public class LocationsViewModel extends ViewModel {
                     imageList[i] = null;
                 }
             }
-            firstTip = new TipItem("Tip 1", location.getString("tip1"), imageList[0]);
-            tipsList.add(new TipItem("Tip 2", location.getString("tip2"), imageList[1]));
-            tipsList.add(new TipItem("Tip 3", location.getString("tip3"), imageList[2]));
-            tipsList.add(new TipItem("Tip 4", location.getString("tip4"), imageList[3]));
-            tipsList.add(new TipItem("Tip 5", location.getString("tip5"), imageList[4]));
+            firstTip = new TipItem(R.string.first_tip, location.getString("tip1"), imageList[0]);
+            tipsList.add(new TipItem(R.string.second_tip, location.getString("tip2"), imageList[1]));
+            tipsList.add(new TipItem(R.string.third_tip, location.getString("tip3"), imageList[2]));
+            tipsList.add(new TipItem(R.string.fourth_tip, location.getString("tip4"), imageList[3]));
+            tipsList.add(new TipItem(R.string.fifth_tip, location.getString("tip5"), imageList[4]));
             boolean isSolved = false;
             if(location.getInt("isSolved") == 1)
                 isSolved = true;

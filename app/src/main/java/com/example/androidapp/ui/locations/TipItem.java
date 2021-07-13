@@ -3,11 +3,11 @@ package com.example.androidapp.ui.locations;
 import android.graphics.Bitmap;
 
 public class TipItem {
-    private final String mTipName;
+    private int mTipName;
     private final String mTipText;
     private Bitmap mTipImage;
 
-    public TipItem(String mTipName, String mTipText, Bitmap mTipImage) {
+    public TipItem(int mTipName, String mTipText, Bitmap mTipImage) {
         this.mTipName = mTipName;
         this.mTipText = mTipText;
         if(mTipImage != null) {
@@ -15,7 +15,7 @@ public class TipItem {
         }
     }
 
-    public String getTipName() {
+    public int getTipName() {
         return mTipName;
     }
 

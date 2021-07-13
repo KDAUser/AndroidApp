@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import androidx.lifecycle.ViewModel;
 
+import com.example.androidapp.R;
 import com.example.androidapp.ui.locations.JFILocation;
 import com.example.androidapp.ui.locations.TipItem;
 
@@ -45,11 +46,11 @@ public class AddLocationsViewModel extends ViewModel {
             tipTextsTab[i] = tipText;
             i++;
         }
-        newTips.add(new TipItem("First Tip", tipTextsTab[0], tipImagesTab[0]));
-        newTips.add(new TipItem("Second Tip", tipTextsTab[1], tipImagesTab[1]));
-        newTips.add(new TipItem("Third Tip", tipTextsTab[2], tipImagesTab[2]));
-        newTips.add(new TipItem("Fourth Tip", tipTextsTab[3], tipImagesTab[3]));
-        newTips.add(new TipItem("Fifth Tip", tipTextsTab[4], tipImagesTab[4]));
+        newTips.add(new TipItem(R.string.first_tip, tipTextsTab[0], tipImagesTab[0]));
+        newTips.add(new TipItem(R.string.second_tip, tipTextsTab[1], tipImagesTab[1]));
+        newTips.add(new TipItem(R.string.third_tip, tipTextsTab[2], tipImagesTab[2]));
+        newTips.add(new TipItem(R.string.fourth_tip, tipTextsTab[3], tipImagesTab[3]));
+        newTips.add(new TipItem(R.string.fifth_tip, tipTextsTab[4], tipImagesTab[4]));
         mLocation.setLocationTips(newTips);
     }
 
