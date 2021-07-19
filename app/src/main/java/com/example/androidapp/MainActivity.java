@@ -34,9 +34,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.androidapp.ui.profile.ProfileViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -107,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
             }
             sp_editor.apply();
             return true;
+        } else if(item.getItemId() == R.id.about_app_button) {
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            navController.navigate(R.id.nav_about_app);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -97,4 +97,11 @@
     <string name="loginPage_loginLabel">Nazwa użytkownika</string>
     <string name="addLocationPage_saveWrittenValuesText">Zapisz własne ko.</string>
     <string name="addLocationPage_saveActualValuesText">Wczytaj z GPS</string>
+    <string name="aboutAppPage_authors">Autorzy:</string>
+    <string name="menuOptions_aboutApp">O Aplikacji</string>
+    <string name="aboutAppPage_appVersion">v1.0</string>
+    <string name="aboutAppPage_appVersionLabel">Wersja:</string>
+    <string name="aboutAppPage_gitHubLabel">Strona aplikacji na GitHub</string>
+    <string name="aobutAppPage_aboutAppLabel">O aplikacji</string>
+    <string name="aboutAppPage_aboutApp">Aplikacja umożliwia odnalezienie przygotowanych przez innych użytkowników lokalizacji i zdobycie trofeum adekwatnego do ilości wykorzystanych wskazówek.</string>
 </resources>

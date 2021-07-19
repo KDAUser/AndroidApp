@@ -96,4 +96,11 @@
     <string name="loginPage_loginLabel">Login</string>
     <string name="addLocationPage_saveWrittenValuesText">Save own values</string>
     <string name="addLocationPage_saveActualValuesText">Read GPS values</string>
+    <string name="aboutAppPage_authors">Authors:</string>
+    <string name="menuOptions_aboutApp">About App</string>
+    <string name="aboutAppPage_appVersion">v1.0</string>
+    <string name="aboutAppPage_appVersionLabel">Version:</string>
+    <string name="aboutAppPage_gitHubLabel">Aplication GitHub Page</string>
+    <string name="aobutAppPage_aboutAppLabel">About application</string>
+    <string name="aboutAppPage_aboutApp">This Application enables to find prepared by other users locations and get trophy adequate to the amount of used tips.</string>
 </resources>

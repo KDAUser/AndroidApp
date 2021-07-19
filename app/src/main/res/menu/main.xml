@@ -8,4 +8,8 @@
             android:title="@string/menuOption_themeMode"
             app:actionLayout="@layout/switch_item"
             app:showAsAction="never" />
+        <item
+            android:id="@+id/about_app_button"
+            android:orderInCategory="102"
+            android:title="@string/menuOptions_aboutApp" />
 </menu>
